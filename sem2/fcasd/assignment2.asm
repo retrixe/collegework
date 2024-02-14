@@ -21,7 +21,7 @@
 %endmacro
 
 section .data
-  number  db 78h ; number to print (stored in hex, for some reason)
+  number  db 7ah ; number to print (hex representation)
   newline db 10  ; \n
 
 section .bss
@@ -34,20 +34,20 @@ _start:
   mov bp, 02h          ; set counter to track how many numbers have been printed
   jmp _loop            ; enter the loop
 _loop:
-  mov al, byte[number] ; move value of number into AL register -> 0111 1000
-; rol al, 4            ; rotate left, shift bytes to the left -> 1000 0111
+  mov bl, byte[number] ; move value of number into BL register -> 0111 1000
+; rol bl, 4            ; rotate left, shift bytes to the left -> 1000 0111
   mov dx, bp           ; copy counter into dx register, TODO: is dx appropriate?
   jmp _loop_shift      ; enter loop to shift bytes, until digit to print is last
 _loop_shift:
   cmp dx, 1h           ; check if we are on the final digit to print
   je _loop_end         ; if counter is 1, stop shifting digits
-  rol al, 4            ; rotate left, shift bytes 4 to the left
+  rol bl, 4            ; rotate left, shift bytes 4 to the left
   dec dx               ; decrement counter to indicate 1 digit shifted
   jmp _loop_shift      ; go back to loop start
 _loop_end:
-  and al, 0Fh          ; mask number with 0000 1111 to keep LSBs -> 0000 0111
-  add al, 30h          ; add 48 (0011 0000) to number -> 0011 0111
-  mov byte[temp], al   ; move contents of al into temp variable
+  and bl, 0Fh          ; mask number with 0000 1111 to keep LSBs -> 0000 0111
+  add bl, 30h          ; add 48 (0011 0000) to number -> 0011 0111
+  mov byte[temp], bl   ; move contents of bl into temp variable
   write 1, temp, 1     ; write byte in temp to stdout
   dec bp               ; decrement counter in bp register
   cmp bp, 0h           ; check if counter has reached zero

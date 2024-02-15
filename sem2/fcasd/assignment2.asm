@@ -1,8 +1,8 @@
 %macro rw 4
   mov rax, %1 ; syscall ID (0 for read, 1 for write)
   mov rdi, %2 ; fd of stream to read from/write to
-  mov rdx, %4 ; data length
   mov rsi, %3 ; pointer loc to read from/write to
+  mov rdx, %4 ; data length
   syscall
 %endmacro
 
@@ -21,7 +21,8 @@
 %endmacro
 
 section .data
-  number  db 7ah ; number to print (hex representation)
+  num1    db 7ah ; number to print (hex representation)
+  num2    db 04h ; number to add to num1 (also in hex)
   newline db 10  ; \n
 
 section .bss
@@ -31,6 +32,8 @@ section .text
   global _start
 
 _start:
+  mov al, byte[num1]   ; copy num1 into AL register
+  add al, byte[num2]   ; add num2 to AL register
   mov bp, 02h          ; set counter to track how many numbers have been printed
   jmp _loop            ; enter the loop
 _loop:
@@ -56,3 +59,26 @@ _loop_end:
 _finish:
   write 1, newline, 1  ; write newline then exit
   exit 0
+
+_start2:
+  mov al, byte[num1]
+  add al, byte[num2]
+  mov bp, 2
+againx:
+  rol al, 4
+  mov bl, al
+  and al, 0Fh
+  cmp al, 09h
+  jbe downx
+  add al, 07h
+downx:
+  add al, 30h
+  mov byte[temp], al
+  write 1, temp, 1
+  mov al, bl
+  dec bp
+  cmp bp, 00
+  jnz againx
+  syscall
+  exit 0
+

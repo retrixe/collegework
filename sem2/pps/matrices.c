@@ -43,7 +43,7 @@ int main() {
   while (1) {
     printf("==================\n");
     printf("Options:\n");
-    printf("1 - Add\n2 - Subtract\n3 - Transpose matrix 1\n4 - Invert matrix 1\n0 - Exit\n");
+    printf("1 - Add\n2 - Subtract\n3 - Transpose matrix 1\n0 - Exit\n");
     printf("Enter option: ");
     int option;
     scanf("%d", &option);
@@ -55,10 +55,6 @@ int main() {
       return 0;
     }
 
-    if (option == 4) {
-      // Invert matrix 1 and store in matrix2
-    }
-
     printf("===== Result =====\n");
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
@@ -68,8 +64,6 @@ int main() {
           printf("%d\t", matrix1[row][col] - matrix2[row][col]);
         if (option == 3)
           printf("%d\t", matrix1[col][row]);
-        if (option == 4) {}
-// TODO: Perform inversion          printf("%d\t", matrix1[row][col] + matrix2[row][col]);
       }
       printf("\n");
     }

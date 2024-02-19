@@ -33,52 +33,23 @@ section .text
 
 _start:
   mov al, byte[num1]   ; copy num1 into AL register
-  add al, byte[num2]   ; add num2 to AL register
+  add al, byte[num2]   ; add num2 to AL register, eg. 0111 1000
   mov bp, 02h          ; set counter to track how many numbers have been printed
-  jmp _loop            ; enter the loop
-_loop:
-  mov bl, byte[number] ; move value of number into BL register -> 0111 1000
-; rol bl, 4            ; rotate left, shift bytes to the left -> 1000 0111
-  mov dx, bp           ; copy counter into dx register, TODO: is dx appropriate?
-  jmp _loop_shift      ; enter loop to shift bytes, until digit to print is last
-_loop_shift:
-  cmp dx, 1h           ; check if we are on the final digit to print
-  je _loop_end         ; if counter is 1, stop shifting digits
-  rol bl, 4            ; rotate left, shift bytes 4 to the left
-  dec dx               ; decrement counter to indicate 1 digit shifted
-  jmp _loop_shift      ; go back to loop start
-_loop_end:
-  and bl, 0Fh          ; mask number with 0000 1111 to keep LSBs -> 0000 0111
-  add bl, 30h          ; add 48 (0011 0000) to number -> 0011 0111
-  mov byte[temp], bl   ; move contents of bl into temp variable
+againx:
+  rol al, 4            ; rotate left, ie. shift bytes to the left, eg. 1000 0111
+  mov bl, al           ; copy number from AL into BL register
+  and al, 0Fh          ; mask number with 0000 1111 to keep LSBs only eg. 0000 0111
+  cmp al, 09h          ; compare value in AL register with 9
+  jbe downx            ; if less than or equal to, jump straight to downx label
+  add al, 07h          ; else add 7 to AL register to account for hex numbers
+downx:
+  add al, 30h          ; add 48 (0011 0000) to number due to ASCII value
+  mov byte[temp], al   ; move contents of AL into temp variable
   write 1, temp, 1     ; write byte in temp to stdout
+  mov al, bl           ; restore number from BL register back into AL
   dec bp               ; decrement counter in bp register
   cmp bp, 0h           ; check if counter has reached zero
-  je _finish           ; if so, jump to _finish
-  jmp _loop            ; go back to loop start
-_finish:
+  jnz againx           ; if not zero, go back to loop (againx)
   write 1, newline, 1  ; write newline then exit
-  exit 0
-
-_start2:
-  mov al, byte[num1]
-  add al, byte[num2]
-  mov bp, 2
-againx:
-  rol al, 4
-  mov bl, al
-  and al, 0Fh
-  cmp al, 09h
-  jbe downx
-  add al, 07h
-downx:
-  add al, 30h
-  mov byte[temp], al
-  write 1, temp, 1
-  mov al, bl
-  dec bp
-  cmp bp, 00
-  jnz againx
-  syscall
   exit 0
 

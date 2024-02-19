@@ -1,8 +1,8 @@
 %macro rw 4
   mov rax, %1 ; syscall ID (0 for read, 1 for write)
   mov rdi, %2 ; fd of stream to read from/write to
-  mov rdx, %4 ; data length
   mov rsi, %3 ; pointer loc to read from/write to
+  mov rdx, %4 ; data length
   syscall
 %endmacro
 
@@ -28,11 +28,11 @@ section .data
   rollno_prompt       db  "Enter your roll no: "
   rollno_prompt_len   equ $-rollno_prompt
 
-  name_response         db  "Name: "
+  name_response         db  "Name:", 0ah
   name_response_len     equ $-name_response
-  division_response     db  "Division: "
+  division_response     db  "Division:", 0ah
   division_response_len equ $-division_response
-  rollno_response       db  "Roll no: "
+  rollno_response       db  "Roll no:", 0ah
   rollno_response_len   equ $-rollno_response
 
 section .bss

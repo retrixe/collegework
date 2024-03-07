@@ -44,9 +44,9 @@ int main() {
         scanf("%s", &str2);
         int cmp = strcmp(str1, str2);
         if (cmp == 0) {
-          printf("Both strings are equal!");
+          printf("Both strings are equal!\n");
         } else {
-          printf("Both strings are unequal.");
+          printf("Both strings are unequal.\n");
         }
         break;
       default:

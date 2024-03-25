@@ -73,28 +73,27 @@ int getDaysInMonth(int year, int month) {
 }
 
 int getFirstDay(int year, int month) {
-  // FIXME Feb - 2020
-  // FIXME Feb - 2023
   int currentYear = 2024;
   int currentMonth = 01;
+  int yearIsLess = year < currentYear;
   int firstDay = 1; // Monday
   while (year != currentYear) {
     // Calculate total days in year.
+    if (yearIsLess) currentYear--;
     int totalDays = 0;
     for (int i = 1; i <= 12; i++) {
       totalDays += getDaysInMonth(currentYear, i);
     }
+    if (!yearIsLess) currentYear++;
     // Reach closer to desired year.
     int leftoverDays = totalDays % 7;
-    if (year < currentYear) {
+    if (yearIsLess) {
       firstDay -= leftoverDays;
       if (firstDay < 0) {
-        firstDay
+        firstDay += 7;
       }
-      currentYear--;
     } else {
       firstDay = (firstDay + leftoverDays) % 7;
-      currentYear++;
     }
   }
   while (month != currentMonth) {

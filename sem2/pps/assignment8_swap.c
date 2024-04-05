@@ -18,7 +18,7 @@ int main() {
   swap(&a, &b);
   printf("A and B after swapping in function: %d, %d\n", a, b);
 
-  int temp = a;
+  int temp = b;
   b = a;
   a = temp;
   printf("A and B after swapping w/out function: %d, %d\n", a, b);

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alarm</title>
+  </head>
+
+  <body>
+    <h1>Alarms</h1>
+    <form id="alarm-form">
+      <section id="alarms">There are no alarms.</section>
+    </form>
+
+    <form id="create-alarm-form" style="margin-top: 20px">
+      <label for="create-alarm">New Alarm</label><br />
+      <input id="create-alarm" placeholder="12:00" required /><br />
+      <button type="submit">Add Alarm</button>
+    </form>
+
+    <h2 style="margin-top: 45px">Change password</h2>
+    <form id="change-password-form" style="margin-top: 20px">
+      <label for="change-password">New Password</label><br />
+      <input
+        id="change-password"
+        placeholder="Password"
+        required
+        type="password"
+      /><br />
+      <button type="submit">Change Password</button>
+    </form>
+
+    <script type="module">
+      let allAlarms = [];
+
+      let password =
+        new URLSearchParams(window.location.search).get("password") ||
+        localStorage.get("alarms-password");
+
+      if (!password) {
+        window.location.href = "login.html";
+      }
+
+      async function deleteAlarm(alarm) {
+        let deleteAlarmResponse;
+        try {
+          deleteAlarmResponse = await fetch("/alarm?alarm=" + alarm, {
+            method: "DELETE",
+            headers: { Authorization: password },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+
+        if (!deleteAlarmResponse.ok) {
+          alert('Server responded with status ' + deleteAlarmResponse.status);
+        } else {
+          allAlarms = allAlarms.filter((a) => a !== alarm);
+          refreshAlarmSection(allAlarms);
+        }
+      }
+
+      function formatAlarm(alarm) {
+        let alarmStr = alarm.toString();
+        if (alarmStr.length == 3) alarmStr = '0' + alarmStr
+        return alarmStr.substring(0, 2) + ":" + alarmStr.substring(2, 4);
+      }
+
+      function refreshAlarmSection(alarms) {
+        const alarmSection = document.querySelector("#alarms");
+        alarmSection.innerHTML = "";
+
+        if (alarms.length === 0) {
+          alarmSection.innerText = "There are no alarms.";
+          return;
+        }
+
+        alarms.forEach((alarm) => {
+          const alarmInput = document.createElement("span");
+          alarmInput.innerText = formatAlarm(alarm);
+          alarmInput.style.marginRight = "10px";
+
+          const alarmRemoveButton = document.createElement("button");
+          alarmRemoveButton.onclick = (e) => {
+            e.preventDefault();
+            deleteAlarm(alarm);
+          };
+          alarmRemoveButton.innerText = "Delete";
+
+          alarmSection.append(
+            alarmInput,
+            alarmRemoveButton,
+            document.createElement("br")
+          );
+        });
+      }
+
+      let response;
+      try {
+        response = await fetch('/alarms', { headers: { Authorization: password } });
+      } catch (e) {
+        console.error(e);
+      }
+
+      if (!response.ok) {
+        alert('Server responded with status ' + response.status);
+      } else {
+        localStorage.setItem('alarms-password', password);
+
+        allAlarms = await response.json();
+        refreshAlarmSection(allAlarms);
+      }
+
+      document.querySelector("#create-alarm-form").onsubmit = async (e) => {
+        e.preventDefault();
+
+        const newAlarmStr = document.querySelector("#create-alarm").value;
+        const newAlarm = parseInt(newAlarmStr.replace(":", ""));
+
+        if (isNaN(newAlarm)) return alert("Invalid alarm!");
+
+        let newAlarmResponse;
+        try {
+          newAlarmResponse = await fetch("/alarm?alarm=" + newAlarm, {
+            method: "POST",
+            headers: { Authorization: password },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+
+        if (!newAlarmResponse.ok) {
+          alert('Server responded with status ' + newAlarmResponse.status);
+        } else {
+          allAlarms.push(newAlarm);
+          refreshAlarmSection(allAlarms);
+        }
+      };
+
+      document.querySelector("#change-password-form").onsubmit = async (e) => {
+        e.preventDefault();
+
+        const newPasswordInput = document.querySelector("#change-password");
+        const newPassword = newPasswordInput.value;
+        let changePasswordResponse;
+        try {
+          changePasswordResponse = await fetch("/password?password=" + newPassword, {
+            method: "POST",
+            headers: { Authorization: password }
+          });
+        } catch (e) {
+          console.error(e);
+        }
+
+        if (!changePasswordResponse.ok) {
+          alert('Server responded with status ' + changePasswordResponse.status);
+        } else {
+          password = newPassword;
+          localStorage.setItem("alarms-password", password);
+
+          newPasswordInput.value = "";
+        }
+      };
+    </script>
+  </body>
+</html>

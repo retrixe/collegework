@@ -2,9 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -21,37 +24,56 @@ func LoadConfig() {
 	defer configMutex.Unlock()
 	data, err := os.ReadFile("config.json")
 	if err != nil && !os.IsNotExist(err) {
-		println("Failed to read config file", err)
+		log.Println("Failed to read config file: ", err)
+	} else if os.IsNotExist(err) {
+		return
 	}
 	err = json.Unmarshal(data, &config)
 	if err != nil {
-		println("Failed to unmarshal config", err)
+		log.Println("Failed to unmarshal config: ", err)
 	}
-	SaveConfig()
 }
 
 func SaveConfig() {
-	configMutex.RLock()
-	defer configMutex.RUnlock()
 	data, err := json.Marshal(config)
 	if err != nil {
-		println("Failed to marshal config", err)
+		log.Println("Failed to marshal config: ", err)
 	}
 	err = os.WriteFile("config.json", data, 0644)
 	if err != nil {
-		println("Failed to save config", err)
+		log.Println("Failed to save config: ", err)
 	}
 }
 
+func GetIP() string {
+	cmd := exec.Command("hostname", "-I")
+	output, _ := cmd.Output()
+	return strings.TrimSpace(string(output))
+}
+
 func RunApi() {
+	http.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "webui/login.html")
+	})
+	http.HandleFunc("GET /login.html", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "webui/login.html")
+	})
+	http.HandleFunc("GET /dashboard.html", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "webui/dashboard.html")
+	})
+
 	http.HandleFunc("POST /password", func(w http.ResponseWriter, r *http.Request) {
+		configMutex.Lock()
+		defer configMutex.Unlock()
+		if r.Header.Get("Authorization") != config.Password {
+			http.Error(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
 		password := r.URL.Query().Get("password")
 		if password == "" {
 			http.Error(w, "password is required", http.StatusBadRequest)
 			return
 		}
-		configMutex.Lock()
-		defer configMutex.Unlock()
 		config.Password = password
 		SaveConfig()
 		w.Write([]byte("{\"success\":true}\n"))
@@ -68,8 +90,8 @@ func RunApi() {
 	})
 
 	http.HandleFunc("POST /alarm", func(w http.ResponseWriter, r *http.Request) {
-		configMutex.RLock()
-		defer configMutex.RUnlock()
+		configMutex.Lock()
+		defer configMutex.Unlock()
 		if r.Header.Get("Authorization") != config.Password {
 			http.Error(w, "unauthorized", http.StatusUnauthorized)
 			return
@@ -96,8 +118,8 @@ func RunApi() {
 	})
 
 	http.HandleFunc("DELETE /alarm", func(w http.ResponseWriter, r *http.Request) {
-		configMutex.RLock()
-		defer configMutex.RUnlock()
+		configMutex.Lock()
+		defer configMutex.Unlock()
 		if r.Header.Get("Authorization") != config.Password {
 			http.Error(w, "unauthorized", http.StatusUnauthorized)
 			return

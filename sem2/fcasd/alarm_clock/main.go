@@ -11,6 +11,9 @@ import (
 )
 
 func main() {
+	LoadConfig()
+	SaveConfig()
+
 	gpio.Open()
 	defer gpio.Close()
 
@@ -19,8 +22,7 @@ func main() {
 	SetupKeypadPins()
 	defer PoweroffKeypadPins()
 
-	// TODO: Setup LCD 2nd line
-	// IP: 192.168.1.121
+	LcdLineTwo = GetIP()
 
 	// Setup alarm thread
 	go (func() {
@@ -28,7 +30,7 @@ func main() {
 		ticker := time.NewTicker(time.Second)
 		var cancel chan bool
 		for {
-			println(t.String()) // TODO: Display time to LCD
+			UpdateLCD("    "+t.Format("15:04 PM"), "")
 			if IsAlarmSet(t) {
 				// Cancel any previous alarms
 				if cancel != nil {

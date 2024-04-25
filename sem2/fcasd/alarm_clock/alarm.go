@@ -1,12 +1,16 @@
 package main
 
-import "time"
+import (
+	"math/rand/v2"
+	"strconv"
+	"time"
+)
 
 func IsAlarmSet(t time.Time) bool {
 	configMutex.RLock()
 	defer configMutex.RUnlock()
 	for _, alarm := range config.Alarms {
-		if alarm%100 == t.Hour() && alarm/100 == t.Minute() && t.Second() == 0 {
+		if alarm/100 == t.Hour() && alarm%100 == t.Minute() && t.Second() == 0 {
 			return true
 		}
 	}
@@ -17,8 +21,11 @@ func TriggerAlarm(t time.Time, cancel chan bool) {
 	deactivateBuzzer := make(chan bool)
 	go ActivateBuzzer(deactivateBuzzer)
 
-	// TODO: Display question on 2nd line
-	ans := "6743" // TODO: Create a proper question
+	n := rand.IntN(20) + 1
+	question := "Solve sqrt " + strconv.Itoa(n*n)
+	ans := strconv.Itoa(n)
+	time.Sleep(5 * time.Second) // FIXME LCD doesn't behave well on rapid update
+	UpdateLCD("", question)
 	input := ""
 	reader := make(chan string, 16)
 	go ReadFromKeypad(reader)
@@ -34,13 +41,17 @@ loop:
 		if char == "A" || char == "B" || char == "C" || char == "D" {
 			if input == ans {
 				deactivateBuzzer <- true
-				break
-			} else {
-				// TODO: Display wrong answer on 2nd line
+				break loop
 			}
+			UpdateLCD("", "Wrong ans!")
+			time.Sleep(5 * time.Second)
+			UpdateLCD("", question)
+			input = ""
 		} else {
 			input += char
 		}
 	}
-	// TODO: Reset 2nd line
+	close(reader)
+	time.Sleep(5 * time.Second) // FIXME see above
+	UpdateLCD("", GetIP())
 }

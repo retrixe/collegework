@@ -73,7 +73,9 @@ func PollKeypad() string {
 }
 
 func ReadFromKeypad(consumer chan string) {
-	defer recover()
+	defer (func() {
+		recover()
+	})()
 	prevInput := ""
 	for {
 		time.Sleep(2 * time.Millisecond)

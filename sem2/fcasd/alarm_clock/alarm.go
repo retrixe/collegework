@@ -1,8 +1,6 @@
 package main
 
 import (
-	"math/rand/v2"
-	"strconv"
 	"time"
 )
 
@@ -21,9 +19,7 @@ func TriggerAlarm(t time.Time, cancel chan bool) {
 	deactivateBuzzer := make(chan bool)
 	go ActivateBuzzer(deactivateBuzzer)
 
-	n := rand.IntN(20) + 1
-	question := "Solve sqrt " + strconv.Itoa(n*n)
-	ans := strconv.Itoa(n)
+	question, answer := GenerateQuestion()
 	time.Sleep(5 * time.Second) // FIXME LCD doesn't behave well on rapid update
 	UpdateLCD("", question)
 	input := ""
@@ -39,7 +35,7 @@ loop:
 		case char = <-reader:
 		}
 		if char == "A" || char == "B" || char == "C" || char == "D" {
-			if input == ans {
+			if input == answer {
 				println("[Debug] Correct input entered, deactivated alarm: " + input)
 				deactivateBuzzer <- true
 				break loop

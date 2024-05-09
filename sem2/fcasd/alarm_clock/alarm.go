@@ -40,9 +40,11 @@ loop:
 		}
 		if char == "A" || char == "B" || char == "C" || char == "D" {
 			if input == ans {
+				println("[Debug] Correct input entered, deactivated alarm: " + input)
 				deactivateBuzzer <- true
 				break loop
 			}
+			println("[Debug] Incorrect input entered: " + input)
 			UpdateLCD("", "Wrong ans!")
 			time.Sleep(5 * time.Second)
 			UpdateLCD("", question)

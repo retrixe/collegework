@@ -30,7 +30,7 @@ func main() {
 		ticker := time.NewTicker(time.Second)
 		var cancel chan bool
 		for {
-			UpdateLCD("    "+t.Format("15:04 PM"), "")
+			UpdateLCD("    "+t.Format("03:04 PM"), "")
 			if IsAlarmSet(t) {
 				// Cancel any previous alarms
 				if cancel != nil {

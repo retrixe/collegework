@@ -228,7 +228,7 @@ int main()
       printf("Enter new number of copies: ");
       scanf("%d", &books[editIndex - 1].copies);
       writeAllBooks(books, booksCount);
-      printf("Successfully updated copies for \"%s\"!\n", books[borrowIndex - 1].title);
+      printf("Successfully updated copies for \"%s\"!\n", books[editIndex - 1].title);
       break;
     case 7:
       int removeIndex;

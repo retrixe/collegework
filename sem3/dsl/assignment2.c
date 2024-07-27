@@ -63,7 +63,7 @@ void displayMatrix(int matrix[5][5], int rows, int cols) {
 }
 
 void displaySparse(int matrix[15][3]) {
-    int rows = matrix[0][2] + 1, cols = 3;
+	int rows = matrix[0][2] + 1, cols = 3;
 	for (int row = 0; row < rows; row++) {
 		for (int col = 0; col < cols; col++) {
 			printf("%d ", matrix[row][col]);
@@ -73,9 +73,9 @@ void displaySparse(int matrix[15][3]) {
 }
 
 void compact(int matrix[5][5], int rows, int cols, int sparse[15][3]) {
-    int index = 1;
-    sparse[0][0] = rows;
-    sparse[0][1] = cols;
+	int index = 1;
+	sparse[0][0] = rows;
+	sparse[0][1] = cols;
 	for (int row = 0; row < rows; row++) {
 		for (int col = 0; col < cols; col++) {
 			if (matrix[row][col] != 0) {
@@ -86,7 +86,7 @@ void compact(int matrix[5][5], int rows, int cols, int sparse[15][3]) {
 			}
 		}
 	}
-    sparse[0][2] = index - 1;
+	sparse[0][2] = index - 1;
 }
 
 void simpleTranspose(int original[15][3], int transpose[15][3]) {

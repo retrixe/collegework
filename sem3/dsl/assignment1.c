@@ -21,13 +21,13 @@ void insertionSort(struct Student students[], int count);
 void shellSort(struct Student students[], int count);
 
 int main() {
-  int studentCount;
-  printf("Enter no of students: ");
-  scanf("%d", &studentCount);
-  struct Student students[studentCount];
-  acceptStudents(students, studentCount);
-
   while (1) {
+    int studentCount;
+    printf("Enter no of students: ");
+    scanf("%d", &studentCount);
+    struct Student students[studentCount];
+    acceptStudents(students, studentCount);
+
     printf("==========================\nEntered student data:\n==========================\n");
     printStudents(students, studentCount);
 

@@ -20,91 +20,109 @@
   syscall
 %endmacro
 
+;%macro pack 2
+;  mov rax, 0           ; clear RAX since we store the elements in AL
+;  mov rsi, %2          ; set RSI to ptr to input array
+;%%packnextdigit:
+;  mov cl, byte[rsi]    ; move into cl the byte at RSI ptr
+;  cmp cl, 0ah          ; compare it with newline
+;  je %%finishedpacking ; if it is a newline, we've finished packing the number
+;  cmp cl, 39h          ; compare cl with 39h
+;  jbe %%skiphex        ; 30h to 39h are 0 to 9, so skip hex subtraction
+;  sub cl, 07h          ; else subtract 7 more since A to F are 40h to 45h
+;%%skiphex:
+;  sub cl, 30h          ; subtract 30h to convert ASCII to number
+;  rol al, 4            ; rotate AL 4 bits to the left to make space for the incoming digit
+;  add al, cl           ; add the digit to AL
+;  inc rsi              ; increment input array ptr in RSI
+;  jmp %%packnextdigit  ; go back to the start to pack the next digit
+;%%finishedpacking:
+;  mov byte[%1], al     ; move into the number the result in AL
+;%endmacro
+
 section .data
-  askNMsg    db  "Enter n: "
-  askNMsgLen equ $-askNMsg
-  askMsg     db  "Enter array number: "
+  askMsg     db  "Enter operation (1 for add, 2 for subtract): "
   askMsgLen  equ $-askMsg
-  resMsg     db  "Result of array addition is: "
+  askMsg1    db  "Enter number 1: "
+  askMsg1Len equ $-askMsg1
+  askMsg2    db  "Enter number 2: "
+  askMsg2Len equ $-askMsg2
+  resMsg     db  "Result of operation is: "
   resMsgLen  equ $-resMsg
   newline    db  10
 
 section .bss
-  array  resb 0ffh
   input  resb 3
-  n      resb 1
+  op     resb 2
+  n1     resb 1
+  n2     resb 1
   temp   resb 1
-  cnt    resb 1 ; we could replace this with 'temp'
 
 section .text
   global _start
 
 _start:
-  write 1, askNMsg, askNMsgLen
-  read 0, input, 03h
+  write 1, askMsg, askMsgLen
+  read 0, op, 02h
 
   ; note this logic only works to accept numbers from 00h to FFh, beyond that, errors occur
   ; as the registers used throughout the code and 'n' are only 1 byte in size
   ; the array size is fixed at FFh and 'input' is only 2 bytes w/ 1 byte for newline
-
-  mov rax, 0           ; clear RAX since we store 'n' in AL
+  write 1, askMsg1, askMsg1Len
+  read 0, input, 03h
+  ; pack n1, input
+  mov rax, 0           ; clear RAX since we store 'n1' in AL
   mov rsi, input       ; set RSI to ptr to 'input'
-packnextdigitn:
+packnextdigitn1:
   mov cl, byte[rsi]    ; move into cl the byte at RSI ptr
   cmp cl, 0ah          ; compare it with newline
-  je finishedpackingn  ; if it is a newline, we've finished packing 'n'
+  je finishedpackingn1 ; if it is a newline, we've finished packing 'n1'
   cmp cl, 39h          ; compare cl with 39h
-  jbe skiphexn         ; 30h to 39h are 0 to 9, so skip hex subtraction
+  jbe skiphexn1        ; 30h to 39h are 0 to 9, so skip hex subtraction
   sub cl, 07h          ; else, subtract 7 more since A to F are 40h to 45h
-skiphexn:
+skiphexn1:
   sub cl, 30h          ; subtract 30h to convert ASCII to number
   rol al, 4            ; rotate AL 4 bits to the left to make space for the incoming digit
   add al, cl           ; add the digit to AL
   inc rsi              ; increment 'input' ptr in RSI
-  jmp packnextdigitn   ; go back to the start to pack the next digit
-finishedpackingn:
-  mov byte[n], al      ; move into 'n' the result in AL
+  jmp packnextdigitn1  ; go back to the start to pack the next digit
+finishedpackingn1:
+  mov byte[n1], al     ; move into 'n1' the result in AL
 
-  mov byte[cnt], al    ; move into 'cnt' temp counter 'n'
-  mov rbp, array       ; set RBP to ptr to 'array'
-readnextnum:
-  write 1, askMsg, askMsgLen
+  write 1, askMsg2, askMsg2Len
   read 0, input, 03h
+  ; pack n2, input
   mov rax, 0           ; clear RAX since we store the elements in AL
   mov rsi, input       ; set RSI to ptr to 'input'
-packnextdigitarr:
+packnextdigitn2:
   mov cl, byte[rsi]    ; move into cl the byte at RSI ptr
   cmp cl, 0ah          ; compare it with newline
-  je finishedpackingarr; if it is a newline, we've finished packing this array element
+  je finishedpackingn2 ; if it is a newline, we've finished packing 'n2'
   cmp cl, 39h          ; compare cl with 39h
-  jbe skiphexarr       ; 30h to 39h are 0 to 9, so skip hex subtraction
+  jbe skiphexn2        ; 30h to 39h are 0 to 9, so skip hex subtraction
   sub cl, 07h          ; else subtract 7 more since A to F are 40h to 45h
-skiphexarr:
+skiphexn2:
   sub cl, 30h          ; subtract 30h to convert ASCII to number
   rol al, 4            ; rotate AL 4 bits to the left to make space for the incoming digit
   add al, cl           ; add the digit to AL
   inc rsi              ; increment 'input' ptr in RSI
-  jmp packnextdigitarr ; go back to the start to pack the next digit
-finishedpackingarr:
-  mov byte[rbp], al    ; move into the array position the result in AL
-  inc rbp              ; move to the next array position
-  dec byte[cnt]        ; decrement the 'cnt' temp counter
-  jnz readnextnum      ; if we still have positions left to fill, jump back to read the next number
+  jmp packnextdigitn2  ; go back to the start to pack the next digit
+finishedpackingn2:
+  mov byte[n2], al     ; move into 'n2' the result in AL
 
   write 1, resMsg, resMsgLen
-  mov rsi, array       ; store array address in RSI
   mov ax, 00h          ; set AX (AH+AL) to 0
-  mov bx, 00h          ; set BX (BH+BL) to 0
-  mov cl, byte[n]      ; set CX to how many array elements are accepted
-addnextel:
-  mov bl, byte[rsi]    ; copy array element into BL
-  add al, bl           ; add AL to BL
+  mov al, byte[n1]     ; move 'n1' into al
+  cmp byte[op], 31h    ; compare op with '1' i.e. 31h
+  jne subtract         ; if op is not '1', then skip addition and subtract
+  add al, byte[n2]     ; add 'n2' into al
   jnc skipcarry        ; if no carry, skip
   inc ah               ; else increment AH
 skipcarry:
-  inc rsi              ; increment array address to next pos
-  dec cl               ; decrement counter
-  jnz addnextel        ; if counter is not zero, go to up
+  jmp skipsubtract     ; after addition, skip subtraction
+subtract:
+  sub al, byte[n2]     ; subtract 'n2' from al
+skipsubtract:
 
   mov bp, 04h          ; set counter to track how many numbers have been printed
 unpacknextdigit:

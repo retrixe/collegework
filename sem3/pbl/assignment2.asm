@@ -25,16 +25,18 @@ section .data
   askNMsgLen equ $-askNMsg
   askMsg     db  "Enter array number: "
   askMsgLen  equ $-askMsg
-  resMsg     db  "Result of array addition is: "
+  resMsg     db  "Result of array sorting is: "
   resMsgLen  equ $-resMsg
   newline    db  10
+  space      db  " "
 
 section .bss
   array  resb 0ffh
   input  resb 3
   n      resb 1
   temp   resb 1
-  cnt    resb 1 ; we could replace this with 'temp'
+  cnt    resb 1
+  cnt2   resb 1
 
 section .text
   global _start
@@ -91,36 +93,57 @@ finishedpackingarr:
   dec byte[cnt]        ; decrement the 'cnt' temp counter
   jnz readnextnum      ; if we still have positions left to fill, jump back to read the next number
 
-  write 1, resMsg, resMsgLen
-  mov rsi, array       ; store array address in RSI
-  mov ax, 00h          ; set AX (AH+AL) to 0
-  mov bx, 00h          ; set BX (BH+BL) to 0
-  mov cl, byte[n]      ; set CX to how many array elements are accepted
-addnextel:
-  mov bl, byte[rsi]    ; copy array element into BL
-  add al, bl           ; add AL to BL
-  jnc skipcarry        ; if no carry, skip
-  inc ah               ; else increment AH
-skipcarry:
-  inc rsi              ; increment array address to next pos
-  dec cl               ; decrement counter
-  jnz addnextel        ; if counter is not zero, go to up
+  mov byte[cnt], 1     ; cnt = 1 - outer loop
+outerloop:
+  mov byte[cnt2], 0    ; cnt2 = 0 - inner loop
+  mov rbp, array       ; put array pointer in RBP
+innerloop:
+  mov al, byte[rbp]    ; move byte at RBP ptr into AL
+  cmp al, byte[rbp + 1]; compare AL with the byte after RBP ptr
+  jbe skipexchange     ; if they are less than or equal, skip exchange
+  xchg al, byte[rbp + 1];exchange AL value with RBP+1 value
+  mov byte[rbp], al    ; put AL value (previously RBP+1) back in RBP
+skipexchange:
+  inc rbp              ; increment RBP (array pointer)
+  inc byte[cnt2]       ; increment cnt2 of inner loop
+  mov al, byte[n]      ; copy value of n into al
+  sub al, byte[cnt]    ; subtract cnt from al
+  cmp byte[cnt2], al   ; now compare cnt2 and al (n - cnt)
+  jge exitinnerloop    ; exit inner loop if cnt2 >= al
+  jmp innerloop        ; else re-enter inner loop
+exitinnerloop:
+  inc byte[cnt]        ; increment cnt of outer loop
+  mov al, byte[n]      ; copy value of n into al
+  cmp byte[cnt], al    ; compare cnt with al
+  jge exitouterloop    ; exit outer loop if cnt >= n
+  jmp outerloop        ; else re-enter outer loop
+exitouterloop:
 
-  mov bp, 04h          ; set counter to track how many numbers have been printed
+  write 1, resMsg, resMsgLen
+  mov al, byte[n]      ; copy n into AL
+  mov byte[cnt], al    ; copy AL into cnt
+  mov rbp, array       ; copy array ptr to first element in RBP
+writenextnum:
+  mov al, byte[rbp]    ; copy element from current array ptr to AL
+  mov byte[cnt2], 02h  ; set counter to track how many numbers have been printed
 unpacknextdigit:
-  rol ax, 4            ; rotate left, ie. shift bytes to the left, eg. 1000 0111
-  mov bx, ax           ; copy number from AX into BX register
-  and ax, 0Fh          ; mask number with 0000 1111 to keep LSBs only eg. 0000 0111
-  cmp ax, 09h          ; compare value in AX register with 9
+  rol al, 4            ; rotate left, ie. shift bytes to the left, eg. 1000 0111
+  mov bl, al           ; copy number from AL into BL register
+  and al, 0Fh          ; mask number with 0000 1111 to keep LSBs only eg. 0000 0111
+  cmp al, 09h          ; compare value in AL register with 9
   jbe skiphex          ; if less than or equal to, jump straight to downx label
-  add ax, 07h          ; else add 7 to AX register to account for hex numbers
+  add al, 07h          ; else add 7 to AL register to account for hex numbers
 skiphex:
   add ax, 30h          ; add 48 (0011 0000) to number due to ASCII value
   mov byte[temp], al   ; move contents of AL into temp variable
   write 1, temp, 1     ; write byte in temp to stdout
   mov ax, bx           ; restore number from BX register back into AX
-  dec bp               ; decrement counter in BP register
-  cmp bp, 0h           ; check if counter has reached zero
+  dec byte[cnt2]       ; decrement counter
   jnz unpacknextdigit  ; if not zero, go back to loop (againx)
+  inc rbp              ; move to next array element ptr in RBP
+  write 1, space, 1    ; write space
+  dec byte[cnt]        ; decrement counter of loop
+  jnz writenextnum     ; if counter is not zero, jump back to write next num
+
   write 1, newline, 1  ; write newline then exit
   exit 0

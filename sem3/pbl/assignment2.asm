@@ -44,51 +44,15 @@ section .text
 _start:
   write 1, askNMsg, askNMsgLen
   read 0, input, 03h
-
-  ; note this logic only works to accept numbers from 00h to FFh, beyond that, errors occur
-  ; as the registers used throughout the code and 'n' are only 1 byte in size
-  ; the array size is fixed at FFh and 'input' is only 2 bytes w/ 1 byte for newline
-
-  mov rax, 0           ; clear RAX since we store 'n' in AL
-  mov rsi, input       ; set RSI to ptr to 'input'
-packnextdigitn:
-  mov cl, byte[rsi]    ; move into cl the byte at RSI ptr
-  cmp cl, 0ah          ; compare it with newline
-  je finishedpackingn  ; if it is a newline, we've finished packing 'n'
-  cmp cl, 39h          ; compare cl with 39h
-  jbe skiphexn         ; 30h to 39h are 0 to 9, so skip hex subtraction
-  sub cl, 07h          ; else, subtract 7 more since A to F are 40h to 45h
-skiphexn:
-  sub cl, 30h          ; subtract 30h to convert ASCII to number
-  rol al, 4            ; rotate AL 4 bits to the left to make space for the incoming digit
-  add al, cl           ; add the digit to AL
-  inc rsi              ; increment 'input' ptr in RSI
-  jmp packnextdigitn   ; go back to the start to pack the next digit
-finishedpackingn:
-  mov byte[n], al      ; move into 'n' the result in AL
+  mov rbp, n
+  call readnumber
 
   mov byte[cnt], al    ; move into 'cnt' temp counter 'n'
   mov rbp, array       ; set RBP to ptr to 'array'
 readnextnum:
   write 1, askMsg, askMsgLen
   read 0, input, 03h
-  mov rax, 0           ; clear RAX since we store the elements in AL
-  mov rsi, input       ; set RSI to ptr to 'input'
-packnextdigitarr:
-  mov cl, byte[rsi]    ; move into cl the byte at RSI ptr
-  cmp cl, 0ah          ; compare it with newline
-  je finishedpackingarr; if it is a newline, we've finished packing this array element
-  cmp cl, 39h          ; compare cl with 39h
-  jbe skiphexarr       ; 30h to 39h are 0 to 9, so skip hex subtraction
-  sub cl, 07h          ; else subtract 7 more since A to F are 40h to 45h
-skiphexarr:
-  sub cl, 30h          ; subtract 30h to convert ASCII to number
-  rol al, 4            ; rotate AL 4 bits to the left to make space for the incoming digit
-  add al, cl           ; add the digit to AL
-  inc rsi              ; increment 'input' ptr in RSI
-  jmp packnextdigitarr ; go back to the start to pack the next digit
-finishedpackingarr:
-  mov byte[rbp], al    ; move into the array position the result in AL
+  call readnumber      ; read number from user
   inc rbp              ; move to the next array position
   dec byte[cnt]        ; decrement the 'cnt' temp counter
   jnz readnextnum      ; if we still have positions left to fill, jump back to read the next number
@@ -147,3 +111,26 @@ skiphex:
 
   write 1, newline, 1  ; write newline then exit
   exit 0
+
+; note this logic only works to accept numbers from 00h to FFh, beyond that, errors occur
+; as the registers used throughout the code and 'n' are only 1 byte in size
+; the array size is fixed at FFh and 'input' is only 2 bytes w/ 1 byte for newline
+readnumber:
+  mov rax, 0           ; clear RAX since we store the number in AL
+  mov rsi, input       ; set RSI to ptr to 'input'
+packnextdigit:
+  mov cl, byte[rsi]    ; move into cl the byte at RSI ptr
+  cmp cl, 0ah          ; compare it with newline
+  je finishedpacking   ; if it is a newline, we've finished packing number
+  cmp cl, 39h          ; compare cl with 39h
+  jbe skiphexpacking   ; 30h to 39h are 0 to 9, so skip hex subtraction
+  sub cl, 07h          ; else subtract 7 more since A to F are 40h to 45h
+skiphexpacking:
+  sub cl, 30h          ; subtract 30h to convert ASCII to number
+  rol al, 4            ; rotate AL 4 bits to the left to make space for the incoming digit
+  add al, cl           ; add the digit to AL
+  inc rsi              ; increment source ptr in RSI
+  jmp packnextdigit    ; go back to the start to pack the next digit
+finishedpacking:
+  mov byte[rbp], al    ; move into RBP the result in AL
+  ret

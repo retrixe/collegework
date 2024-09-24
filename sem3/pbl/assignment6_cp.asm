@@ -29,6 +29,10 @@
 %endmacro
 
 section .data
+  srcErrMsg    db  "cat: Error occurred when opening source file", 10
+  srcErrMsgLen equ $-srcErrMsg
+  destErrMsg    db  "cat: Error occurred when opening destination file", 10
+  destErrMsgLen equ $-destErrMsg
 
 section .bss
   src    resb 256
@@ -70,16 +74,26 @@ nextchardest:
   jmp nextchardest
 copieddest:
 
-  ; FIXME: add error handling
   ; open source file
   open src, 0, 0777o
   mov qword[srcfd], rax
+  ; handle any error when opening source file
+  cmp rax, 0
+  jge opendest
+  write 1, srcErrMsg, srcErrMsgLen
+  exit qword[srcfd]
 
+opendest:
   ; open destination file
   open dest, 0x241, 0777o ; 0x200 = O_TRUNC, 0x40 = O_CREAT, 0x1 = O_WRONLY
                           ; creat() is functionally identical to open with
                           ; O_TRUNC|O_CREAT|O_WRONLY flags
   mov qword[destfd], rax
+  ; handle any error when opening file
+  cmp rax, 0
+  jge writenext
+  write 1, destErrMsg, destErrMsgLen
+  exit qword[destfd]
 
 writenext:
   ; read file

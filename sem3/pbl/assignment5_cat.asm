@@ -29,6 +29,8 @@
 %endmacro
 
 section .data
+  errMsg    db  "cat: Error occurred when opening file", 10
+  errMsgLen equ $-errMsg
 
 section .bss
   fname  resb 256
@@ -58,6 +60,11 @@ copiedfname:
   ; open file
   open fname, 0777o
   mov qword[fd], rax
+  ; handle any error when opening file
+  cmp rax, 0
+  jge writenext
+  write 1, errMsg, errMsgLen
+  exit qword[fd]
 
 writenext:
   ; read file

@@ -20,18 +20,23 @@ void sort(node* head);
 
 void display(node* head);
 
+void reverse(node* head);
+
+node* merge(node* head1, node* head2);
+
 int main() {
 	node* head = (node*)malloc(sizeof(node));
 	head->next = NULL;
 	create(head);
-	//sort(head);
-	display(head);
 	while (1) {
 		printf("===== Enter choice =====\n");
 		printf("1. Insert member\n");
 		printf("2. Delete member\n");
 		printf("3. Display members\n");
 		printf("4. Get member count\n");
+		printf("5. Sort members\n");
+		printf("6. Reverse member list\n");
+		printf("7. Merge with new list\n");
 		printf("0. Exit\n");
 		int choice; scanf("%d", &choice);
 		switch (choice) {
@@ -40,6 +45,16 @@ int main() {
 			case 2: deletion(head); break;
 			case 3: display(head); break;
 			case 4: printf("Length: %d\n", len(head)); break;
+			case 5: sort(head); display(head); break;
+			case 6: reverse(head); display(head); break;
+			case 7:
+				sort(head);
+				node* newlist = (node*)malloc(sizeof(node));
+				newlist->next = NULL;
+				create(newlist);
+				sort(newlist);
+				head = merge(head, newlist);
+				break;
 			default: printf("Invalid choice!\n");
 		}
 	}
@@ -70,17 +85,21 @@ int len(node* head) {
 	return count;
 }
 
-/* void sort(node* head) {
+int pos(char pos) {
+	if (pos == 'P') return 2;
+	if (pos == 'M') return 1;
+	if (pos == 'S') return 0;
+	return -1;
+}
+
+void sort(node* head) {
 	int length = len(head);
-	for (int i = 0; i < length - 1; i++) {
+	for (int i = 1; i < length; i++) {
 		node* prev = head;
 		node* curr = head->next;
-		// FIXME more efficient
 		for (int j = 0; j < length - 1; j++) {
-			// FIXME incorrect comparison
 			node* future = curr->next;
-			if (future->id < curr->id) {
-//				pos(future->id) < pos(curr->id)) {
+			if (future->id < curr->id || pos(future->pos) < pos(curr->pos)) {
 				curr->next = future->next;
 				future->next = curr;
 				prev->next = future;
@@ -91,7 +110,7 @@ int len(node* head) {
 			}
 		}
 	}
-} */
+}
 
 void display(node* head) {
 	node* curr = head->next;
@@ -102,6 +121,56 @@ void display(node* head) {
 		printf("Name: %s\n", curr->name);
 		printf("Position (P - president, S - secretary, M - member): %c\n", curr->pos);
 		curr = curr->next;
+	}
+}
+
+void reverse(node* head) {
+	node* prev = NULL;
+	node* curr = head->next;
+	while (curr != NULL) {
+		node* future = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = future;
+	}
+	head->next = prev;
+}
+
+node* merge(node* head1, node* head2) {
+	node* curr1 = head1->next;
+	node* curr2 = head2->next;
+	node* temp;
+	int flag;
+	if (curr1->id < curr2->id || pos(curr1->pos) < pos(curr2->pos)) {
+		temp = head1;
+		flag = 1;
+	} else {
+		temp = head2;
+		flag = 2;
+	}
+	while (curr1 != NULL && curr2 != NULL) {
+		if (curr1->id < curr2->id || pos(curr1->pos) < pos(curr2->pos)) {
+			temp->next = curr1;
+			temp = curr1;
+			curr1 = curr1->next;
+		} else {
+			temp->next = curr2;
+			temp = curr2;
+			curr2 = curr2->next;
+		}
+	}
+	if (curr1 == NULL) {
+		temp->next = curr2;
+	}
+	if (curr2 == NULL) {
+		temp->next = curr1;
+	}
+	if (flag == 1) {
+		free(head2);
+		return head1;
+	} else {
+		free(head1);
+		return head2;
 	}
 }
 

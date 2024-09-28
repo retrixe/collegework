@@ -99,7 +99,7 @@ void sort(node* head) {
 		node* curr = head->next;
 		for (int j = 0; j < length - 1; j++) {
 			node* future = curr->next;
-			if (future->id < curr->id || pos(future->pos) < pos(curr->pos)) {
+			if (future->id < curr->id || pos(future->pos) > pos(curr->pos)) {
 				curr->next = future->next;
 				future->next = curr;
 				prev->next = future;
@@ -141,7 +141,7 @@ node* merge(node* head1, node* head2) {
 	node* curr2 = head2->next;
 	node* temp;
 	int flag;
-	if (curr1->id < curr2->id || pos(curr1->pos) < pos(curr2->pos)) {
+	if (curr1->id < curr2->id || pos(curr1->pos) > pos(curr2->pos)) {
 		temp = head1;
 		flag = 1;
 	} else {
@@ -149,7 +149,7 @@ node* merge(node* head1, node* head2) {
 		flag = 2;
 	}
 	while (curr1 != NULL && curr2 != NULL) {
-		if (curr1->id < curr2->id || pos(curr1->pos) < pos(curr2->pos)) {
+		if (curr1->id < curr2->id || pos(curr1->pos) > pos(curr2->pos)) {
 			temp->next = curr1;
 			temp = curr1;
 			curr1 = curr1->next;

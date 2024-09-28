@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct treenode {
 	char data[64];
@@ -118,7 +119,7 @@ void create_r(treenode* root) {
 		curr->left = NULL;
 		curr->right = NULL;
 		printf("Enter node data: ");
-		fgets(curr->data, 64, stdin);
+		fgets(curr->data, 64, stdin); curr->data[strcspn(curr->data, "\n")] = 0;
 		root->left = curr;
 		create_r(curr);
 	}
@@ -129,7 +130,7 @@ void create_r(treenode* root) {
 		curr->left = NULL;
 		curr->right = NULL;
 		printf("Enter node data: ");
-		fgets(curr->data, 64, stdin);
+		fgets(curr->data, 64, stdin); curr->data[strcspn(curr->data, "\n")] = 0;
 		root->right = curr;
 		create_r(curr);
 	}
@@ -140,11 +141,12 @@ void create_nr(treenode* root) {
 		treenode* temp = root;
 		treenode* curr = (treenode*)malloc(sizeof(treenode));
 		printf("Enter data for new node: ");
-		fgets(curr->data, 64, stdin);
+		fgets(curr->data, 64, stdin); curr->data[strcspn(curr->data, "\n")] = 0;
 		curr->left = NULL; curr->right = NULL;
 		while (1) {
 			printf("Add node to left or right of \"%s\"? (L/R) ", temp->data);
 			char ch; fgets(input, 4, stdin); sscanf(input, "%c", &ch);
+
 			if ((ch == 'l' || ch == 'L') && temp->left == NULL) {
 				temp->left = curr; break;
 			} else if ((ch == 'r' || ch == 'R') && temp->right == NULL) {
@@ -170,7 +172,7 @@ typedef struct queuenode{
 queuenode* queueFront;
 queuenode* queueRear = NULL;
 
-int queueIsEmpty() { return queueRear == NULL; }
+int queueIsEmpty() { return queueFront->next == NULL; }
 
 void enqueue(treenode* value) {
 	queuenode* node = (queuenode*)malloc(sizeof(queuenode));
@@ -185,17 +187,17 @@ void enqueue(treenode* value) {
 }
 
 treenode* dequeue() {
-	if (queueIsEmpty()) return NULL;
+	if (queueIsEmpty()) {
+		return NULL;
+	}
 	queuenode* temp = queueFront->next;
 	treenode* value = temp->data;
 	queueFront->next = temp->next;
-	temp->next = NULL;
 	free(temp);
 	return value;
 }
 
 void display_bfs(treenode* root) {
-	// FIXME
 	treenode* temp = root;
 	enqueue(temp);
 	while (!queueIsEmpty()) {
@@ -222,7 +224,7 @@ int main() {
 	root->left = NULL;
 	root->right = NULL;
 	printf("Enter root node data: ");
-	fgets(root->data, 64, stdin);
+	fgets(root->data, 64, stdin); root->data[strcspn(root->data, "\n")] = 0;
 	printf("Use recursive? (Y/N) ");
 	char ch; fgets(input, 4, stdin); sscanf(input, "%c", &ch);
 	if (ch == 'Y' || ch == 'y') create_r(root);
@@ -234,7 +236,7 @@ int main() {
 		printf("2) DFS non-recursive traversals\n");
 		printf("3) BFS traversals\n");
 		printf("4) Mirror tree recursively\n");
-		printf("5) Mirror tree non-recursively\n");
+		// printf("5) Mirror tree non-recursively\n");
 		printf("0) Exit\n");
 		int choice;
 		fgets(input, 4, stdin); sscanf(input, "%d", &choice);

@@ -263,7 +263,4 @@ int main() {
 			printf("Mirrored tree recursively!\n");
 		} else if (choice == 0) return 0;
 	}
-	// FIXME delete
-	// FIXME non recursive mirror image
-	// FIXME copy
 }

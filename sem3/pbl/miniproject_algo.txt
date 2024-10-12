@@ -1,0 +1,41 @@
+- load initial time as 11 59 59 in register bank 2
+- INTERRUPT HANDLER: increment time by 10ms and display time to LCD in 12 hour
+- increment source of randomness
+- if alarm time, and currently not alarm, then clear register bank 1 and jump to alarm routine
+- jump to routine of mode in R1 register (default, set alarm, set alarm#, set time, alarm)
+
+default mode routine (00h):
+- display options on second line of LCD
+<space>Alarm:1 Time:2<space>
+- poll keypad until 1 or 2 is pressed, then go to set alarm or set time routine
+
+set alarm mode routine (01h):
+- display current alarms (24 hour time) stored in register bank 2
+1(##:##)2(##:##)
+- poll keypad until 1 or 2 is pressed, then go to set alarm# mode
+
+set alarm# mode routine (02h):
+- display the following
+Set alarm # time
+- check if counter of accepted digit is 4, if so, jump to 3
+- poll keypad, if digit entered, increment counter and save it in register bank 1, jump to 1
+- set alarm in register bank 2
+- clear register bank 1, switch to default mode (change mode and jump)
+
+set time mode routine (03h):
+- display the following
+<space>Enter new time<space>
+- check if counter of accepted digit is 6, if so, jump to 3
+- poll keypad, if digit entered, increment counter and save it in register bank 1, jump to 1
+- set time in register bank 2
+- clear register bank 1, switch to default mode (change mode and jump)
+
+alarm routine (03h):
+- check if register bank 1 R0 holds problem question, if so, jump to 4
+- store random number, as well as its answer and set buzzer to ON
+- show on LCD second line question
+<space>Enter ans: #^2<space>
+- check if accepted digit matches, if so, jump to 6
+- poll keypad, if digit entered, save it in register bank 1 with left shift and add, jump to 4
+- set buzzer OFF
+- clear register bank 1, switch to default mode (change mode and jump)

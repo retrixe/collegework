@@ -18,24 +18,35 @@ set alarm# mode routine (02h):
 - display the following
 Set alarm # time
 - check if counter of accepted digit is 4, if so, jump to 3
-- poll keypad, if digit entered, increment counter and save it in register bank 0, jump to 1
+- poll keypad, if digit entered, increment counter and save it in R2+R3, jump to 1
 - set alarm in register bank 2
-- clear register bank 0, switch to default mode (change mode and jump)
+- LCALL defaultmodereset
 
 set time mode routine (03h):
 - display the following
 <space>Enter new time<space>
 - check if counter of accepted digit is 6, if so, jump to 3
-- poll keypad, if digit entered, increment counter and save it in register bank 0, jump to 1
+- poll keypad, if digit entered, increment counter and save it in R2+R3+R4, jump to 1
 - set time in register bank 2
-- clear register bank 0, switch to default mode (change mode and jump)
+- LCALL defaultmodereset
 
 alarm routine (03h):
-- check if register bank 0 R0 holds problem question, if so, jump to 4
+- check if R2 holds problem question, if so, jump to 4
 - store random number, as well as its answer and set buzzer to ON
 - show on LCD second line question
 <space>Enter ans: #^2<space>
 - check if accepted digit matches, if so, jump to 6
-- poll keypad, if digit entered, save it in register bank 0 with left shift and add, jump to 4
+- poll keypad, if digit entered, save it in R3 with left shift and add, jump to 4
 - set buzzer OFF
-- clear register bank 0, switch to default mode (change mode and jump)
+- LCALL defaultmodereset
+
+poll keypad function:
+- go through entire keypad, see activated key
+- store value in R6
+- if R6 is zero and not equal to R7, return
+- else, copy R6 to R7, and continue to poll
+
+reset to default function:
+- pop stack twice to clear return
+- clear register bank 0
+- jump to default mode routine

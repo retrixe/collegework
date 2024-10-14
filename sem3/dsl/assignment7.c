@@ -33,7 +33,7 @@ void create(bstnode* root) {
 					temp->left = curr;
 					break;
 				} else {
-					temp = temp->right;
+					temp = temp->left;
 				}
 			} else {
 				if (temp->right == NULL) {

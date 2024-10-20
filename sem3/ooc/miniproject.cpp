@@ -20,15 +20,91 @@ public:
     virtual void display() = 0;
 };
 
-class CPUPerformance : public Benchmark {
+class CPUStPerformance : public Benchmark {
+private:
+    size_t file_size = 1024 * 1024 * 100;
+    size_t block_size = 1024 * 1024 * 4;
+    string filename = "file1.txt";
+
 public:
     double run() override {
-        return 50.0; 
+        char* buffer = new char[file_size];
+        for (size_t i = 0; i < file_size; ++i) {
+            buffer[i] = randomChar(); 
+        }
+        ofstream file(filename);
+        for (int i = 0; i < file_size; i += block_size) {
+            file.write(buffer + (i * sizeof(char)), block_size);
+        }
+        file.close();
+        delete[] buffer;
+
+        int retCode;
+        uint64_t start = timeSinceEpochMillisec();
+        retCode = system("clang++ -o temp.out miniproject.cpp");
+        retCode = system("g++ -o temp.out miniproject.cpp");
+        retCode = system("rm temp.out");
+        retCode = system(("zstd -3 -k --force -T1 " + filename).c_str());
+        retCode = system(("zstd -5 -k --force -T1 " + filename).c_str());
+        retCode = system(("xz -k -T1 " + filename).c_str());
+        retCode = system(("rm " + filename + ".xz").c_str());
+        retCode = system(("rm " + filename + ".zst").c_str());
+        retCode = system(("rm " + filename).c_str());
+        uint64_t end = timeSinceEpochMillisec();
+        return double(end - start);
     }
 
     void display() override {
-        // FIXME        
-        cout << "File Compression Speed: " << run() << " MB/s\n";
+        int result = run();
+        if (result == -1) {
+            cout << "An error occurred during benchmark execution!\n";
+            return;
+        }
+        cout << "Benchmark Score: " << result << "\n";
+    }
+};
+
+class CPUMtPerformance : public Benchmark {
+private:
+    size_t file_size = 1024 * 1024 * 100;
+    size_t block_size = 1024 * 1024 * 4;
+    string filename = "file1.txt";
+
+public:
+    double run() override {
+        char* buffer = new char[file_size];
+        for (size_t i = 0; i < file_size; ++i) {
+            buffer[i] = randomChar(); 
+        }
+        ofstream file(filename);
+        for (int i = 0; i < file_size; i += block_size) {
+            file.write(buffer + (i * sizeof(char)), block_size);
+        }
+        file.close();
+        delete[] buffer;
+
+        int retCode;
+        uint64_t start = timeSinceEpochMillisec();
+        retCode = system("clang++ -o temp.out miniproject.cpp");
+        retCode = system("g++ -o temp.out miniproject.cpp");
+        retCode = system("rm temp.out");
+        retCode = system(("zstd -3 -k --force " + filename).c_str());
+        retCode = system(("zstd -5 -k --force " + filename).c_str());
+        retCode = system(("xz -k " + filename).c_str());
+        retCode = system(("rm " + filename + ".xz").c_str());
+        retCode = system(("rm " + filename + ".zst").c_str());
+        retCode = system(("rm " + filename).c_str());
+        uint64_t end = timeSinceEpochMillisec();
+        return double(end - start);
+    }
+
+    void display() override {
+        int result = run();
+        if (result == -1) {
+            cout << "An error occurred during benchmark execution!\n";
+            return;
+        }
+        cout << "Benchmark Score: " << result << "\n";
     }
 };
 
@@ -80,6 +156,7 @@ public:
     double run() override {
         double writeSpeed1 = writeSpeed();
         double readSpeed1 = readSpeed();
+        system(("rm " + filename).c_str());
         double avgspeed = (writeSpeed1 + readSpeed1) / 2;
         cout << "Write Speed: " << writeSpeed1 << " MB/s\n";
         cout << "Read Speed: " << readSpeed1 << " MB/s\n";
@@ -132,31 +209,36 @@ public:
 
 int main() {
     cout << "====== Benchmark Suite ======\n";
-    CPUPerformance cpuPerformance;
+    CPUStPerformance cpuStPerformance;
+    CPUMtPerformance cpuMtPerformance;
     SSDPerformance ssdPerformance;
     RAMPerformance ramPerformance;
 
     while (true) {
         cout << "Choose a benchmark you want to check:\n";
-        cout << "1. CPU Performance\n";
-        cout << "2. SSD Performance\n";
-        cout << "3. RAM Performance\n";
-        cout << "4. Exit\n";
-        cout << "Enter your choice (1-4): ";
+        cout << "1. Single-threaded CPU Performance\n";
+        cout << "2. Multi-threaded CPU Performance\n";
+        cout << "3. SSD Performance\n";
+        cout << "4. RAM Performance\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice (1-5): ";
 
         int choice;
         cin >> choice;
         switch (choice) {
             case 1:
-                cpuPerformance.display();
+                cpuStPerformance.display();
                 break;
             case 2:
-                ssdPerformance.display();
+                cpuMtPerformance.display();
                 break;
             case 3:
-                ramPerformance.display();
+                ssdPerformance.display();
                 break;
             case 4:
+                ramPerformance.display();
+                break;
+            case 5:
                 cout << "Exiting program.\n";
                 return 0;
             default:

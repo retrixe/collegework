@@ -33,7 +33,7 @@ public:
             buffer[i] = randomChar(); 
         }
         ofstream file(filename);
-        for (int i = 0; i < file_size; i += block_size) {
+        for (size_t i = 0; i < file_size; i += block_size) {
             file.write(buffer + (i * sizeof(char)), block_size);
         }
         file.close();
@@ -42,20 +42,29 @@ public:
         int retCode;
         uint64_t start = timeSinceEpochMillisec();
         retCode = system("clang++ -o temp.out miniproject.cpp");
+        if (retCode != 0) return -1;
         retCode = system("g++ -o temp.out miniproject.cpp");
+        if (retCode != 0) return -1;
         retCode = system("rm temp.out");
+        if (retCode != 0) return -1;
         retCode = system(("zstd -3 -k --force -T1 " + filename).c_str());
+        if (retCode != 0) return -1;
         retCode = system(("zstd -5 -k --force -T1 " + filename).c_str());
+        if (retCode != 0) return -1;
         retCode = system(("xz -k -T1 " + filename).c_str());
+        if (retCode != 0) return -1;
         retCode = system(("rm " + filename + ".xz").c_str());
+        if (retCode != 0) return -1;
         retCode = system(("rm " + filename + ".zst").c_str());
+        if (retCode != 0) return -1;
         retCode = system(("rm " + filename).c_str());
+        if (retCode != 0) return -1;
         uint64_t end = timeSinceEpochMillisec();
-        return double(end - start);
+        return (10000.0 / double(end - start)) * 1000.0;
     }
 
     void display() override {
-        int result = run();
+        double result = run();
         if (result == -1) {
             cout << "An error occurred during benchmark execution!\n";
             return;
@@ -77,7 +86,7 @@ public:
             buffer[i] = randomChar(); 
         }
         ofstream file(filename);
-        for (int i = 0; i < file_size; i += block_size) {
+        for (size_t i = 0; i < file_size; i += block_size) {
             file.write(buffer + (i * sizeof(char)), block_size);
         }
         file.close();
@@ -86,20 +95,29 @@ public:
         int retCode;
         uint64_t start = timeSinceEpochMillisec();
         retCode = system("clang++ -o temp.out miniproject.cpp");
+        if (retCode != 0) return -1;
         retCode = system("g++ -o temp.out miniproject.cpp");
+        if (retCode != 0) return -1;
         retCode = system("rm temp.out");
+        if (retCode != 0) return -1;
         retCode = system(("zstd -3 -k --force " + filename).c_str());
+        if (retCode != 0) return -1;
         retCode = system(("zstd -5 -k --force " + filename).c_str());
+        if (retCode != 0) return -1;
         retCode = system(("xz -k " + filename).c_str());
+        if (retCode != 0) return -1;
         retCode = system(("rm " + filename + ".xz").c_str());
+        if (retCode != 0) return -1;
         retCode = system(("rm " + filename + ".zst").c_str());
+        if (retCode != 0) return -1;
         retCode = system(("rm " + filename).c_str());
+        if (retCode != 0) return -1;
         uint64_t end = timeSinceEpochMillisec();
-        return double(end - start);
+        return (10000.0 / double(end - start)) * 1000.0;
     }
 
     void display() override {
-        int result = run();
+        double result = run();
         if (result == -1) {
             cout << "An error occurred during benchmark execution!\n";
             return;
@@ -123,7 +141,7 @@ private:
 
         uint64_t start = timeSinceEpochMillisec();
         ofstream file(filename);
-        for (int i = 0; i < file_size; i += block_size) {
+        for (size_t i = 0; i < file_size; i += block_size) {
             file.write(buffer + (i * sizeof(char)), block_size);
         }
         file.close();
@@ -138,7 +156,7 @@ private:
         buffer = new char[file_size];
         uint64_t start = timeSinceEpochMillisec();
         ifstream file(filename); 
-        for (int i = 0; i < file_size; i += block_size) {
+        for (size_t i = 0; i < file_size; i += block_size) {
             file.read(buffer + (i * sizeof(char)), block_size);
         }
         file.close();
@@ -183,7 +201,7 @@ private:
             buf1[i] = randomChar(); 
         }
         uint64_t start = timeSinceEpochMillisec();
-        for (int i = 0; i < memory_size; i += block_size) {
+        for (size_t i = 0; i < memory_size; i += block_size) {
             memcpy(buf2 + (sizeof(char) * i), buf1 + (sizeof(char) * i), block_size);
         }
         uint64_t end = timeSinceEpochMillisec();

@@ -387,18 +387,19 @@ int main() {
 
 	create(root);
 	bstnode* copy;
+	printf("==========\n");
+	printf("1. Inorder traversal (recursive)\n");
+	printf("2. Breadth traversal\n");
+	printf("3. Insert a new word\n");
+	printf("4. Delete a word\n");
+	printf("5. Copy tree (recursive)\n");
+	printf("6. Copy tree (non-recursive)\n");
+	printf("7. Mirror the tree (recursive)\n");
+	printf("8. Mirror the tree (non-recursive)\n");
+	printf("9. Search for a word (recursive)\n");
+	printf("10. Search for a word (non-recursive)\n");
 	while (1) {
 		printf("==========\n");
-		printf("1. Inorder traversal (recursive)\n");
-		printf("2. Breadth traversal\n");
-		printf("3. Insert a new word\n");
-		printf("4. Delete a word\n");
-		printf("5. Copy tree (recursive)\n");
-		printf("6. Copy tree (non-recursive)\n");
-		printf("7. Mirror the tree (recursive)\n");
-		printf("8. Mirror the tree (non-recursive)\n");
-		printf("9. Search for a word (recursive)\n");
-		printf("10. Search for a word (non-recursive)\n");
 		printf("Enter choice: ");
 		char choice[4]; fgets(choice, 4, stdin);
 		int ch; sscanf(choice, "%d", &ch);
@@ -418,7 +419,7 @@ int main() {
 				deletetree(copy);
 				break;
 			case 7: mirror_r(root); break;
-			case 8: mirror_r(root); break;
+			case 8: mirror_nr(root); break;
 			case 9: search_r(root); break;
 			case 10: search_nr(root); break;
 			default: printf("Incorrect choice!\n");

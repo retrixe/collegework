@@ -133,7 +133,7 @@ class Graph {
 	}
 
 	void dft_rec(int id) {
-		cout << id << "(" + head[id]->name + ")" << " ";
+		cout << id << " (" + head[id]->name + ")" << " ";
 		visited[id] = 1;
 		auto next = head[id]->next;
 		while (next != NULL) {
@@ -173,7 +173,7 @@ class Graph {
 		s.insert(id); visited[id] = 1;
 		while (!s.empty()) {
 			id = s.del();
-			cout << id << "(" + head[id]->name + ")" << " ";
+			cout << id << " (" + head[id]->name + ")" << " ";
 			auto next = head[id]->next;
 			while (next != NULL) {
 				if (!visited[next->id]) {

@@ -96,7 +96,7 @@ public:
             display(ptr->right, level + 1);
             cout << endl;
             if (ptr == root) cout << "Root -> ";
-            for (int i = 0; i < level && ptr != root; i++) cout << " ";
+            for (int i = 0; i <= level && ptr != root; i++) cout << "        ";
             cout << ptr->word;
             display(ptr->left, level + 1);
         }
@@ -104,8 +104,21 @@ public:
 };
 
 int main() {
- 	avltree tree;
-    tree.insert();
-    tree.display();
+    avltree tree;
+    while (true) {
+        cout << "Options:\n1. Insert\n2. Display\n0. Exit\n";
+        int option;
+        cin >> option;
+        switch (option) {
+            case 1:
+                tree.insert();
+            break;
+            case 2:
+                tree.display();
+                cout << endl;
+            break;
+            default:
+                return 0;
+        }
+    }
 }
-

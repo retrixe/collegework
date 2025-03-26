@@ -22,5 +22,15 @@ results = cursor.fetchall()
 for row in results:
     print(row)
 
+cursor.execute("SELECT * FROM student")
+results = cursor.fetchall()
+for row in results:
+    print(row)
+
+cursor.execute("SELECT * FROM course")
+results = cursor.fetchall()
+for row in results:
+    print(row)
+
 cursor.close()
 connection.close()

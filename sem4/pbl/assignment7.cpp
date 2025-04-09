@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int x[10000];
+int x[10000] = {};
 
 void print_soln(int n) {
     for (int i = 1; i <= n; i++) {
@@ -13,7 +13,7 @@ void print_soln(int n) {
 
 bool place(int k, int i) {
     for (int j = 1; j < k; j++) {
-        if (x[j] == i || abs(x[j] - 1) == abs(j - k)) return false;
+        if (x[j] == i || abs(x[j] - i) == abs(j - k)) return false;
     }
     return true;
 }

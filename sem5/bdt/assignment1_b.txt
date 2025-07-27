@@ -1,0 +1,1327 @@
+use institute
+switched to db institute
+
+db.student.insertMany([{ _id: 1, id: 1, name: 'A', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'A', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 100 }, { name: 'TOC', score: 50 }, { name: 'IS', score: 100 }, { name: 'AI', score: 50 }], interests: ['DBMS', 'Networking'] },
+{ _id: 2, id: 2, name: 'B', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'B', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 90 }, { name: 'TOC', score: 60 }, { name: 'IS', score: 90 }, { name: 'AI', score: 60 }], interests: ['DBMS', 'Networking'] },
+{ _id: 3, id: 3, name: 'C', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'C', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 80 }, { name: 'TOC', score: 70 }, { name: 'IS', score: 80 }, { name: 'AI', score: 70 }], interests: ['DBMS', 'Networking'] },
+{ _id: 4, id: 4, name: 'D', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'D', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 70 }, { name: 'TOC', score: 80 }, { name: 'IS', score: 70 }, { name: 'AI', score: 80 }], interests: ['DBMS', 'Networking'] },
+{ _id: 5, id: 5, name: 'E', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'A', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 60 }, { name: 'TOC', score: 90 }, { name: 'IS', score: 60 }, { name: 'AI', score: 90 }], interests: ['DBMS', 'Networking'] },
+{ _id: 6, id: 6, name: 'F', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'B', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 50 }, { name: 'TOC', score: 100 }, { name: 'IS', score: 50 }, { name: 'AI', score: 100 }], interests: ['DBMS', 'Networking'] },
+{ _id: 7, id: 7, name: 'G', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'C', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 60 }, { name: 'TOC', score: 90 }, { name: 'IS', score: 60 }, { name: 'AI', score: 90 }], interests: ['DBMS', 'Networking'] },
+{ _id: 8, id: 8, name: 'H', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'D', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 70 }, { name: 'TOC', score: 80 }, { name: 'IS', score: 70 }, { name: 'AI', score: 80 }], interests: ['DBMS', 'Networking'] },
+{ _id: 9, id: 9, name: 'I', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'A', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 80 }, { name: 'TOC', score: 70 }, { name: 'IS', score: 70 }, { name: 'AI', score: 80 }], interests: ['DBMS', 'Networking'] },
+{ _id: 10, id: 10, name: 'J', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'B', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 90 }, { name: 'TOC', score: 60 }, { name: 'IS', score: 70 }, { name: 'AI', score: 80 }], interests: ['DBMS', 'Networking'] }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': 1,
+    '1': 2,
+    '2': 3,
+    '3': 4,
+    '4': 5,
+    '5': 6,
+    '6': 7,
+    '7': 8,
+    '8': 9,
+    '9': 10
+  }
+}
+
+db.student.find({})
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 2,
+  id: 2,
+  name: 'B',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 90
+    },
+    {
+      name: 'TOC',
+      score: 60
+    },
+    {
+      name: 'IS',
+      score: 90
+    },
+    {
+      name: 'AI',
+      score: 60
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 3,
+  id: 3,
+  name: 'C',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'C',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 80
+    },
+    {
+      name: 'TOC',
+      score: 70
+    },
+    {
+      name: 'IS',
+      score: 80
+    },
+    {
+      name: 'AI',
+      score: 70
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 4,
+  id: 4,
+  name: 'D',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'D',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 70
+    },
+    {
+      name: 'TOC',
+      score: 80
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 5,
+  id: 5,
+  name: 'E',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 60
+    },
+    {
+      name: 'TOC',
+      score: 90
+    },
+    {
+      name: 'IS',
+      score: 60
+    },
+    {
+      name: 'AI',
+      score: 90
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 6,
+  id: 6,
+  name: 'F',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 50
+    },
+    {
+      name: 'TOC',
+      score: 100
+    },
+    {
+      name: 'IS',
+      score: 50
+    },
+    {
+      name: 'AI',
+      score: 100
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 7,
+  id: 7,
+  name: 'G',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'C',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 60
+    },
+    {
+      name: 'TOC',
+      score: 90
+    },
+    {
+      name: 'IS',
+      score: 60
+    },
+    {
+      name: 'AI',
+      score: 90
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 8,
+  id: 8,
+  name: 'H',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'D',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 70
+    },
+    {
+      name: 'TOC',
+      score: 80
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 9,
+  id: 9,
+  name: 'I',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 80
+    },
+    {
+      name: 'TOC',
+      score: 70
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 10,
+  id: 10,
+  name: 'J',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 90
+    },
+    {
+      name: 'TOC',
+      score: 60
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.updateOne({ id: 1 }, { $inc: { age: 1 } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+db.student.updateOne({ id: 1 }, { $push: { interests: 'AI' } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+db.student.updateOne({ id: 1 }, { $pop: { subjects: -1 } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+db.student.replaceOne({ id: 1 }, { _id: 1, id: 1, name: 'A', branch: 'Kothrud', age: 19, panel: 'I', address: { area: 'A', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 100 }, { name: 'TOC', score: 50 }, { name: 'IS', score: 100 }, { name: 'AI', score: 50 }], interests: ['DBMS', 'Networking'] })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+db.student.updateMany({ panel: 'A' }, { $set: { panel: 'B' } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+db.student.updateOne({ id: 11 }, { $set: { _id: 11, id: 11, name: 'MA', branch: 'Kothrud', age: 21, panel: 'I', address: { area: 'A', city: 'Pune', pincode: 411014 }, subjects: [{ name: 'DBMS', score: 100 }, { name: 'TOC', score: 50 }, { name: 'IS', score: 100 }, { name: 'AI', score: 50 }], interests: ['DBMS', 'Networking', 'Big Data, 'Machine Learning'] } }, { upsert: true })
+{
+  acknowledged: true,
+  insertedId: 11,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 1
+}
+
+db.student.deleteMany({ panel: 'G' })
+{
+  acknowledged: true,
+  deletedCount: 0
+}
+
+db.student.find({ id: { $gt: 10 } })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 21,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking',
+    'Big Data',
+    'Machine Learning'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+
+db.student.find({ id: { $gte: 11 } })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 21,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking',
+    'Big Data',
+    'Machine Learning'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+
+db.student.find({ id: { $lt: 2 } })
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.find({ subjects: { $elemMatch: { name: 'Big Data' } } })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 21,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking',
+    'Big Data',
+    'Machine Learning'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+
+db.student.find({ age: { $gt: 20 } })
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 21,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.find({ name: { $regex: /^M/ } })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 21,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+
+db.student.countDocuments()
+11
+
+db.student.find({ interests: { $size: 4 } })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 21,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking',
+    'Big Data',
+    'Machine Learning'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+
+db.student.find({ interests: { $size: 4 } }).projection({ name: 1, _id: 0 })
+{
+  name: 'MA'
+}
+
+db.student.find({}).sort({ name: -1 })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 21,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking',
+    'Big Data',
+    'Machine Learning'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+{
+  _id: 10,
+  id: 10,
+  name: 'J',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 90
+    },
+    {
+      name: 'TOC',
+      score: 60
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 9,
+  id: 9,
+  name: 'I',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 80
+    },
+    {
+      name: 'TOC',
+      score: 70
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 8,
+  id: 8,
+  name: 'H',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'D',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 70
+    },
+    {
+      name: 'TOC',
+      score: 80
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 7,
+  id: 7,
+  name: 'G',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'C',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 60
+    },
+    {
+      name: 'TOC',
+      score: 90
+    },
+    {
+      name: 'IS',
+      score: 60
+    },
+    {
+      name: 'AI',
+      score: 90
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 6,
+  id: 6,
+  name: 'F',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 50
+    },
+    {
+      name: 'TOC',
+      score: 100
+    },
+    {
+      name: 'IS',
+      score: 50
+    },
+    {
+      name: 'AI',
+      score: 100
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 5,
+  id: 5,
+  name: 'E',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 60
+    },
+    {
+      name: 'TOC',
+      score: 90
+    },
+    {
+      name: 'IS',
+      score: 60
+    },
+    {
+      name: 'AI',
+      score: 90
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 4,
+  id: 4,
+  name: 'D',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'D',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 70
+    },
+    {
+      name: 'TOC',
+      score: 80
+    },
+    {
+      name: 'IS',
+      score: 70
+    },
+    {
+      name: 'AI',
+      score: 80
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 3,
+  id: 3,
+  name: 'C',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'C',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 80
+    },
+    {
+      name: 'TOC',
+      score: 70
+    },
+    {
+      name: 'IS',
+      score: 80
+    },
+    {
+      name: 'AI',
+      score: 70
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 2,
+  id: 2,
+  name: 'B',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 90
+    },
+    {
+      name: 'TOC',
+      score: 60
+    },
+    {
+      name: 'IS',
+      score: 90
+    },
+    {
+      name: 'AI',
+      score: 60
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 21,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.find({ $and: [{ name: 'A' }, { id: 1 }] })
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 21,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.find({ $or: [{ name: 'C' }, { id: 1 }] })
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 21,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 3,
+  id: 3,
+  name: 'C',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'C',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 80
+    },
+    {
+      name: 'TOC',
+      score: 70
+    },
+    {
+      name: 'IS',
+      score: 80
+    },
+    {
+      name: 'AI',
+      score: 70
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.find({}).limit(2)
+{
+  _id: 1,
+  id: 1,
+  name: 'A',
+  branch: 'Kothrud',
+  age: 21,
+  panel: 'I',
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+{
+  _id: 2,
+  id: 2,
+  name: 'B',
+  branch: 'Kothrud',
+  age: 19,
+  panel: 'I',
+  address: {
+    area: 'B',
+    city: 'Pune',
+    pincode: 411014
+  },
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 90
+    },
+    {
+      name: 'TOC',
+      score: 60
+    },
+    {
+      name: 'IS',
+      score: 90
+    },
+    {
+      name: 'AI',
+      score: 60
+    }
+  ],
+  interests: [
+    'DBMS',
+    'Networking'
+  ]
+}
+
+db.student.find({ interests: { $all: ['Big Data', 'Machine Learning'] } })
+{
+  _id: 11,
+  id: 11,
+  address: {
+    area: 'A',
+    city: 'Pune',
+    pincode: 411014
+  },
+  age: 19,
+  branch: 'Kothrud',
+  interests: [
+    'DBMS',
+    'Networking',
+    'Big Data',
+    'Machine Learning'
+  ],
+  name: 'MA',
+  panel: 'I',
+  subjects: [
+    {
+      name: 'DBMS',
+      score: 100
+    },
+    {
+      name: 'TOC',
+      score: 50
+    },
+    {
+      name: 'IS',
+      score: 100
+    },
+    {
+      name: 'AI',
+      score: 50
+    }
+  ]
+}
+
+db.student.drop()
+true

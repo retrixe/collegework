@@ -1,0 +1,846 @@
+test> use restaurants
+switched to db restaurants
+restaurants> db.createCollection('hotels')
+{ ok: 1 }
+restaurants> db.hotels.insertMany([{
+...   Id: 1, Name: 'A', Type: 'Premium', Ratings: 5, Likes: 10,
+...   Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 100 }, { Roomno: 2, Type: 'One Bed', Price: 70 }],
+...   Cuisines: ['Indian', 'Italian', 'Chinese', 'Continental']
+... },
+... {
+...   Id: 2, Name: 'B', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'B', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 70 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian']
+... },
+... {
+...   Id: 3, Name: 'C', Type: 'Premium', Ratings: 5, Likes: 10,
+...   Address: { Area: 'C', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 100 }, { Roomno: 2, Type: 'One Bed', Price: 70 }],
+...   Cuisines: ['Indian', 'Italian', 'Chinese', 'Continental']
+... },
+... {
+...   Id: 4, Name: 'D', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'D', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 70 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian', 'Chinese']
+... },
+... {
+...   Id: 5, Name: 'E', Type: 'Premium', Ratings: 5, Likes: 10,
+...   Address: { Area: 'E', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 100 }, { Roomno: 2, Type: 'One Bed', Price: 70 }],
+...   Cuisines: ['Indian', 'Italian', 'Chinese', 'Continental']
+... },
+... {
+...   Id: 6, Name: 'F', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'F', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 50 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian']
+... },
+... {
+...   Id: 7, Name: 'G', Type: 'Premium', Ratings: 5, Likes: 50,
+...   Address: { Area: 'G', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 100 }, { Roomno: 2, Type: 'One Bed', Price: 70 }],
+...   Cuisines: ['Indian', 'Italian', 'Chinese', 'Continental']
+... },
+... {
+...   Id: 8, Name: 'M', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'H', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 50 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian', 'Chinese']
+... },
+... {
+...   Id: 9, Name: 'I', Type: 'Premium', Ratings: 5, Likes: 10,
+...   Address: { Area: 'I', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 100 }, { Roomno: 2, Type: 'One Bed', Price: 70 }],
+...   Cuisines: ['Indian', 'Italian', 'Chinese', 'Continental']
+... },
+... {
+...   Id: 10, Name: 'J', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'J', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 50 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian']
+... }]
+... )
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6881fae94872a74f5332a046'),
+    '1': ObjectId('6881fae94872a74f5332a047'),
+    '2': ObjectId('6881fae94872a74f5332a048'),
+    '3': ObjectId('6881fae94872a74f5332a049'),
+    '4': ObjectId('6881fae94872a74f5332a04a'),
+    '5': ObjectId('6881fae94872a74f5332a04b'),
+    '6': ObjectId('6881fae94872a74f5332a04c'),
+    '7': ObjectId('6881fae94872a74f5332a04d'),
+    '8': ObjectId('6881fae94872a74f5332a04e'),
+    '9': ObjectId('6881fae94872a74f5332a04f')
+  }
+}
+restaurants> db.hotels.find({})
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a046'),
+    Id: 1,
+    Name: 'A',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a047'),
+    Id: 2,
+    Name: 'B',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'B', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a048'),
+    Id: 3,
+    Name: 'C',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'C', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a049'),
+    Id: 4,
+    Name: 'D',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'D', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04a'),
+    Id: 5,
+    Name: 'E',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'E', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04b'),
+    Id: 6,
+    Name: 'F',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'F', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04c'),
+    Id: 7,
+    Name: 'G',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 50,
+    Address: { Area: 'G', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04d'),
+    Id: 8,
+    Name: 'M',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'H', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04e'),
+    Id: 9,
+    Name: 'I',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'I', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04f'),
+    Id: 10,
+    Name: 'J',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'J', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  }
+]
+restaurants> db.hotels.updateOne({ Id: 10 }, { $inc: { Likes: 1 } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+restaurants> db.hotels.updateOne({ Id: 10 }, { $push: { Cuisines: 'Chinese' } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+restaurants> db.hotels.updateOne({ Id: 10 }, { $pop: { Rooms: 1 } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+restaurants> db.hotels.updateOne({ Id: 10 }, { $set: {
+...   Id: 11, Name: 'J', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'J', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 50 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian']
+... } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+restaurants> db.hotels.updateOne({ Id: 11 }, { $set: { Address: { Area: 'J', City: 'Indore', Pincode: 452010 } } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+restaurants> db.hotels.updateOne({ Id: 10 }, { $set: {
+...   Id: 10, Name: 'J', Type: 'Affordable', Ratings: 3, Likes: 6,
+...   Address: { Area: 'J', City: 'Pune', Pincode: 411014 },
+...   Rooms: [{ Roomno: 1, Type: 'Two Beds', Price: 50 }, { Roomno: 2, Type: 'One Bed', Price: 35 }],
+...   Cuisines: ['Indian']
+... } }, { upsert: true })
+{
+  acknowledged: true,
+  insertedId: ObjectId('6885f25bbd09254c13cdecf3'),
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 1
+}
+restaurants> db.hotels.deleteOne({ Id: 10 })
+{ acknowledged: true, deletedCount: 1 }
+restaurants> db.hotels.find({ Id: { $gt: 9 } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a04f'),
+    Id: 11,
+    Name: 'J',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'J', City: 'Indore', Pincode: 452010 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  }
+]
+restaurants> db.hotels.find({ Id: { $gte: 9 } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a04e'),
+    Id: 9,
+    Name: 'I',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'I', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04f'),
+    Id: 11,
+    Name: 'J',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'J', City: 'Indore', Pincode: 452010 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  }
+]
+restaurants> db.hotels.find({ Id: { $lt: 2 } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a046'),
+    Id: 1,
+    Name: 'A',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  }
+]
+restaurants> db.hotels.find({ Id: { $lte: 2 } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a046'),
+    Id: 1,
+    Name: 'A',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a047'),
+    Id: 2,
+    Name: 'B',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'B', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  }
+]
+restaurants> db.hotels.find({ 'Address.City': { $eq: 'Indore' } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a04f'),
+    Id: 11,
+    Name: 'J',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'J', City: 'Indore', Pincode: 452010 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  }
+]
+restaurants> db.hotels.find({ Likes: { $gt: 40 } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a04c'),
+    Id: 7,
+    Name: 'G',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 50,
+    Address: { Area: 'G', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  }
+]
+restaurants> db.hotels.find({ Name: /^M.*/ })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a04d'),
+    Id: 8,
+    Name: 'M',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'H', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  }
+]
+restaurants> db.hotels.countDocuments()
+10
+restaurants> db.hotels.find({ $nor: [{ Cuisines: {$size: 0} }, { Cuisines: {$size: 1} }, { Cuisines: {$size: 2} }] })
+OR
+restaurants> db.hotels.find({ $expr: { $gt: [{ $size: '$Cuisines' }, 2] } })
+OR
+restaurants> db.hotels.find({ 'Cuisines.3': { $exists: true } })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a046'),
+    Id: 1,
+    Name: 'A',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a048'),
+    Id: 3,
+    Name: 'C',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'C', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04a'),
+    Id: 5,
+    Name: 'E',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'E', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04c'),
+    Id: 7,
+    Name: 'G',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 50,
+    Address: { Area: 'G', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04e'),
+    Id: 9,
+    Name: 'I',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'I', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  }
+]
+restaurants> db.hotels.find({}, { Name: 1, _id: 0 })
+[
+  { Name: 'A' },
+  { Name: 'B' },
+  { Name: 'C' },
+  { Name: 'D' },
+  { Name: 'E' },
+  { Name: 'F' },
+  { Name: 'G' },
+  { Name: 'M' },
+  { Name: 'I' },
+  { Name: 'J' }
+]
+restaurants> db.hotels.find({}).sort({ Name: 1 })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a046'),
+    Id: 1,
+    Name: 'A',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a047'),
+    Id: 2,
+    Name: 'B',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'B', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a048'),
+    Id: 3,
+    Name: 'C',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'C', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a049'),
+    Id: 4,
+    Name: 'D',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'D', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04a'),
+    Id: 5,
+    Name: 'E',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'E', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04b'),
+    Id: 6,
+    Name: 'F',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'F', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04c'),
+    Id: 7,
+    Name: 'G',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 50,
+    Address: { Area: 'G', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04e'),
+    Id: 9,
+    Name: 'I',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'I', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04f'),
+    Id: 11,
+    Name: 'J',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'J', City: 'Indore', Pincode: 452010 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04d'),
+    Id: 8,
+    Name: 'M',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'H', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  }
+]
+restaurants> db.hotels.find({ $and: [{ Ratings: 5 }, { Likes: 10 }] })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a046'),
+    Id: 1,
+    Name: 'A',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'A', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a048'),
+    Id: 3,
+    Name: 'C',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'C', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04a'),
+    Id: 5,
+    Name: 'E',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'E', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04e'),
+    Id: 9,
+    Name: 'I',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 10,
+    Address: { Area: 'I', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  }
+]
+restaurants> db.hotels.find({ $or: [{ Ratings: 3 }, { Likes: 50 }] })
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a047'),
+    Id: 2,
+    Name: 'B',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'B', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a049'),
+    Id: 4,
+    Name: 'D',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'D', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04b'),
+    Id: 6,
+    Name: 'F',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'F', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04c'),
+    Id: 7,
+    Name: 'G',
+    Type: 'Premium',
+    Ratings: 5,
+    Likes: 50,
+    Address: { Area: 'G', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 100 },
+      { Roomno: 2, Type: 'One Bed', Price: 70 }
+    ],
+    Cuisines: [ 'Indian', 'Italian', 'Chinese', 'Continental' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04d'),
+    Id: 8,
+    Name: 'M',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'H', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a04f'),
+    Id: 11,
+    Name: 'J',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'J', City: 'Indore', Pincode: 452010 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 50 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  }
+]
+restaurants> db.hotels.find({ $or: [{ Ratings: 3 }, { Likes: 50 }] }).limit(2)
+[
+  {
+    _id: ObjectId('6881fae94872a74f5332a047'),
+    Id: 2,
+    Name: 'B',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'B', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian' ]
+  },
+  {
+    _id: ObjectId('6881fae94872a74f5332a049'),
+    Id: 4,
+    Name: 'D',
+    Type: 'Affordable',
+    Ratings: 3,
+    Likes: 6,
+    Address: { Area: 'D', City: 'Pune', Pincode: 411014 },
+    Rooms: [
+      { Roomno: 1, Type: 'Two Beds', Price: 70 },
+      { Roomno: 2, Type: 'One Bed', Price: 35 }
+    ],
+    Cuisines: [ 'Indian', 'Chinese' ]
+  }
+]
+restaurants> db.hotels.drop()
+true
+restaurants> 
+

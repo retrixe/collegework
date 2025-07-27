@@ -1,0 +1,411 @@
+Create database Company.
+test> use company
+switched to db company
+Create collection Employee.
+company> db.createCollection('employee')
+{ ok: 1 }
+Insert 10 documents with above mentioned structure.
+company> db.employee.insertMany([
+...   {
+...     "firstName": "Emily",
+...     "lastName": "Williams",
+...     "age": 32,
+...     "address": {
+...       "streetAddress": "123 Maple St",
+...       "city": "Springfield",
+...       "state": "IL",
+...       "postalCode": "62704"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "217 555-0101" },
+...       { "type": "mobile", "number": "312 555-0102" }
+...     ],
+...     "emailAddress": ["emily.w@example.com", "ewilliams88@email.net"]
+...   },
+...   {
+...     "firstName": "Kenji",
+...     "lastName": "Tanaka",
+...     "age": 45,
+...     "address": {
+...       "streetAddress": "456 Oak Ave",
+...       "city": "San Francisco",
+...       "state": "CA",
+...       "postalCode": "94110"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "415 555-0110" },
+...       { "type": "fax", "number": "415 555-0111" }
+...     ],
+...     "emailAddress": ["kenji.tanaka@workplace.com", "ktanaka@email.org"]
+...   },
+...   {
+...     "firstName": "Aisha",
+...     "lastName": "Khan",
+...     "age": 28,
+...     "address": {
+...       "streetAddress": "789 Pine Ln",
+...       "city": "Houston",
+...       "state": "TX",
+...       "postalCode": "77002"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "713 555-0120" },
+...       { "type": "work", "number": "832 555-0121" }
+...     ],
+...     "emailAddress": ["akhan@university.edu", "aisha.k@inbox.com"]
+...   },
+...   {
+...     "firstName": "Benjamin",
+...     "lastName": "Carter",
+...     "age": 51,
+...     "address": {
+...       "streetAddress": "101 Elm Ct",
+...       "city": "Miami",
+...       "state": "FL",
+...       "postalCode": "33101"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "305 555-0130" },
+...       { "type": "fax", "number": "786 555-0131" }
+...     ],
+...     "emailAddress": ["ben.carter@business.net"]
+...   },
+...   {
+...     "firstName": "Sofia",
+...     "lastName": "Rodriguez",
+...     "age": 22,
+...     "address": {
+...       "streetAddress": "222 Birch Rd",
+...       "city": "Albany",
+...       "state": "NY",
+...       "postalCode": "12210"
+...     },
+...     "phoneNumber": [
+...       { "type": "mobile", "number": "602 555-0140" },
+...       { "type": "home", "number": "480 555-0141" }
+...     ],
+...     "emailAddress": ["sofia.r@studentmail.edu", "srodriguez22@email.com"]
+...   },
+...   {
+...     "firstName": "David",
+...     "lastName": "Lee",
+...     "age": 38,
+...     "address": {
+...       "streetAddress": "333 Cedar Blvd",
+...       "city": "Seattle",
+...       "state": "WA",
+...       "postalCode": "98104"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "206 555-0150" },
+...       { "type": "fax", "number": "206 555-0151" }
+...     ],
+...     "emailAddress": ["dlee@techsolutions.io"]
+...   },
+...   {
+...     "firstName": "Chloe",
+...     "lastName": "Davis",
+...     "age": 29,
+...     "address": {
+...       "streetAddress": "444 Willow Way",
+...       "city": "Denver",
+...       "state": "CO",
+...       "postalCode": "80202"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "303 555-0160" },
+...       { "type": "fax", "number": "303 555-0161" },
+...       { "type": "mobile", "number": "720 555-0161" }
+...     ],
+...     "emailAddress": ["chloe.davis@designfirm.com", "cdavis.art@email.net"]
+...   },
+...   {
+...     "firstName": "Mohammed",
+...     "lastName": "Ali",
+...     "age": 41,
+...     "address": {
+...       "streetAddress": "555 Spruce Dr",
+...       "city": "Boston",
+...       "state": "MA",
+...       "postalCode": "02108"
+...     },
+...     "phoneNumber": [
+...       { "type": "work", "number": "617 555-0170" },
+...       { "type": "home", "number": "857 555-0171" }
+...     ],
+...     "emailAddress": ["m.ali@consulting.com"]
+...   },
+...   {
+...     "firstName": "Isabella",
+...     "lastName": "Garcia",
+...     "age": 34,
+...     "address": {
+...       "streetAddress": "667 Redwood Pkwy",
+...       "city": "Austin",
+...       "state": "TX",
+...       "postalCode": "78701"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "512 555-0180" },
+...       { "type": "fax", "number": "512 555-0181" }
+...     ],
+...     "emailAddress": ["isabella.garcia@realestate.com", "iggy@emailbox.org"]
+...   },
+...   {
+...     "firstName": "Liam",
+...     "lastName": "O'Connell",
+...     "age": 27,
+...     "address": {
+...       "streetAddress": "888 Main St",
+...       "city": "Chicago",
+...       "state": "IL",
+...       "postalCode": "60611"
+...     },
+...     "phoneNumber": [
+...       { "type": "home", "number": "312 555-0190" },
+...       { "type": "mobile", "number": "773 555-0191" }
+...     ],
+...     "emailAddress": ["liam.oconnell@music.edu", "liam.o@mailhub.com"]
+...   }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6881fcea3999981ea832a03c'),
+    '1': ObjectId('6881fcea3999981ea832a03d'),
+    '2': ObjectId('6881fcea3999981ea832a03e'),
+    '3': ObjectId('6881fcea3999981ea832a03f'),
+    '4': ObjectId('6881fcea3999981ea832a040'),
+    '5': ObjectId('6881fcea3999981ea832a041'),
+    '6': ObjectId('6881fcea3999981ea832a042'),
+    '7': ObjectId('6881fcea3999981ea832a043'),
+    '8': ObjectId('6881fcea3999981ea832a044'),
+    '9': ObjectId('6881fcea3999981ea832a045')
+  }
+}
+Display all Employee Information.
+company> db.employee.find({})
+[
+  {
+    _id: ObjectId('6881fcea3999981ea832a03c'),
+    firstName: 'Emily',
+    lastName: 'Williams',
+    age: 32,
+    address: {
+      streetAddress: '123 Maple St',
+      city: 'Springfield',
+      state: 'IL',
+      postalCode: '62704'
+    },
+    phoneNumber: [
+      { type: 'home', number: '217 555-0101' },
+      { type: 'mobile', number: '312 555-0102' }
+    ],
+    emailAddress: [ 'emily.w@example.com', 'ewilliams88@email.net' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a03d'),
+    firstName: 'Kenji',
+    lastName: 'Tanaka',
+    age: 45,
+    address: {
+      streetAddress: '456 Oak Ave',
+      city: 'San Francisco',
+      state: 'CA',
+      postalCode: '94110'
+    },
+    phoneNumber: [
+      { type: 'home', number: '415 555-0110' },
+      { type: 'fax', number: '415 555-0111' }
+    ],
+    emailAddress: [ 'kenji.tanaka@workplace.com', 'ktanaka@email.org' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a03e'),
+    firstName: 'Aisha',
+    lastName: 'Khan',
+    age: 28,
+    address: {
+      streetAddress: '789 Pine Ln',
+      city: 'Houston',
+      state: 'TX',
+      postalCode: '77002'
+    },
+    phoneNumber: [
+      { type: 'home', number: '713 555-0120' },
+      { type: 'work', number: '832 555-0121' }
+    ],
+    emailAddress: [ 'akhan@university.edu', 'aisha.k@inbox.com' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a03f'),
+    firstName: 'Benjamin',
+    lastName: 'Carter',
+    age: 51,
+    address: {
+      streetAddress: '101 Elm Ct',
+      city: 'Miami',
+      state: 'FL',
+      postalCode: '33101'
+    },
+    phoneNumber: [
+      { type: 'home', number: '305 555-0130' },
+      { type: 'fax', number: '786 555-0131' }
+    ],
+    emailAddress: [ 'ben.carter@business.net' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a040'),
+    firstName: 'Sofia',
+    lastName: 'Rodriguez',
+    age: 22,
+    address: {
+      streetAddress: '222 Birch Rd',
+      city: 'Albany',
+      state: 'NY',
+      postalCode: '12210'
+    },
+    phoneNumber: [
+      { type: 'mobile', number: '602 555-0140' },
+      { type: 'home', number: '480 555-0141' }
+    ],
+    emailAddress: [ 'sofia.r@studentmail.edu', 'srodriguez22@email.com' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a041'),
+    firstName: 'David',
+    lastName: 'Lee',
+    age: 38,
+    address: {
+      streetAddress: '333 Cedar Blvd',
+      city: 'Seattle',
+      state: 'WA',
+      postalCode: '98104'
+    },
+    phoneNumber: [
+      { type: 'home', number: '206 555-0150' },
+      { type: 'fax', number: '206 555-0151' }
+    ],
+    emailAddress: [ 'dlee@techsolutions.io' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a042'),
+    firstName: 'Chloe',
+    lastName: 'Davis',
+    age: 29,
+    address: {
+      streetAddress: '444 Willow Way',
+      city: 'Denver',
+      state: 'CO',
+      postalCode: '80202'
+    },
+    phoneNumber: [
+      { type: 'home', number: '303 555-0160' },
+      { type: 'fax', number: '303 555-0161' },
+      { type: 'mobile', number: '720 555-0161' }
+    ],
+    emailAddress: [ 'chloe.davis@designfirm.com', 'cdavis.art@email.net' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a043'),
+    firstName: 'Mohammed',
+    lastName: 'Ali',
+    age: 41,
+    address: {
+      streetAddress: '555 Spruce Dr',
+      city: 'Boston',
+      state: 'MA',
+      postalCode: '02108'
+    },
+    phoneNumber: [
+      { type: 'work', number: '617 555-0170' },
+      { type: 'home', number: '857 555-0171' }
+    ],
+    emailAddress: [ 'm.ali@consulting.com' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a044'),
+    firstName: 'Isabella',
+    lastName: 'Garcia',
+    age: 34,
+    address: {
+      streetAddress: '667 Redwood Pkwy',
+      city: 'Austin',
+      state: 'TX',
+      postalCode: '78701'
+    },
+    phoneNumber: [
+      { type: 'home', number: '512 555-0180' },
+      { type: 'fax', number: '512 555-0181' }
+    ],
+    emailAddress: [ 'isabella.garcia@realestate.com', 'iggy@emailbox.org' ]
+  },
+  {
+    _id: ObjectId('6881fcea3999981ea832a045'),
+    firstName: 'Liam',
+    lastName: "O'Connell",
+    age: 27,
+    address: {
+      streetAddress: '888 Main St',
+      city: 'Chicago',
+      state: 'IL',
+      postalCode: '60611'
+    },
+    phoneNumber: [
+      { type: 'home', number: '312 555-0190' },
+      { type: 'mobile', number: '773 555-0191' }
+    ],
+    emailAddress: [ 'liam.oconnell@music.edu', 'liam.o@mailhub.com' ]
+  }
+]
+Display state vise total employee
+company> db.employee.aggregate([{ $group: { _id: '$address.state', count: { $count: {} } } }])
+[
+  { _id: 'TX', count: 2 },
+  { _id: 'CA', count: 1 },
+  { _id: 'WA', count: 1 },
+  { _id: 'IL', count: 2 },
+  { _id: 'MA', count: 1 },
+  { _id: 'AZ', count: 1 },
+  { _id: 'FL', count: 1 },
+  { _id: 'CO', count: 1 }
+]
+Display count of employees of ‘NY’ state
+company> db.employee.aggregate([{ $match: { 'address.state': 'NY' } }, { $count: 'count' }])
+[ { count: 1 } ]
+Display all the states where more than 10 employees are working
+company> db.employee.aggregate([{ $group: { _id: '$address.state', count: { $count: {} } } }, { $match: { count: { $gt: 10 } } }])
+
+company> db.employee.aggregate([{ $group: { _id: '$address.state', count: { $count: {} } } }, { $match: { count: { $gt: 1 } } }])
+[ { _id: 'TX', count: 2 }, { _id: 'IL', count: 2 } ]
+Display count of employees having age less than 30
+company> db.employee.aggregate([{ $match: { age: { $lt: 30 } } }, { $count: 'count' }])
+[ { count: 4 } ]
+Display name of employees having more than two phone nos.
+company> db.employee.aggregate([{ $match: { $expr: { $gt: [{ $size: '$phoneNumber' }, 2] } } }, { $project: { firstName: 1, lastName: 1, _id: 0 } }])
+[ { firstName: 'Chloe', lastName: 'Davis' } ]
+OR
+company> db.employee.aggregate([{ $match: { 'phoneNumber.2': { $exists: true } } }, { $project: { firstName: 1, lastName: 1, _id: 0 } }])
+[ { firstName: 'Chloe', lastName: 'Davis' } ]
+OR
+company> db.employee.aggregate([{ $match: { $nor: [{ phoneNumber: {$size: 0} }, { phoneNumber: {$size: 1} }, { phoneNumber: {$size: 2} }] } }, { $project: { firstName: 1, lastName: 1, _id: 0 } }])
+[ { firstName: 'Chloe', lastName: 'Davis' } ]
+How many employees have provided home phone no
+company> db.employee.aggregate([{ $match: { phoneNumber: { $elemMatch: { type: 'home' } } } }, { $count: 'count' }])
+[ { count: 10 } ]
+company> db.employee.aggregate([{ $match: { phoneNumber: { $elemMatch: { type: 'fax' } } } }, { $count: 'count' }])
+[ { count: 5 } ]
+Display employee vise count of email addresses.
+company> db.employee.aggregate([{ $project: { _id: 0, firstName: 1, lastName: 1, emailAddress: { $size: '$emailAddress' } } }])
+[
+  { firstName: 'Emily', lastName: 'Williams', emailAddress: 2 },
+  { firstName: 'Kenji', lastName: 'Tanaka', emailAddress: 2 },
+  { firstName: 'Aisha', lastName: 'Khan', emailAddress: 2 },
+  { firstName: 'Benjamin', lastName: 'Carter', emailAddress: 1 },
+  { firstName: 'Sofia', lastName: 'Rodriguez', emailAddress: 2 },
+  { firstName: 'David', lastName: 'Lee', emailAddress: 1 },
+  { firstName: 'Chloe', lastName: 'Davis', emailAddress: 2 },
+  { firstName: 'Mohammed', lastName: 'Ali', emailAddress: 1 },
+  { firstName: 'Isabella', lastName: 'Garcia', emailAddress: 2 },
+  { firstName: 'Liam', lastName: "O'Connell", emailAddress: 2 }
+]

@@ -2,31 +2,52 @@
 
 import itertools
 
-keyword1 = input("Enter the first input keyword: ")
-keyword2 = input("Enter the second input keyword: ")
-keyword3 = input("Enter the output keyword: ")
 
-letters = set(keyword1 + keyword2 + keyword3)
-digits = range(10)
-found = False
+def main():
+    keyword_count = int(input("Enter number of input keywords: "))
+    keywords = []
+    for i in range(keyword_count):
+        keyword = input(f"Enter input keyword {i + 1}: ")
+        keywords.append(keyword)
+    sum_keyword = input("Enter the output keyword: ")
+    operation = input("Enter the operation (e.g., '+'): ")
 
-for perm in itertools.permutations(digits, len(letters)):
-    sol = dict(zip(letters, perm))
-    if sol[keyword1[0]] == 0 or sol[keyword2[0]] == 0 or sol[keyword3[0]] == 0:
-        continue
-    word1 = 0
-    for i, letter in enumerate(keyword1):
-        word1 = word1 * 10 + sol[letter]
-    word2 = 0
-    for i, letter in enumerate(keyword2):
-        word2 = word2 * 10 + sol[letter]
-    output = 0
-    for i, letter in enumerate(keyword3):
-        output = output * 10 + sol[letter]
-    if word1 + word2 == output:
-        print(f"{keyword1} + {keyword2} = {keyword3}")
-        print(word1, word2, output)
-        found = True
+    letters = set("".join(keywords) + sum_keyword)
+    digits = range(10)
+    found = False
 
-if not found:
-    print("No solution found.")
+    for perm in itertools.permutations(digits, len(letters)):
+        sol = dict(zip(letters, perm))
+        if any(sol[keyword[0]] == 0 for keyword in keywords) or sol[sum_keyword[0]] == 0:
+            continue
+        words = []
+        total_input = 0
+        for keyword in keywords:
+            word = 0
+            for i, letter in enumerate(keyword):
+                word = word * 10 + sol[letter]
+            words.append(word)
+            if total_input == 0:
+                total_input = word
+            elif operation == '+':
+                total_input += word
+            elif operation == '-':
+                total_input -= word
+            elif operation == '*':
+                total_input *= word
+            elif operation == '/':
+                total_input /= word
+        output = 0
+        for i, letter in enumerate(sum_keyword):
+            output = output * 10 + sol[letter]
+        if total_input == output:
+            print(f"{' + '.join(keywords)} = {sum_keyword}")
+            print(' + '.join(map(str, words)), '=', output)
+            found = True
+
+    if not found:
+        print("No solution found.")
+
+
+if __name__ == "__main__":
+    main()

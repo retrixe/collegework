@@ -1,0 +1,4 @@
+My first program of Map-reduce.
+This is the first program of word count.
+This is the first program of word count.
+An apple a day keeps the doctor away.

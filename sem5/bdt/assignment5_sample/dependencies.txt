@@ -1,0 +1,2 @@
+hadoop-common-2.7.5.jar
+hadoop-core-1.2.1.jar

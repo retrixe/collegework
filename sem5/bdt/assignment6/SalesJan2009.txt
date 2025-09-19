@@ -1,0 +1,9 @@
+<property>
+  <name>yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage</name>
+  <value>98.5</value>
+</property>
+
+create table sales(
+  transaction_date string, product string, price int, payment_type string, name string, city string, state string, country string,
+  account_created string, last_login string, latitude string, longitude string
+) row format delimited fields terminated by ',';

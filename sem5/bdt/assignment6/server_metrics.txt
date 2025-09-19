@@ -1,0 +1,12 @@
+timestamp,server_id,cpu_usage,memory_usage,disk_usage,network_traffic
+
+<property>
+  <name>yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage</name>
+  <value>98.5</value>
+</property>
+
+create table server_metrics(
+  timestamp string, server_id int, cpu_usage int, memory_usage int, disk_usage int, network_traffic int
+) row format delimited fields terminated by ',';
+
+

@@ -63,6 +63,52 @@ bool is_safe() {
     return true;
 }
 
+void execute_process() {
+    int safe_sequence[MAX_PROCESSES];
+    int count = 0;
+
+    for (int i = 0; i < num_resources; i++) {
+        work[i] = available[i];
+    }
+
+    for (int i = 0; i < num_processes; i++) {
+        finish[i] = false;
+    }
+
+    while (count < num_processes) {
+        bool found = false;
+        for (int i = 0; i < num_processes; i++) {
+            if (finish[i] == false) {
+                int can_finish = true;
+                for (int j = 0; j < num_resources; j++) {
+                    if (need[i][j] > work[j]) {
+                        can_finish = false;
+                        break;
+                    }
+                }
+                if (can_finish) {
+                    for (int k = 0; k < num_resources; k++) {
+                        work[k] += allocation[i][k];
+                    }
+                    safe_sequence[count] = i;
+                    finish[i] = true;
+                    found = true;
+                    count++;
+                }
+            }
+        }
+        if (found == false) {
+            return;
+        }
+    }
+
+    for (int i = 0; i < num_resources; i++) {
+        available[i] += allocation[safe_sequence[0]][i];
+        allocation[safe_sequence[0]][i] = 0;
+        need[safe_sequence[0]][i] = 0;
+   }
+}
+
 void request_resources(int process_id, int request[]) {
     for (int i = 0; i < num_resources; i++) {
         if (request[i] > need[process_id][i]) {
@@ -84,6 +130,11 @@ void request_resources(int process_id, int request[]) {
         printf("Resources allocated to P%d successfully\n", process_id);
     } else {
         printf("Unsafe state when P%d requested resources\n", process_id);
+        for (int i = 0; i < num_resources; i++) {
+            available[i] += request[i];
+            allocation[process_id][i] -= request[i];
+            need[process_id][i] += request[i];
+        }
     }
 }
 
@@ -122,16 +173,23 @@ int main() {
     printf("\n");
     is_safe();
 
-    int process_id;
-    int request[MAX_RESOURCES];
-    printf("Enter process ID to request resources for (0 to %d): ", num_processes - 1);
-    scanf("%d", &process_id);
-    printf("Enter resource request for P%d: ", process_id);
-    for (int i = 0; i < num_resources; i++) {
-        scanf("%d", &request[i]);
-    }
+	while (1) {
+	    int process_id;
+	    int request[MAX_RESOURCES];
+	    printf("Enter process ID to request resources for (0 to %d): ", num_processes - 1);
+	    scanf("%d", &process_id);
+	    printf("Enter resource request for P%d: ", process_id);
+	    for (int i = 0; i < num_resources; i++) {
+        	scanf("%d", &request[i]);
+    	}
 
-    request_resources(process_id, request);
+    	request_resources(process_id, request);
+    	printf("Would you like to make another request? (1 for Yes, 0 for No)");
+    	int inp;
+    	scanf("%d", &inp);
+    	if (inp != 1) break;
+    	execute_process();
+    }
 
     return 0;
 }

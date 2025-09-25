@@ -1,0 +1,123 @@
+grunt> customers = LOAD '/xyz/Mall_Customers.csv' USING PigStorage(',') AS (CustomerID:int, Gender:chararray, Age:int, Annual_Income:int, Spending_Score:int);
+grunt> grouped_customers = FOREACH customers GENERATE *, (CASE WHEN Age > 55 THEN 'high' WHEN Age > 25 THEN 'medium' ELSE 'low' END) AS age_category, (CASE WHEN Annual_Income > 100 THEN 'high' WHEN Annual_Income > 50 THEN 'medium' ELSE 'low' END) AS income_category, (CASE WHEN Spending_Score > 100 THEN 'high' WHEN Spending_Score > 50 THEN 'medium' ELSE 'low' END) AS spending_category;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- =================================================================
+-- Step 1: Load customer data from HDFS
+-- =================================================================
+-- Assumes the CSV file is in HDFS and has a header row.
+-- The schema is defined according to the CSV header.
+raw_data = LOAD 'hdfs:/path/to/your/customer_data.csv' USING PigStorage(',')
+           AS (CustomerID:int, Gender:chararray, Age:int, Annual_Income:int, Spending_Score:int);
+
+-- Filter out the header row. This works if the first column of the header
+-- cannot be cast to an integer, which is a common case.
+customers = FILTER raw_data BY CustomerID IS NOT NULL;
+
+
+-- =================================================================
+-- Step 2 & 3: Segment customers based on Age, Income, and Spending Score
+-- =================================================================
+-- A single FOREACH statement is used to generate all segments for efficiency.
+-- The thresholds for segmentation are defined here and can be adjusted.
+segmented_customers = FOREACH customers GENERATE
+    CustomerID,
+    Gender,
+    Age,
+    Annual_Income,
+    Spending_Score,
+    -- Age segmentation
+    (CASE
+        WHEN Age <= 30 THEN 'Young'
+        WHEN Age > 30 AND Age <= 50 THEN 'Middle-Aged'
+        ELSE 'Senior'
+    END) AS age_segment,
+    -- Income segmentation
+    (CASE
+        WHEN Annual_Income <= 40 THEN 'Low_Income'
+        WHEN Annual_Income > 40 AND Annual_Income <= 80 THEN 'Medium_Income'
+        ELSE 'High_Income'
+    END) AS income_segment,
+    -- Spending Score segmentation
+    (CASE
+        WHEN Spending_Score <= 35 THEN 'Low_Spender'
+        WHEN Spending_Score > 35 AND Spending_Score <= 70 THEN 'Average_Spender'
+        ELSE 'High_Spender'
+    END) AS spending_segment;
+
+
+-- =================================================================
+-- Step 4: Analyze customer segments
+-- =================================================================
+-- Analysis 4a: Group by age and income segments to find behavioral patterns.
+grouped_by_demographics = GROUP segmented_customers BY (age_segment, income_segment);
+
+demographic_analysis = FOREACH grouped_by_demographics GENERATE
+    FLATTEN(group) AS (age_segment, income_segment),
+    COUNT(segmented_customers) AS total_customers,
+    AVG(segmented_customers.Spending_Score) AS avg_spending_score,
+    AVG(segmented_customers.Age) AS avg_age;
+
+-- Analysis 4b: Group by spending segment to understand demographics.
+grouped_by_spending = GROUP segmented_customers BY spending_segment;
+
+spending_analysis = FOREACH grouped_by_spending GENERATE
+    group AS spending_segment,
+    COUNT(segmented_customers) AS total_customers,
+    AVG(segmented_customers.Age) AS avg_age,
+    AVG(segmented_customers.Annual_Income) AS avg_annual_income;
+
+
+-- =================================================================
+-- Step 5: Store the results into HDFS
+-- =================================================================
+-- The results are stored in separate directories in CSV format.
+-- NOTE: Pig will fail if these HDFS directories already exist.
+STORE demographic_analysis INTO 'hdfs:/output/demographic_analysis_results' USING PigStorage(',');
+STORE spending_analysis INTO 'hdfs:/output/spending_analysis_results' USING PigStorage(',');

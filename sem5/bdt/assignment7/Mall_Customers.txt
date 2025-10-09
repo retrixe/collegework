@@ -1,4 +1,6 @@
 grunt> customers = LOAD '/xyz/Mall_Customers.csv' USING PigStorage(',') AS (CustomerID:int, Gender:chararray, Age:int, Annual_Income:int, Spending_Score:int);
+
+
 grunt> grouped_customers = FOREACH customers GENERATE *, (CASE WHEN Age > 55 THEN 'high' WHEN Age > 25 THEN 'medium' ELSE 'low' END) AS age_category, (CASE WHEN Annual_Income > 100 THEN 'high' WHEN Annual_Income > 50 THEN 'medium' ELSE 'low' END) AS income_category, (CASE WHEN Spending_Score > 100 THEN 'high' WHEN Spending_Score > 50 THEN 'medium' ELSE 'low' END) AS spending_category;
 
 

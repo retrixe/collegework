@@ -1,9 +1,14 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "xyz.retrixe.collegework"
 version = "1.0-SNAPSHOT"
+
+application {
+    mainClass = "xyz.retrixe.collegework.Main"
+}
 
 repositories {
     mavenCentral()

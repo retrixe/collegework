@@ -17,8 +17,8 @@ import (
 
 const OCTYNE_USERNAME = "red"
 const OCTYNE_PASSWORD = "velvet"
-const OCTYNE_URL = "http://localhost:42069"
-const OCTYNE_WS_URL = "ws://localhost:42069"
+const OCTYNE_URL = "http://n1.mythicmc.org/octyne"
+const OCTYNE_WS_URL = "wss://n1.mythicmc.org/octyne"
 const OCTYNE_PROXY = "BungeeCord"
 
 func loginOctyne() string {

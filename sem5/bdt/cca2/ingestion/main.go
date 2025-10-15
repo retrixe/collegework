@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/iverly/go-mcping/mcping"
 	"github.com/segmentio/kafka-go"
 	"github.com/shirou/gopsutil/v4/cpu"
 	"github.com/shirou/gopsutil/v4/mem"
@@ -20,6 +21,8 @@ const OCTYNE_PASSWORD = "velvet"
 const OCTYNE_URL = "http://n1.mythicmc.org/octyne"
 const OCTYNE_WS_URL = "wss://n1.mythicmc.org/octyne"
 const OCTYNE_PROXY = "BungeeCord"
+const MC_IP = "play.mythicmc.org"
+const MC_PORT = 25565
 
 func loginOctyne() string {
 	// Log into Octyne
@@ -66,6 +69,13 @@ func main() {
 	}
 	defer kafkaServerLogsConn.Close()
 
+	// Connect to Kafka player-count
+	kafkaPlayerCountConn, err := kafka.DialLeader(context.Background(), "tcp", "localhost:9092", "player-count", 0)
+	if err != nil {
+		log.Fatalln("failed to dial leader:", err)
+	}
+	defer kafkaPlayerCountConn.Close()
+
 	// Connect to Kafka system-utilisation
 	kafkaSystemUtilisationConn, err := kafka.DialLeader(context.Background(), "tcp", "localhost:9092", "system-utilisation", 0)
 	if err != nil {
@@ -106,6 +116,28 @@ func main() {
 			}
 			kafkaSystemUtilisationConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
 			_, err = kafkaSystemUtilisationConn.WriteMessages(kafka.Message{Value: jsonData})
+			if err != nil {
+				log.Fatalln("failed to write message:", err)
+			}
+			time.Sleep(10 * time.Second)
+		}
+	}()
+
+	// Send player count data to Kafka
+	go func() {
+		pinger := mcping.NewPinger()
+		for {
+			response, err := pinger.Ping(MC_IP, MC_PORT)
+			jsonData, err := json.Marshal(map[string]interface{}{
+				"timestamp":    time.Now().Format(time.RFC3339),
+				"player_count": response.PlayerCount.Online,
+			})
+			if err != nil {
+				log.Fatalln("failed to marshal JSON:", err)
+				continue
+			}
+			kafkaPlayerCountConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+			_, err = kafkaPlayerCountConn.WriteMessages(kafka.Message{Value: jsonData})
 			if err != nil {
 				log.Fatalln("failed to write message:", err)
 			}

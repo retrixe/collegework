@@ -1,5 +1,6 @@
 done:
 - log events (Octyne -> App -> Kafka)
+- currently online players (App -> Kafka)
 - CPU / RAM / network utilisation (App -> Kafka)
 - players joining (+geolocation)/leaving (Kafka stream processing)
 - ingest data via logstash into elasticsearch
@@ -7,11 +8,6 @@ done:
 - visualise historical join events
 - visualise historical join geolocation
 - visualise historical log events per second
-
-todo:
-- visualise historical leave events
-- currently online players (Kafka stream processing)
 - visualise historical online player count
-- visualise currently online players geolocation
-- finish report
 - finish presentation
+- finish report

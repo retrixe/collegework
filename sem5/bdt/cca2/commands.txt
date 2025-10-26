@@ -1,0 +1,7 @@
+mkdir experiment
+curl -fsSL https://elastic.co/start-local | sudo sh
+sudo docker run -it --net=host -e DYNAMIC_CONFIG_ENABLED=true provectuslabs/kafka-ui
+sudo docker run -d --name kafka -p 9092:9092 apache/kafka
+sudo docker run -d --name=logstash --net=host -v ./logstash-pipeline/:/usr/share/logstash/pipeline/ docker.elastic.co/logstash/logstash:9.1.5
+# run ingestion
+# run kafkastreams JAR with geomind

@@ -39,6 +39,9 @@ func main() {
 
 				cancel = make(chan bool, 1)
 				go TriggerAlarm(t, cancel)
+			} else if cancel == nil {
+				// Update the IP every second
+				UpdateLCD("", GetIP())
 			}
 			t = <-ticker.C
 		}

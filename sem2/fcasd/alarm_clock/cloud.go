@@ -48,7 +48,11 @@ func SaveConfig() {
 func GetIP() string {
 	cmd := exec.Command("hostname", "-I")
 	output, _ := cmd.Output()
-	return strings.TrimSpace(strings.Split(string(output), " ")[0])
+	ip := strings.TrimSpace(strings.Split(string(output), " ")[0])
+	if ip == "" {
+		ip = "Unknown IP"
+	}
+	return ip
 }
 
 func RunApi() {

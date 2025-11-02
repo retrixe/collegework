@@ -8,7 +8,7 @@ import (
 func GenerateQuestion() (string, string) {
 	questionType := rand.IntN(1)
 	if questionType == 1 {
-		return GenerateSqrtQuestion() // FIXME
+		return GenerateAlgebraQuestion()
 	}
 	return GenerateSqrtQuestion()
 }

@@ -32,10 +32,19 @@ func UpdateLCD(line1 string, line2 string) {
 	}
 
 	// Pass to python
+	// FIXME hacky
 	line1 = hex.EncodeToString([]byte(line1))
 	line2 = hex.EncodeToString([]byte(line2))
-	pwd, _ := os.Getwd()
-	pythonPath := filepath.Join(pwd, "venv/bin/python")
-	lcdControlPath := filepath.Join(pwd, "python/lcd.py")
-	go exec.Command(pythonPath, lcdControlPath, line1, line2).Run() // FIXME hacky
+	go func() {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			println(err.Error())
+			return
+		}
+		uvPath := filepath.Join(homeDir, ".local", "bin", "uv")
+		err = exec.Command(uvPath, "run", "main.py", line1, line2).Run()
+		if err != nil {
+			println(err.Error())
+		}
+	}()
 }

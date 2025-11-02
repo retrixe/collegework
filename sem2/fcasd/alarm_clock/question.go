@@ -6,7 +6,7 @@ import (
 )
 
 func GenerateQuestion() (string, string) {
-	questionType := rand.IntN(1)
+	questionType := rand.IntN(2)
 	if questionType == 1 {
 		return GenerateAlgebraQuestion()
 	}

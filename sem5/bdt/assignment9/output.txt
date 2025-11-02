@@ -1,0 +1,253 @@
+>>> df = spark.read.option("header", True).option("inferSchema", True).csv("/searchterms.csv")
+>>> df.printSchema()
+root
+ |-- day: integer (nullable = true)
+ |-- month: integer (nullable = true)
+ |-- year: integer (nullable = true)
+ |-- searchterm: string (nullable = true)
+
+>>> df.show()
++---+-----+----+--------------+
+|day|month|year|    searchterm|
++---+-----+----+--------------+
+| 12|   11|2021| mobile 6 inch|
+| 12|   11|2021| mobile latest|
+| 12|   11|2021|   tablet wifi|
+| 12|   11|2021|laptop 14 inch|
+| 12|   11|2021|     mobile 5g|
+| 12|   11|2021| mobile 6 inch|
+| 12|   11|2021|        laptop|
+| 12|   11|2021|        laptop|
+| 12|   11|2021|     mobile 5g|
+| 12|   11|2021|   tablet wifi|
+| 12|   11|2021|     mobile 5g|
+| 12|   11|2021| gaming laptop|
+| 12|   11|2021|     mobile 5g|
+| 12|   11|2021|     mobile 5g|
+| 12|   11|2021| mobile 6 inch|
+| 12|   11|2021| mobile latest|
+| 12|   11|2021| mobile 6 inch|
+| 12|   11|2021|   tablet wifi|
+| 12|   11|2021|     mobile 5g|
+| 12|   11|2021|        laptop|
++---+-----+----+--------------+
+only showing top 20 rows
+
+>>> df.count()
+10000
+>>> df.filter(col("day").isNull() | col("month").isNull() | col("year").isNull() | col("searchterm").isNull()).show()
++---+-----+----+----------+
+|day|month|year|searchterm|
++---+-----+----+----------+
++---+-----+----+----------+
+
+>>> df.dropDuplicates(["day", "month", "year", "searchterm"]).count()
+435
+>>> df.dtypes
+[('day', 'int'), ('month', 'int'), ('year', 'int'), ('searchterm', 'string')]
+>>> df.filter(col("searchterm") == "gaming laptop").count()
+499
+>>> df.createOrReplaceTempView("searchterms")
+
+# Top Search Terms By Day
+spark.sql("""
+WITH SearchTermCountByDay AS (
+	SELECT day, month, year, searchterm, COUNT(searchterm) AS searchtermcount FROM searchterms GROUP BY day, month, year, searchterm
+), MaxSearchTermCount AS (
+	SELECT day, month, year, MAX(searchtermcount) AS maxsearchtermcount FROM SearchTermCountByDay GROUP BY day, month, year
+) SELECT SearchTermCountByDay.day, SearchTermCountByDay.month, SearchTermCountByDay.year, SearchTermCountByDay.searchterm, searchtermcount, maxsearchtermcount
+	FROM SearchTermCountByDay
+	JOIN MaxSearchTermCount ON SearchTermCountByDay.day = MaxSearchTermCount.day
+	AND SearchTermCountByDay.month = MaxSearchTermCount.month
+	AND SearchTermCountByDay.year = MaxSearchTermCount.year
+	WHERE searchtermcount = maxsearchtermcount
+	ORDER BY SearchTermCountByDay.year, SearchTermCountByDay.month, SearchTermCountByDay.day ASC;
+""").show()
+>>> spark.sql("""
+... WITH SearchTermCountByDay AS (
+...         SELECT day, month, year, searchterm, COUNT(searchterm) AS searchtermcount FROM searchterms GROUP BY day, month, year, searchterm
+... ), MaxSearchTermCount AS (
+...         SELECT day, month, year, MAX(searchtermcount) AS maxsearchtermcount FROM SearchTermCountByDay GROUP BY day, month, year
+... ) SELECT SearchTermCountByDay.day, SearchTermCountByDay.month, SearchTermCountByDay.year, SearchTermCountByDay.searchterm, searchtermcount, maxsearchtermcount
+...         FROM SearchTermCountByDay
+...         JOIN MaxSearchTermCount ON SearchTermCountByDay.day = MaxSearchTermCount.day
+...         AND SearchTermCountByDay.month = MaxSearchTermCount.month
+...         AND SearchTermCountByDay.year = MaxSearchTermCount.year
+...         WHERE searchtermcount = maxsearchtermcount
+...         ORDER BY SearchTermCountByDay.year, SearchTermCountByDay.month, SearchTermCountByDay.day ASC;
+... """).show()
++---+-----+----+-------------+---------------+------------------+
+|day|month|year|   searchterm|searchtermcount|maxsearchtermcount|
++---+-----+----+-------------+---------------+------------------+
+| 12|   11|2021|    mobile 5g|             10|                10|
+| 13|   11|2021|    mobile 5g|             49|                49|
+| 13|   11|2021|mobile 6 inch|             49|                49|
+| 14|   11|2021|mobile 6 inch|             62|                62|
+| 15|   11|2021|mobile 6 inch|             62|                62|
+| 16|   11|2021|mobile 6 inch|             54|                54|
+| 17|   11|2021|mobile 6 inch|             51|                51|
+| 18|   11|2021|mobile 6 inch|             56|                56|
+| 19|   11|2021|    mobile 5g|             54|                54|
+| 20|   11|2021|    mobile 5g|             53|                53|
+| 21|   11|2021|    mobile 5g|             68|                68|
+| 22|   11|2021|mobile 6 inch|             57|                57|
+| 23|   11|2021|mobile 6 inch|             56|                56|
+| 24|   11|2021|mobile 6 inch|             60|                60|
+| 25|   11|2021|    mobile 5g|             56|                56|
+| 26|   11|2021|    mobile 5g|             61|                61|
+| 27|   11|2021|mobile 6 inch|             56|                56|
+| 28|   11|2021|    mobile 5g|             56|                56|
+| 29|   11|2021|    mobile 5g|             53|                53|
+| 30|   11|2021|mobile 6 inch|             56|                56|
++---+-----+----+-------------+---------------+------------------+
+only showing top 20 rows
+
+# Most Popular Search Term per Month
+spark.sql("""
+WITH SearchTermCountByMonth AS (
+	SELECT month, year, searchterm, COUNT(searchterm) AS searchtermcount FROM searchterms GROUP BY month, year, searchterm
+), MaxSearchTermCount AS (
+	SELECT month, year, MAX(searchtermcount) AS maxsearchtermcount FROM SearchTermCountByMonth GROUP BY month, year
+) SELECT SearchTermCountByMonth.month, SearchTermCountByMonth.year, SearchTermCountByMonth.searchterm, searchtermcount, maxsearchtermcount
+	FROM SearchTermCountByMonth
+	JOIN MaxSearchTermCount ON SearchTermCountByMonth.month = MaxSearchTermCount.month AND SearchTermCountByMonth.year = MaxSearchTermCount.year
+	WHERE searchtermcount = maxsearchtermcount
+        ORDER BY SearchTermCountByMonth.year, SearchTermCountByMonth.month ASC;
+""").show()
+
+>>> spark.sql("""
+... WITH SearchTermCountByMonth AS (
+...         SELECT month, year, searchterm, COUNT(searchterm) AS searchtermcount FROM searchterms GROUP BY month, year, searchterm
+... ), MaxSearchTermCount AS (
+...         SELECT month, year, MAX(searchtermcount) AS maxsearchtermcount FROM SearchTermCountByMonth GROUP BY month, year
+... ) SELECT SearchTermCountByMonth.month, SearchTermCountByMonth.year, SearchTermCountByMonth.searchterm, searchtermcount, maxsearchtermcount
+...         FROM SearchTermCountByMonth
+...         JOIN MaxSearchTermCount ON SearchTermCountByMonth.month = MaxSearchTermCount.month AND SearchTermCountByMonth.year = MaxSearchTermCount.year
+...         WHERE searchtermcount = maxsearchtermcount
+...         ORDER BY SearchTermCountByMonth.year, SearchTermCountByMonth.month ASC;
+... """).show()
++-----+----+-------------+---------------+------------------+
+|month|year|   searchterm|searchtermcount|maxsearchtermcount|
++-----+----+-------------+---------------+------------------+
+|   11|2021|mobile 6 inch|            974|               974|
+|   12|2021|    mobile 5g|           1351|              1351|
++-----+----+-------------+---------------+------------------+
+
+
+# Daily and monthly Search Volume
+>>> spark.sql("SELECT day, month, year, COUNT(*) as searchcount FROM searchterms GROUP BY day, month, year ORDER BY year, month, day ASC").show()
++---+-----+----+-----------+
+|day|month|year|searchcount|
++---+-----+----+-----------+
+| 12|   11|2021|         36|
+| 13|   11|2021|        232|
+| 14|   11|2021|        233|
+| 15|   11|2021|        232|
+| 16|   11|2021|        232|
+| 17|   11|2021|        232|
+| 18|   11|2021|        233|
+| 19|   11|2021|        232|
+| 20|   11|2021|        232|
+| 21|   11|2021|        232|
+| 22|   11|2021|        233|
+| 23|   11|2021|        232|
+| 24|   11|2021|        232|
+| 25|   11|2021|        232|
+| 26|   11|2021|        233|
+| 27|   11|2021|        232|
+| 28|   11|2021|        232|
+| 29|   11|2021|        232|
+| 30|   11|2021|        233|
+|  1|   12|2021|        232|
++---+-----+----+-----------+
+only showing top 20 rows
+
+>>> spark.sql("SELECT month, year, COUNT(*) as searchcount FROM searchterms GROUP BY month, year ORDER BY year, month ASC").show()
++-----+----+-----------+
+|month|year|searchcount|
++-----+----+-----------+
+|   11|2021|       4217|
+|   12|2021|       5783|
++-----+----+-----------+
+
+# Advanced: Trending Terms (Day-over-Day Growth)
+spark.sql("""
+WITH DailySearchCounts AS (
+	SELECT day, month, year, COUNT(*) as searchcount FROM searchterms GROUP BY day, month, year
+) SELECT day, month, year, searchcount,
+	searchcount - LAG(searchcount, 1) OVER (ORDER BY year, month, day ASC) AS count_difference
+	FROM DailySearchCounts
+	ORDER BY year, month, day ASC;
+""").show()
+
+>>> spark.sql("""
+... WITH DailySearchCounts AS (
+...         SELECT day, month, year, COUNT(*) as searchcount FROM searchterms GROUP BY day, month, year
+... ) SELECT day, month, year, searchcount,
+...         searchcount - LAG(searchcount, 1) OVER (ORDER BY year, month, day ASC) AS count_difference
+...         FROM DailySearchCounts
+...         ORDER BY year, month, day ASC;
+... """).show()
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:53:04 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
++---+-----+----+-----------+----------------+
+|day|month|year|searchcount|count_difference|
++---+-----+----+-----------+----------------+
+| 12|   11|2021|         36|            null|
+| 13|   11|2021|        232|             196|
+| 14|   11|2021|        233|               1|
+| 15|   11|2021|        232|              -1|
+| 16|   11|2021|        232|               0|
+| 17|   11|2021|        232|               0|
+| 18|   11|2021|        233|               1|
+| 19|   11|2021|        232|              -1|
+| 20|   11|2021|        232|               0|
+| 21|   11|2021|        232|               0|
+| 22|   11|2021|        233|               1|
+| 23|   11|2021|        232|              -1|
+| 24|   11|2021|        232|               0|
+| 25|   11|2021|        232|               0|
+| 26|   11|2021|        233|               1|
+| 27|   11|2021|        232|              -1|
+| 28|   11|2021|        232|               0|
+| 29|   11|2021|        232|               0|
+| 30|   11|2021|        233|               1|
+|  1|   12|2021|        232|              -1|
++---+-----+----+-----------+----------------+
+only showing top 20 rows
+
+spark.sql("""
+WITH MonthlySearchCounts AS (
+	SELECT month, year, COUNT(*) as searchcount FROM searchterms GROUP BY month, year
+) SELECT month, year, searchcount,
+	searchcount - LAG(searchcount, 1) OVER (ORDER BY year, month ASC) AS count_difference
+	FROM MonthlySearchCounts
+	ORDER BY year, month ASC;
+""").show()
+
+>>> spark.sql("""
+... WITH MonthlySearchCounts AS (
+...         SELECT month, year, COUNT(*) as searchcount FROM searchterms GROUP BY month, year
+... ) SELECT month, year, searchcount,
+...         searchcount - LAG(searchcount, 1) OVER (ORDER BY year, month ASC) AS count_difference
+...         FROM MonthlySearchCounts
+...         ORDER BY year, month ASC;
+... """).show()
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
+25/10/30 09:54:07 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.
++-----+----+-----------+----------------+
+|month|year|searchcount|count_difference|
++-----+----+-----------+----------------+
+|   11|2021|       4217|            null|
+|   12|2021|       5783|            1566|
++-----+----+-----------+----------------+

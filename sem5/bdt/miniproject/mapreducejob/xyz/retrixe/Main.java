@@ -41,13 +41,13 @@ public class Main {
                 elasticsearchResource = "hourly_count";
                 job.setMapperClass(HourlyCountMapper.class);
                 break;
-            case "dailyHourlyCount":
+            /*case "dailyHourlyCount":
                 elasticsearchResource = "daily_hourly_count";
                 job.setMapperClass(DailyHourlyCountMapper.class);
-                break;
+                break;*/
             default:
                 throw new RuntimeException("Invalid operation! Valid operations: " +
-                        "urlCount, statusCodeCount, dailyCount, hourlyCount, dailyHourlyCount");
+                        "urlCount, statusCodeCount, dailyCount, hourlyCount"); //, dailyHourlyCount");
         }
         if (args[3].startsWith("elasticsearch")) {
             job.setReducerClass(ElasticSumReducer.class);

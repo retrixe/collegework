@@ -1,0 +1,302 @@
+2025-10-29 22:23:56,039: This is an informational log message.
+2025-10-29 22:23:56,838: Processing data statistics...
+Number of unique user_ids: 70390
+Number of unique recipe_ids: 46702
+Number of interactions between users and recipes: 231637
+Number of unique ingredients: 230475
+************************************
+Sparsity of the dataset: 99.99%
+************************************
+Number of Users per Rating Count:
+ [1] 52076 users have 1 rated recipes
+ [2] 7101 users have 2 rated recipes
+ [3] 3100 users have 3 rated recipes
+ [4] 1734 users have 4 rated recipes
+ [5] 1146 users have 5 rated recipes
+ [6] 783 users have 6 rated recipes
+ [7] 573 users have 7 rated recipes
+ [8] 450 users have 8 rated recipes
+ [9] 360 users have 9 rated recipes
+ [10] 275 users have 10 rated recipes
+ [11] 244 users have 11 rated recipes
+ [12] 204 users have 12 rated recipes
+ [13] 199 users have 13 rated recipes
+ [14] 138 users have 14 rated recipes
+ [15] 135 users have 15 rated recipes
+ [16] 81 users have 16 rated recipes
+ [17] 106 users have 17 rated recipes
+ [18] 98 users have 18 rated recipes
+ [19] 93 users have 19 rated recipes
+ [20] 69 users have 20 rated recipes
+ [21] 61 users have 21 rated recipes
+ [22] 66 users have 22 rated recipes
+ [23] 48 users have 23 rated recipes
+ [24] 49 users have 24 rated recipes
+ [25] 43 users have 25 rated recipes
+ [26] 48 users have 26 rated recipes
+ [27] 42 users have 27 rated recipes
+ [28] 42 users have 28 rated recipes
+ [29] 43 users have 29 rated recipes
+ [30] 27 users have 30 rated recipes
+ [31] 38 users have 31 rated recipes
+ [32] 30 users have 32 rated recipes
+ [33] 28 users have 33 rated recipes
+ [34] 22 users have 34 rated recipes
+ [35] 20 users have 35 rated recipes
+ [36] 25 users have 36 rated recipes
+ [37] 19 users have 37 rated recipes
+ [38] 23 users have 38 rated recipes
+ [39] 22 users have 39 rated recipes
+ [40] 12 users have 40 rated recipes
+ [41] 19 users have 41 rated recipes
+ [42] 15 users have 42 rated recipes
+ [43] 17 users have 43 rated recipes
+ [44] 17 users have 44 rated recipes
+ [45] 13 users have 45 rated recipes
+ [46] 12 users have 46 rated recipes
+ [47] 16 users have 47 rated recipes
+ [48] 12 users have 48 rated recipes
+ [49] 16 users have 49 rated recipes
+ [50] 10 users have 50 rated recipes
+ [51] 9 users have 51 rated recipes
+ [52] 8 users have 52 rated recipes
+ [53] 15 users have 53 rated recipes
+ [54] 6 users have 54 rated recipes
+ [55] 13 users have 55 rated recipes
+ [56] 10 users have 56 rated recipes
+ [57] 7 users have 57 rated recipes
+ [58] 15 users have 58 rated recipes
+ [59] 11 users have 59 rated recipes
+ [60] 8 users have 60 rated recipes
+ [61] 11 users have 61 rated recipes
+ [62] 6 users have 62 rated recipes
+ [63] 11 users have 63 rated recipes
+ [64] 4 users have 64 rated recipes
+ [65] 11 users have 65 rated recipes
+ [66] 13 users have 66 rated recipes
+ [67] 13 users have 67 rated recipes
+ [68] 6 users have 68 rated recipes
+ [69] 6 users have 69 rated recipes
+ [70] 5 users have 70 rated recipes
+ [71] 4 users have 71 rated recipes
+ [72] 7 users have 72 rated recipes
+ [73] 11 users have 73 rated recipes
+ [74] 7 users have 74 rated recipes
+ [75] 8 users have 75 rated recipes
+ [76] 4 users have 76 rated recipes
+ [77] 6 users have 77 rated recipes
+ [78] 3 users have 78 rated recipes
+ [79] 8 users have 79 rated recipes
+ [80] 1 users have 80 rated recipes
+ [81] 4 users have 81 rated recipes
+ [82] 7 users have 82 rated recipes
+ [83] 8 users have 83 rated recipes
+ [84] 2 users have 84 rated recipes
+ [85] 6 users have 85 rated recipes
+ [86] 5 users have 86 rated recipes
+ [87] 5 users have 87 rated recipes
+ [88] 1 users have 88 rated recipes
+ [89] 2 users have 89 rated recipes
+ [90] 4 users have 90 rated recipes
+ [91] 7 users have 91 rated recipes
+ [92] 7 users have 92 rated recipes
+ [93] 7 users have 93 rated recipes
+ [94] 4 users have 94 rated recipes
+ [95] 2 users have 95 rated recipes
+ [96] 3 users have 96 rated recipes
+ [97] 3 users have 97 rated recipes
+ [98] 4 users have 98 rated recipes
+ [99] 6 users have 99 rated recipes
+ [100] 2 users have 100 rated recipes
+ [101] 3 users have 101 rated recipes
+ [102] 3 users have 102 rated recipes
+ [105] 4 users have 105 rated recipes
+ [106] 1 users have 106 rated recipes
+ [107] 4 users have 107 rated recipes
+ [108] 2 users have 108 rated recipes
+ [109] 2 users have 109 rated recipes
+ [110] 2 users have 110 rated recipes
+ [111] 1 users have 111 rated recipes
+ [112] 4 users have 112 rated recipes
+ [113] 4 users have 113 rated recipes
+ [114] 3 users have 114 rated recipes
+ [116] 1 users have 116 rated recipes
+ [117] 3 users have 117 rated recipes
+ [118] 3 users have 118 rated recipes
+ [119] 1 users have 119 rated recipes
+ [122] 1 users have 122 rated recipes
+ [123] 1 users have 123 rated recipes
+ [125] 2 users have 125 rated recipes
+ [126] 2 users have 126 rated recipes
+ [127] 1 users have 127 rated recipes
+ [128] 2 users have 128 rated recipes
+ [129] 2 users have 129 rated recipes
+ [131] 1 users have 131 rated recipes
+ [132] 2 users have 132 rated recipes
+ [133] 2 users have 133 rated recipes
+ [135] 1 users have 135 rated recipes
+ [137] 3 users have 137 rated recipes
+ [138] 1 users have 138 rated recipes
+ [139] 2 users have 139 rated recipes
+ [140] 3 users have 140 rated recipes
+ [143] 4 users have 143 rated recipes
+ [144] 1 users have 144 rated recipes
+ [145] 4 users have 145 rated recipes
+ [147] 4 users have 147 rated recipes
+ [149] 1 users have 149 rated recipes
+ [152] 3 users have 152 rated recipes
+ [153] 2 users have 153 rated recipes
+ [155] 1 users have 155 rated recipes
+ [156] 3 users have 156 rated recipes
+ [157] 2 users have 157 rated recipes
+ [158] 2 users have 158 rated recipes
+ [159] 1 users have 159 rated recipes
+ [161] 2 users have 161 rated recipes
+ [163] 1 users have 163 rated recipes
+ [164] 1 users have 164 rated recipes
+ [165] 1 users have 165 rated recipes
+ [166] 2 users have 166 rated recipes
+ [167] 2 users have 167 rated recipes
+ [169] 3 users have 169 rated recipes
+ [170] 2 users have 170 rated recipes
+ [172] 1 users have 172 rated recipes
+ [175] 1 users have 175 rated recipes
+ [176] 2 users have 176 rated recipes
+ [178] 1 users have 178 rated recipes
+ [179] 1 users have 179 rated recipes
+ [180] 2 users have 180 rated recipes
+ [181] 2 users have 181 rated recipes
+ [182] 1 users have 182 rated recipes
+ [183] 2 users have 183 rated recipes
+ [186] 1 users have 186 rated recipes
+ [188] 1 users have 188 rated recipes
+ [189] 1 users have 189 rated recipes
+ [191] 2 users have 191 rated recipes
+ [192] 2 users have 192 rated recipes
+ [193] 1 users have 193 rated recipes
+ [194] 1 users have 194 rated recipes
+ [197] 2 users have 197 rated recipes
+ [198] 2 users have 198 rated recipes
+ [202] 1 users have 202 rated recipes
+ [205] 1 users have 205 rated recipes
+ [206] 1 users have 206 rated recipes
+ [207] 2 users have 207 rated recipes
+ [208] 2 users have 208 rated recipes
+ [210] 3 users have 210 rated recipes
+ [217] 1 users have 217 rated recipes
+ [221] 1 users have 221 rated recipes
+ [222] 1 users have 222 rated recipes
+ [223] 2 users have 223 rated recipes
+ [224] 1 users have 224 rated recipes
+ [225] 1 users have 225 rated recipes
+ [226] 2 users have 226 rated recipes
+ [229] 1 users have 229 rated recipes
+ [232] 2 users have 232 rated recipes
+ [235] 1 users have 235 rated recipes
+ [237] 1 users have 237 rated recipes
+ [238] 1 users have 238 rated recipes
+ [241] 2 users have 241 rated recipes
+ [244] 2 users have 244 rated recipes
+ [245] 1 users have 245 rated recipes
+ [246] 1 users have 246 rated recipes
+ [249] 1 users have 249 rated recipes
+ [250] 1 users have 250 rated recipes
+ [252] 1 users have 252 rated recipes
+ [267] 1 users have 267 rated recipes
+ [268] 2 users have 268 rated recipes
+ [272] 1 users have 272 rated recipes
+ [276] 1 users have 276 rated recipes
+ [281] 1 users have 281 rated recipes
+ [285] 1 users have 285 rated recipes
+ [288] 1 users have 288 rated recipes
+ [289] 1 users have 289 rated recipes
+ [290] 1 users have 290 rated recipes
+ [292] 1 users have 292 rated recipes
+ [293] 1 users have 293 rated recipes
+ [297] 2 users have 297 rated recipes
+ [298] 1 users have 298 rated recipes
+ [302] 1 users have 302 rated recipes
+ [304] 1 users have 304 rated recipes
+ [309] 2 users have 309 rated recipes
+ [310] 1 users have 310 rated recipes
+ [311] 1 users have 311 rated recipes
+ [312] 1 users have 312 rated recipes
+ [313] 1 users have 313 rated recipes
+ [316] 2 users have 316 rated recipes
+ [327] 1 users have 327 rated recipes
+ [330] 1 users have 330 rated recipes
+ [333] 1 users have 333 rated recipes
+ [337] 1 users have 337 rated recipes
+ [343] 1 users have 343 rated recipes
+ [353] 1 users have 353 rated recipes
+ [354] 1 users have 354 rated recipes
+ [355] 1 users have 355 rated recipes
+ [360] 1 users have 360 rated recipes
+ [369] 2 users have 369 rated recipes
+ [374] 1 users have 374 rated recipes
+ [390] 1 users have 390 rated recipes
+ [405] 1 users have 405 rated recipes
+ [415] 1 users have 415 rated recipes
+ [420] 1 users have 420 rated recipes
+ [421] 1 users have 421 rated recipes
+ [430] 2 users have 430 rated recipes
+ [433] 1 users have 433 rated recipes
+ [440] 1 users have 440 rated recipes
+ [453] 1 users have 453 rated recipes
+ [455] 1 users have 455 rated recipes
+ [458] 1 users have 458 rated recipes
+ [461] 1 users have 461 rated recipes
+ [485] 1 users have 485 rated recipes
+ [488] 1 users have 488 rated recipes
+ [527] 1 users have 527 rated recipes
+ [534] 1 users have 534 rated recipes
+ [572] 1 users have 572 rated recipes
+ [618] 1 users have 618 rated recipes
+ [624] 1 users have 624 rated recipes
+ [632] 1 users have 632 rated recipes
+ [634] 1 users have 634 rated recipes
+ [691] 1 users have 691 rated recipes
+ [774] 1 users have 774 rated recipes
+ [784] 1 users have 784 rated recipes
+ [901] 1 users have 901 rated recipes
+ [1075] 1 users have 1075 rated recipes
+ [1535] 1 users have 1535 rated recipes
+************************************
+2025-10-29 22:24:05,191: Building the main graph...
+2025-10-29 22:24:05,191: Loading data into a graph...
+2025-10-29 22:24:14,720: Finished; resulting graph:
+2025-10-29 22:24:14,720: Graph with 132041 nodes and 1987779 edges
+2025-10-29 22:24:14,776: Main graph build complete.
+2025-10-29 22:27:42,238: Starting path generation in find_paths_users_interests...
+2025-10-29 22:27:45,151: Reached path limit of 5000000. Stopping path generation.
+2025-10-29 22:27:45,151: Generated 5000000 paths.
+2025-10-29 22:27:45,151: Converting paths to DataFrame for efficient encoding...
+2025-10-29 22:27:45,589: Original path list deleted, freeing memory.
+2025-10-29 22:27:45,689: Encoding paths using fast pandas operations...
+2025-10-29 22:27:46,951: Converting encoded array to tensor...
+2025-10-29 22:27:47,010: Path encoding complete.
+2025-10-29 22:30:13,822: Epoch 1/10, NLA Loss: 15.9644
+2025-10-29 22:33:14,418: Epoch 2/10, NLA Loss: 11.7144
+2025-10-29 22:36:10,945: Epoch 3/10, NLA Loss: 10.2693
+2025-10-29 22:39:10,313: Epoch 4/10, NLA Loss: 9.4951
+2025-10-29 22:42:08,568: Epoch 5/10, NLA Loss: 9.0020
+2025-10-29 22:45:24,350: Epoch 6/10, NLA Loss: 8.6562
+2025-10-29 22:48:35,393: Epoch 7/10, NLA Loss: 8.3974
+2025-10-29 22:51:42,216: Epoch 8/10, NLA Loss: 8.1979
+2025-10-29 22:54:59,737: Epoch 9/10, NLA Loss: 8.0393
+2025-10-29 22:58:18,674: Epoch 10/10, NLA Loss: 7.9127
+2025-10-29 22:58:18,724: Embedding Vectors (NLA):
+2025-10-29 22:58:18,724: tensor([[ 5.0769,  5.0769,  5.0769,  ...,  5.0769,  5.0769,  5.0769],
+        [ 4.5891,  4.5891,  4.5891,  ...,  4.5891,  4.5891,  4.5891],
+        [ 4.7191,  4.7191,  4.7191,  ...,  4.7191,  4.7191,  4.7191],
+        ...,
+        [-0.1023, -0.1155, -0.0722,  ..., -0.0935, -0.0520,  0.0674],
+        [ 2.3424,  4.3388,  3.6903,  ...,  1.9439,  4.0326,  3.4312],
+        [ 2.3491,  3.2323,  3.0600,  ...,  3.3237,  2.9060,  3.2036]])
+2025-10-29 22:58:19,121: Error during SLA training epoch 1: [enforce fail at alloc_cpu.cpp:83] err == 0. DefaultCPUAllocator: can't allocate memory: you tried to allocate 212474902500 bytes. Error code 12 (Cannot allocate memory)
+2025-10-29 22:58:19,121: SLA training failed. This is likely due to mismatched tensor sizes in the forward pass.
+2025-10-29 22:58:19,191: Error in load_ground_truth_ratings: [Errno 2] No such file or directory: '/home/ibu/Food/Food/Food_Dataset.zip'
+2025-10-29 22:58:19,191: L2 normalizing embeddings for Faiss...
+2025-10-29 22:58:19,202: Building Faiss index...
+2025-10-29 22:58:19,214: Faiss index built with 70390 vectors.
+2025-10-29 22:58:19,214: Running Faiss range search for recommendations...

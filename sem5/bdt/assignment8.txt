@@ -1,0 +1,147 @@
+hbase(main):001:0> create 'library', 'books', 'authors', 'members'
+Created table library
+Took 1.6332 seconds                                                                             
+=> Hbase::Table - library
+hbase(main):002:0> list
+TABLE                                                                                           
+library                                                                                         
+1 row(s)
+Took 0.0813 seconds                                                                             
+=> ["library"]
+hbase(main):003:0> describe 'library'
+Table library is ENABLED                                                                        
+library                                                                                         
+COLUMN FAMILIES DESCRIPTION                                                                     
+{NAME => 'authors', VERSIONS => '1', EVICT_BLOCKS_ON_CLOSE => 'false', NEW_VERSION_BEHAVIOR => '
+false', KEEP_DELETED_CELLS => 'FALSE', CACHE_DATA_ON_WRITE => 'false', DATA_BLOCK_ENCODING => 'N
+ONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', CAC
+HE_INDEX_ON_WRITE => 'false', IN_MEMORY => 'false', CACHE_BLOOMS_ON_WRITE => 'false', PREFETCH_B
+LOCKS_ON_OPEN => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536'}    
+{NAME => 'books', VERSIONS => '1', EVICT_BLOCKS_ON_CLOSE => 'false', NEW_VERSION_BEHAVIOR => 'fa
+lse', KEEP_DELETED_CELLS => 'FALSE', CACHE_DATA_ON_WRITE => 'false', DATA_BLOCK_ENCODING => 'NON
+E', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', CACHE
+_INDEX_ON_WRITE => 'false', IN_MEMORY => 'false', CACHE_BLOOMS_ON_WRITE => 'false', PREFETCH_BLO
+CKS_ON_OPEN => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536'}      
+{NAME => 'members', VERSIONS => '1', EVICT_BLOCKS_ON_CLOSE => 'false', NEW_VERSION_BEHAVIOR => '
+false', KEEP_DELETED_CELLS => 'FALSE', CACHE_DATA_ON_WRITE => 'false', DATA_BLOCK_ENCODING => 'N
+ONE', TTL => 'FOREVER', MIN_VERSIONS => '0', REPLICATION_SCOPE => '0', BLOOMFILTER => 'ROW', CAC
+HE_INDEX_ON_WRITE => 'false', IN_MEMORY => 'false', CACHE_BLOOMS_ON_WRITE => 'false', PREFETCH_B
+LOCKS_ON_OPEN => 'false', COMPRESSION => 'NONE', BLOCKCACHE => 'true', BLOCKSIZE => '65536'}    
+3 row(s)
+Took 0.3968 seconds                                                                             
+hbase(main):004:0> put 'library', 'book_9780061120084', 'books:title', 'To Kill a Mockingbird'
+Took 0.2402 seconds                                                                             
+hbase(main):005:0> put 'library', 'book_9780061120084', 'books:author_name', 'Harper Lee'
+Took 0.0085 seconds                                                                             
+hbase(main):006:0> put 'library', 'book_9780061120084', 'books:isbn', '9780061120084'
+Took 0.0126 seconds                                                                             
+hbase(main):007:0> put 'library', 'author_hlee', 'authors:name', 'Harper Lee'
+Took 0.0108 seconds                                                                             
+hbase(main):008:0> put 'library', 'author_hlee', 'authors:birthdate', 'April 28, 1926'
+Took 0.0180 seconds                                                                             
+hbase(main):009:0> put 'library', 'author_hlee', 'authors:nationality', 'American'
+Took 0.0181 seconds                                                                             
+hbase(main):010:0> put 'library', 'member_12345', 'members:name', 'John Smith'
+Took 0.0254 seconds                                                                             
+hbase(main):011:0> put 'library', 'member_12345', 'members:member_id', '12345'
+Took 0.0175 seconds                                                                             
+hbase(main):012:0> put 'library', 'member_12345', 'members:email', 'john@example.com'
+Took 0.0238 seconds                                                                             
+hbase(main):013:0> # Create a new book
+hbase(main):014:0* put 'library', 'book_9780451524935', 'books:title', '1984'
+Took 0.0197 seconds                                                                             
+hbase(main):015:0> put 'library', 'book_9780451524935', 'books:author_name', 'George Orwell'
+Took 0.0259 seconds                                                                             
+hbase(main):016:0> put 'library', 'book_9780451524935', 'books:isbn', '9780451524935'
+Took 0.0112 seconds                                                                             
+hbase(main):017:0> put 'library', 'book_9780451524935', 'books:title', '1984'
+Took 0.0096 seconds                                                                             
+hbase(main):018:0> put 'library', 'book_9780451524935', 'books:author_name', 'George Orwell'
+Took 0.0115 seconds                                                                             
+hbase(main):019:0> put 'library', 'book_9780451524935', 'books:isbn', '9780451524935'
+Took 0.0128 seconds                                                                             
+hbase(main):020:0> put 'library', 'member_67890', 'members:name', 'Jane Doe'
+Took 0.0264 seconds                                                                             
+hbase(main):021:0> put 'library', 'member_67890', 'members:member_id', '67890'
+Took 0.0162 seconds                                                                             
+hbase(main):022:0> put 'library', 'member_67890', 'members:email', 'jane@example.com'
+Took 0.0240 seconds                                                                             
+hbase(main):023:0> get 'library', 'book_9780061120084'
+COLUMN                    CELL                                                                  
+ books:author_name        timestamp=1762336525933, value=Harper Lee                             
+ books:isbn               timestamp=1762336526644, value=9780061120084                          
+ books:title              timestamp=1762336525891, value=To Kill a Mockingbird                  
+1 row(s)
+Took 0.1154 seconds                                                                             
+hbase(main):024:0> get 'library', 'author_hlee'
+COLUMN                    CELL                                                                  
+ authors:birthdate        timestamp=1762336531991, value=April 28, 1926                         
+ authors:name             timestamp=1762336531928, value=Harper Lee                             
+ authors:nationality      timestamp=1762336532713, value=American                               
+1 row(s)
+Took 0.0117 seconds                                                                             
+hbase(main):025:0> get 'library', 'member_12345'
+COLUMN                    CELL                                                                  
+ members:email            timestamp=1762336541358, value=john@example.com                       
+ members:member_id        timestamp=1762336540705, value=12345                                  
+ members:name             timestamp=1762336540649, value=John Smith                             
+1 row(s)
+Took 0.0381 seconds                                                                             
+hbase(main):026:0> scan 'library', {ROWPREFIXFILTER => 'book_'}
+ROW                       COLUMN+CELL                                                           
+ book_9780061120084       column=books:author_name, timestamp=1762336525933, value=Harper Lee   
+ book_9780061120084       column=books:isbn, timestamp=1762336526644, value=9780061120084       
+ book_9780061120084       column=books:title, timestamp=1762336525891, value=To Kill a Mockingbi
+                          rd                                                                    
+ book_9780451524935       column=books:author_name, timestamp=1762336557421, value=George Orwell
+ book_9780451524935       column=books:isbn, timestamp=1762336558826, value=9780451524935       
+ book_9780451524935       column=books:title, timestamp=1762336557367, value=1984               
+2 row(s)
+Took 0.0787 seconds                                                                             
+hbase(main):027:0> scan 'library', {ROWPREFIXFILTER => 'member_'}
+ROW                       COLUMN+CELL                                                           
+ member_12345             column=members:email, timestamp=1762336541358, value=john@example.com 
+ member_12345             column=members:member_id, timestamp=1762336540705, value=12345        
+ member_12345             column=members:name, timestamp=1762336540649, value=John Smith        
+ member_67890             column=members:email, timestamp=1762336565076, value=jane@example.com 
+ member_67890             column=members:member_id, timestamp=1762336564507, value=67890        
+ member_67890             column=members:name, timestamp=1762336564440, value=Jane Doe          
+2 row(s)
+Took 0.1323 seconds                                                                             
+hbase(main):028:0> put 'library', 'member_12345', 'members:email', 'john.smith@new-email.com'
+Took 0.0253 seconds                                                                             
+hbase(main):029:0> get 'library', 'member_12345'
+COLUMN                    CELL                                                                  
+ members:email            timestamp=1762336600006, value=john.smith@new-email.com               
+ members:member_id        timestamp=1762336540705, value=12345                                  
+ members:name             timestamp=1762336540649, value=John Smith                             
+1 row(s)
+Took 0.0287 seconds                                                                             
+hbase(main):030:0> delete 'library', 'book_9780061120084', 'books:isbn'
+Took 0.0344 seconds                                                                             
+hbase(main):031:0> get 'library', 'book_9780061120084'
+COLUMN                    CELL                                                                  
+ books:author_name        timestamp=1762336525933, value=Harper Lee                             
+ books:title              timestamp=1762336525891, value=To Kill a Mockingbird                  
+1 row(s)
+Took 0.0308 seconds                                                                             
+hbase(main):032:0> deleteall 'library', 'member_67890'
+Took 0.0249 seconds                                                                             
+hbase(main):033:0> get 'library', 'member_67890'
+COLUMN                    CELL                                                                  
+0 row(s)
+Took 0.0234 seconds                                                                             
+hbase(main):034:0> disable 'library
+hbase(main):035:0' '
+
+ERROR: Illegal character code:10, <
+> at 7. User-space table qualifiers may only contain 'alphanumeric characters' and digits: library
+
+For usage try 'help "disable"'
+
+Took 0.0316 seconds                                                                             
+hbase(main):036:0> disable 'library'
+Took 1.4934 seconds                                                                             
+hbase(main):037:0> drop 'library'
+Took 0.6295 seconds    
+

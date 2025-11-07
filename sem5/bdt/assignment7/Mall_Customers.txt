@@ -1,12 +1,9 @@
-grunt> customers = LOAD '/xyz/Mall_Customers.csv' USING PigStorage(',') AS (CustomerID:int, Gender:chararray, Age:int, Annual_Income:int, Spending_Score:int);
-
-
-grunt> grouped_customers = FOREACH customers GENERATE *, (CASE WHEN Age > 55 THEN 'high' WHEN Age > 25 THEN 'medium' ELSE 'low' END) AS age_category, (CASE WHEN Annual_Income > 100 THEN 'high' WHEN Annual_Income > 50 THEN 'medium' ELSE 'low' END) AS income_category, (CASE WHEN Spending_Score > 100 THEN 'high' WHEN Spending_Score > 50 THEN 'medium' ELSE 'low' END) AS spending_category;
-
-
-
-
-
+grunt> raw_data = LOAD '/xyz/Mall_Customers.csv' USING PigStorage(',') AS (CustomerID:int, Gender:chararray, Age:int, Annual_Income:int, Spending_Score:int);
+grunt> customers = FILTER raw_data BY CustomerID IS NOT NULL;
+grunt> grouped_customers = FOREACH customers GENERATE *,
+  (CASE WHEN Age > 55 THEN 'high' WHEN Age > 25 THEN 'medium' ELSE 'low' END) AS Age_Category,
+  (CASE WHEN Annual_Income > 100 THEN 'high' WHEN Annual_Income > 50 THEN 'medium' ELSE 'low' END) AS Income_Category,
+  (CASE WHEN Spending_Score > 100 THEN 'high' WHEN Spending_Score > 50 THEN 'medium' ELSE 'low' END) AS Spending_Category;
 
 
 
@@ -21,6 +18,553 @@ grunt> grouped_customers = FOREACH customers GENERATE *, (CASE WHEN Age > 55 THE
 
 
 
+grunt> STORE grouped_customers INTO '/xyz/grouped_customers.csv' USING PigStorage(',');
+2025-10-09 09:03:12,951 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: UNKNOWN
+2025-10-09 09:03:12,953 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:03:12,957 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.textoutputformat.separator is deprecated. Instead, use mapreduce.output.textoutputformat.separator
+2025-10-09 09:03:12,972 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:03:12,975 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 1
+2025-10-09 09:03:12,975 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:03:13,013 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:03:13,017 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:03:13,043 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:03:14,519 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job4859838901692206426.jar
+2025-10-09 09:03:17,756 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job4859838901692206426.jar created
+2025-10-09 09:03:17,762 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:03:17,762 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:03:17,762 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:03:17,762 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:03:17,771 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:03:17,771 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:03:17,772 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:03:17,778 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:03:18,308 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:03:18,308 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:03:18,315 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:03:18,770 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:1
+2025-10-09 09:03:19,212 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0003
+2025-10-09 09:03:19,345 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0003
+2025-10-09 09:03:19,355 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0003/
+2025-10-09 09:03:19,355 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0003
+2025-10-09 09:03:19,355 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases customers,grouped_customers
+2025-10-09 09:03:19,355 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],grouped_customers[2,20] C:  R: 
+2025-10-09 09:03:19,355 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0003
+2025-10-09 09:03:19,413 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:03:27,120 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:03:30,049 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:03:30,050 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:03:13	2025-10-09 09:03:30	UNKNOWN
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0003	1	0	1	1	1	1	n/a	n/a	n/a	n/a	customers,grouped_customers	MAP_ONLY	/xyz/grouped_customers.csv,
+
+Input(s):
+Successfully read 201 records (4345 bytes) from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 201 records (7198 bytes) in: "/xyz/grouped_customers.csv"
+
+Counters:
+Total records written : 201
+Total bytes written : 7198
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0003
+
+
+2025-10-09 09:03:30,193 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 4 time(s).
+2025-10-09 09:03:30,194 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+
+
+
+
+
+
+
+
+
+
+
+
+
+============================================================================================================================================================================
+
+
+
+
+grunt> grouped_by_spending = GROUP grouped_customers BY Spending_Category;
+grunt> DUMP grouped_by_spending;
+2025-10-09 09:19:39,031 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: GROUP_BY,FILTER
+2025-10-09 09:19:39,033 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:19:39,056 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:19:39,060 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 1
+2025-10-09 09:19:39,061 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:19:39,097 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:19:39,101 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:19:39,116 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:19:39,116 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Reduce phase detected, estimating # of required reducers.
+2025-10-09 09:19:39,117 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+2025-10-09 09:19:39,123 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=3972
+2025-10-09 09:19:39,123 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting Parallelism to 1
+2025-10-09 09:19:40,601 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job2175073103501539562.jar
+2025-10-09 09:19:43,856 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job2175073103501539562.jar created
+2025-10-09 09:19:43,861 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:19:43,861 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:19:43,861 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:19:43,861 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:19:43,870 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:19:43,871 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:19:43,873 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:19:43,881 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:19:44,491 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:19:44,491 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:19:44,495 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:19:44,931 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:1
+2025-10-09 09:19:45,400 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0009
+2025-10-09 09:19:45,474 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0009
+2025-10-09 09:19:45,481 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0009/
+2025-10-09 09:19:45,481 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0009
+2025-10-09 09:19:45,481 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases customers,grouped_by_spending,grouped_customers
+2025-10-09 09:19:45,481 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],customers[11,12],grouped_customers[12,20],grouped_by_spending[21,22] C:  R: 
+2025-10-09 09:19:45,481 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0009
+2025-10-09 09:19:45,526 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:19:53,269 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:20:01,082 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:20:01,082 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:19:39	2025-10-09 09:20:01	GROUP_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0009	1	1	1	1	1	1	2	2	22customers,grouped_by_spending,grouped_customers	GROUP_BY	hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp-1678844881,
+
+Input(s):
+Successfully read 201 records (4345 bytes) from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 2 records (8192 bytes) in: "hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp-1678844881"
+
+Counters:
+Total records written : 2
+Total bytes written : 8192
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0009
+
+
+2025-10-09 09:20:01,256 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 4 time(s).
+2025-10-09 09:20:01,256 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2025-10-09 09:20:01,257 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:20:01,257 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:20:01,257 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2025-10-09 09:20:01,274 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:20:01,274 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+(low,{(1,Male,19,15,39,low,low,low),(199,Male,32,137,18,medium,high,low),(197,Female,45,126,28,medium,high,low),(195,Female,47,120,16,medium,high,low),(193,Male,33,113,8,medium,high,low),(191,Female,34,103,23,medium,high,low),(189,Female,41,103,17,medium,high,low),(187,Female,54,101,24,medium,high,low),(185,Female,41,99,39,medium,medium,low),(183,Male,46,98,15,medium,medium,low),(181,Female,37,97,32,medium,medium,low),(179,Male,59,93,14,high,medium,low),(177,Male,58,88,15,high,medium,low),(175,Female,52,88,13,medium,medium,low),(173,Male,36,87,10,medium,medium,low),(171,Male,40,87,13,medium,medium,low),(169,Female,36,87,27,medium,medium,low),(167,Male,42,86,20,medium,medium,low),(165,Male,50,85,26,medium,medium,low),(163,Male,19,81,5,low,medium,low),(161,Female,56,79,35,high,medium,low),(159,Male,34,78,1,medium,medium,low),(157,Male,37,78,1,medium,medium,low),(155,Female,47,78,16,medium,medium,low),(153,Female,44,78,20,medium,medium,low),(151,Male,43,78,17,medium,medium,low),(149,Female,34,78,22,medium,medium,low),(147,Male,48,77,36,medium,medium,low),(145,Male,25,77,12,low,medium,low),(143,Female,28,76,40,medium,medium,low),(141,Female,57,75,5,high,medium,low),(139,Male,19,74,10,low,medium,low),(137,Female,44,73,7,medium,medium,low),(135,Male,20,73,5,low,medium,low),(133,Female,25,72,34,low,medium,low),(131,Male,47,71,9,medium,medium,low),(129,Male,59,71,11,high,medium,low),(127,Male,43,71,35,medium,medium,low),(125,Female,23,70,29,low,medium,low),(122,Female,38,67,40,medium,medium,low),(119,Female,51,67,43,medium,medium,low),(117,Female,63,65,43,high,medium,low),(116,Female,19,65,50,low,medium,low),(115,Female,18,65,48,low,medium,low),(114,Male,19,64,46,low,medium,low),(113,Female,38,64,42,medium,medium,low),(110,Male,66,63,48,high,medium,low),(109,Male,68,63,43,high,medium,low),(108,Male,54,63,46,medium,medium,low),(107,Female,66,63,50,high,medium,low),(106,Female,21,62,42,low,medium,low),(102,Female,49,62,48,medium,medium,low),(101,Female,23,62,41,low,medium,low),(100,Male,20,61,49,low,medium,low),(99,Male,48,61,42,medium,medium,low),(98,Female,27,60,50,medium,medium,low),(97,Female,47,60,47,medium,medium,low),(95,Female,32,60,42,medium,medium,low),(94,Female,40,60,40,medium,medium,low),(93,Male,48,60,49,medium,medium,low),(92,Male,18,59,41,low,medium,low),(90,Female,50,58,46,medium,medium,low),(86,Male,48,54,46,medium,medium,low),(84,Female,46,54,44,medium,medium,low),(83,Male,67,54,41,high,medium,low),(80,Female,49,54,42,medium,medium,low),(78,Male,40,54,48,medium,medium,low),(75,Male,59,54,47,high,medium,low),(73,Female,60,50,49,high,low,low),(72,Female,47,49,42,medium,low,low),(70,Female,32,48,47,medium,low,low),(68,Female,68,48,48,high,low,low),(67,Female,43,48,50,medium,low,low),(60,Male,53,46,46,medium,low,low),(58,Male,69,44,46,high,low,low),(57,Female,51,44,50,medium,low,low),(56,Male,47,43,41,medium,low,low),(55,Female,50,43,45,medium,low,low),(50,Female,31,40,42,medium,low,low),(49,Female,29,40,42,medium,low,low),(48,Female,27,40,47,medium,low,low),(45,Female,49,39,28,medium,low,low),(43,Male,48,39,36,medium,low,low),(41,Female,65,38,35,high,low,low),(39,Female,36,37,26,medium,low,low),(37,Female,42,34,17,medium,low,low),(35,Female,49,33,14,medium,low,low),(33,Male,53,33,4,medium,low,low),(31,Male,60,30,4,high,low,low),(29,Female,40,29,31,medium,low,low),(27,Female,45,28,32,medium,low,low),(25,Female,54,28,14,medium,low,low),(23,Female,46,25,5,medium,low,low),(21,Male,35,24,35,medium,low,low),(19,Male,52,23,29,medium,low,low),(17,Female,35,21,35,medium,low,low),(15,Male,37,20,13,medium,low,low),(13,Female,58,20,15,high,low,low),(11,Male,67,19,14,high,low,low),(9,Male,64,19,3,high,low,low),(7,Female,35,18,6,medium,low,low),(5,Female,31,17,40,medium,low,low),(3,Female,20,16,6,low,low,low)})
+(medium,{(194,Female,38,113,91,medium,high,medium),(24,Male,31,25,73,medium,low,medium),(192,Female,32,103,69,medium,high,medium),(2,Male,21,15,81,low,low,medium),(190,Female,36,103,85,medium,high,medium),(47,Female,50,40,55,medium,low,medium),(188,Male,28,101,68,medium,high,medium),(96,Male,24,60,52,low,medium,medium),(186,Male,30,99,97,medium,medium,medium),(46,Female,24,39,65,low,low,medium),(184,Female,29,98,88,medium,medium,medium),(22,Male,25,24,73,low,low,medium),(182,Female,32,97,86,medium,medium,medium),(44,Female,31,39,61,medium,low,medium),(180,Male,35,93,90,medium,medium,medium),(10,Female,30,19,72,medium,low,medium),(178,Male,27,88,69,medium,medium,medium),(91,Female,68,59,55,high,medium,medium),(176,Female,30,88,86,medium,medium,medium),(42,Male,24,38,92,low,low,medium),(174,Male,36,87,92,medium,medium,medium),(89,Female,34,58,60,medium,medium,medium),(172,Male,28,87,75,medium,medium,medium),(88,Female,22,57,55,low,medium,medium),(170,Male,32,87,63,medium,medium,medium),(87,Female,55,57,58,medium,medium,medium),(168,Female,33,86,95,medium,medium,medium),(20,Female,35,23,98,medium,low,medium),(166,Female,36,85,75,medium,medium,medium),(85,Female,21,54,57,low,medium,medium),(164,Female,31,81,93,medium,medium,medium),(40,Female,20,37,75,low,low,medium),(162,Female,29,79,83,medium,medium,medium),(4,Female,23,16,77,low,low,medium),(160,Female,30,78,73,medium,medium,medium),(82,Male,38,54,55,medium,medium,medium),(158,Female,30,78,78,medium,medium,medium),(81,Male,57,54,51,high,medium,medium),(156,Female,27,78,89,medium,medium,medium),(38,Female,30,34,73,medium,low,medium),(154,Female,38,78,76,medium,medium,medium),(79,Female,23,54,52,low,medium,medium),(152,Male,39,78,88,medium,medium,medium),(18,Male,20,21,66,low,low,medium),(150,Male,34,78,90,medium,medium,medium),(77,Female,45,54,53,medium,medium,medium),(148,Female,32,77,74,medium,medium,medium),(76,Male,26,54,54,medium,medium,medium),(146,Male,28,77,97,medium,medium,medium),(36,Female,21,33,81,low,low,medium),(144,Female,32,76,87,medium,medium,medium),(74,Female,60,50,56,high,low,medium),(142,Male,32,75,93,medium,medium,medium),(8,Female,23,18,94,low,low,medium),(140,Female,35,74,72,medium,medium,medium),(34,Male,18,33,92,low,low,medium),(138,Male,32,73,73,medium,medium,medium),(71,Male,70,49,55,high,low,medium),(136,Female,29,73,88,medium,medium,medium),(16,Male,22,20,79,low,low,medium),(134,Female,31,72,71,medium,medium,medium),(69,Male,19,48,59,low,low,medium),(132,Male,39,71,75,medium,medium,medium),(32,Female,21,30,73,low,low,medium),(130,Male,38,71,75,medium,medium,medium),(200,Male,30,137,83,medium,high,medium),(128,Male,40,71,95,medium,medium,medium),(66,Male,18,48,59,low,low,medium),(126,Female,31,70,77,medium,medium,medium),(65,Male,63,48,51,high,low,medium),(124,Male,39,69,91,medium,medium,medium),(123,Female,40,69,58,medium,medium,medium),(64,Female,54,47,59,medium,low,medium),(121,Male,27,67,56,medium,medium,medium),(120,Female,50,67,57,medium,medium,medium),(63,Female,67,47,52,high,low,medium),(118,Female,49,65,59,medium,medium,medium),(62,Male,19,46,55,low,low,medium),(61,Male,70,46,56,high,low,medium),(30,Female,23,29,87,low,low,medium),(59,Female,27,46,51,medium,low,medium),(14,Female,24,20,77,low,low,medium),(112,Female,19,63,54,low,medium,medium),(111,Male,65,63,52,high,medium,medium),(28,Male,35,28,61,medium,low,medium),(6,Female,22,17,76,low,low,medium),(26,Male,29,28,82,medium,low,medium),(54,Male,59,43,60,high,low,medium),(53,Female,31,43,54,medium,low,medium),(105,Male,49,62,56,medium,medium,medium),(104,Male,26,62,55,medium,medium,medium),(103,Male,67,62,59,high,medium,medium),(52,Male,33,42,60,medium,low,medium),(198,Male,32,126,74,medium,high,medium),(51,Female,49,42,52,medium,low,medium),(196,Female,35,120,79,medium,high,medium),(12,Female,35,19,99,medium,low,medium)})
+
+
+
+
+
+grunt> spending_analysis = FOREACH grouped_by_spending GENERATE group, COUNT(grouped_customers) AS total_customers, AVG(grouped_customers.Age) AS avg_age, AVG(grouped_customers.Annual_Income) AS avg_annual_income;
+grunt> DUMP spending_analysis;
+2025-10-09 09:44:42,130 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: GROUP_BY,FILTER
+2025-10-09 09:44:42,133 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:44:42,159 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:44:42,161 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.CombinerOptimizer - Choosing to move algebraic foreach to combiner
+2025-10-09 09:44:42,167 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 1
+2025-10-09 09:44:42,167 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:44:42,222 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:44:42,227 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:44:42,253 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:44:42,255 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Reduce phase detected, estimating # of required reducers.
+2025-10-09 09:44:42,255 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+2025-10-09 09:44:42,261 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=3972
+2025-10-09 09:44:42,261 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting Parallelism to 1
+2025-10-09 09:44:42,964 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job5303414849764580644.jar
+2025-10-09 09:44:48,532 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job5303414849764580644.jar created
+2025-10-09 09:44:48,539 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:44:48,540 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:44:48,540 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:44:48,540 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:44:48,562 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:44:48,562 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:44:48,564 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:44:48,568 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:44:48,719 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:44:48,719 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:44:48,727 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:44:48,787 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:1
+2025-10-09 09:44:49,223 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0015
+2025-10-09 09:44:49,371 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0015
+2025-10-09 09:44:49,385 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0015/
+2025-10-09 09:44:49,386 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0015
+2025-10-09 09:44:49,386 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases customers,grouped_by_spending,grouped_customers,spending_analysis
+2025-10-09 09:44:49,386 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],customers[11,12],grouped_customers[12,20],spending_analysis[30,20],grouped_by_spending[21,22] C: spending_analysis[30,20],grouped_by_spending[21,22] R: spending_analysis[30,20]
+2025-10-09 09:44:49,386 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0015
+2025-10-09 09:44:49,449 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:45:00,227 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:45:09,686 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:45:09,687 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:44:42	2025-10-09 09:45:09	GROUP_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0015	1	1	3	3	3	3	3	3	33customers,grouped_by_spending,grouped_customers,spending_analysis	GROUP_BY,COMBINERhdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1321779981,
+
+Input(s):
+Successfully read 201 records (4345 bytes) from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 2 records (63 bytes) in: "hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1321779981"
+
+Counters:
+Total records written : 2
+Total bytes written : 63
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0015
+
+
+2025-10-09 09:45:09,940 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 4 time(s).
+2025-10-09 09:45:09,940 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2025-10-09 09:45:09,943 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:45:09,943 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:45:09,944 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2025-10-09 09:45:09,966 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:45:09,966 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+(low,103,42.85436893203884,60.699029126213595)
+(medium,97,34.597938144329895,60.41237113402062)
+
+
+
+
+
+
+
+
+
+============================================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+grunt> grouped_by_age_income = GROUP grouped_customers BY (Age_Category, Income_Category);
+grunt> DUMP grouped_by_age_income;
+2025-10-09 09:21:16,543 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: GROUP_BY,FILTER
+2025-10-09 09:21:16,546 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:21:16,563 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:21:16,565 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 1
+2025-10-09 09:21:16,565 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:21:16,602 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:21:16,605 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:21:16,617 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:21:16,618 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Reduce phase detected, estimating # of required reducers.
+2025-10-09 09:21:16,618 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+2025-10-09 09:21:16,621 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=3972
+2025-10-09 09:21:16,621 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting Parallelism to 1
+2025-10-09 09:21:18,106 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job4830475047735933539.jar
+2025-10-09 09:21:21,350 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job4830475047735933539.jar created
+2025-10-09 09:21:21,355 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:21:21,356 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:21:21,356 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:21:21,356 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:21:21,365 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:21:21,365 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:21:21,367 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:21:21,375 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:21:21,592 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:21:21,593 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:21:21,600 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:21:22,050 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:1
+2025-10-09 09:21:22,487 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0010
+2025-10-09 09:21:22,589 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0010
+2025-10-09 09:21:22,602 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0010/
+2025-10-09 09:21:22,602 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0010
+2025-10-09 09:21:22,602 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases customers,grouped_by_age_income,grouped_customers
+2025-10-09 09:21:22,602 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],customers[11,12],grouped_customers[12,20],grouped_by_age_income[22,24] C:  R: 
+2025-10-09 09:21:22,602 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0010
+2025-10-09 09:21:22,654 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:21:29,651 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:21:37,940 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:21:37,940 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:21:16	2025-10-09 09:21:37	GROUP_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0010	1	1	1	1	1	1	2	2	22customers,grouped_by_age_income,grouped_customers	GROUP_BY	hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1213616024,
+
+Input(s):
+Successfully read 201 records (4345 bytes) from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 7 records (8319 bytes) in: "hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1213616024"
+
+Counters:
+Total records written : 7
+Total bytes written : 8319
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0010
+
+
+2025-10-09 09:21:38,097 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 4 time(s).
+2025-10-09 09:21:38,097 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2025-10-09 09:21:38,098 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:21:38,098 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:21:38,099 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2025-10-09 09:21:38,112 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:21:38,112 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+((low,low),{(1,Male,19,15,39,low,low,low),(2,Male,21,15,81,low,low,medium),(3,Female,20,16,6,low,low,low),(4,Female,23,16,77,low,low,medium),(6,Female,22,17,76,low,low,medium),(8,Female,23,18,94,low,low,medium),(14,Female,24,20,77,low,low,medium),(16,Male,22,20,79,low,low,medium),(18,Male,20,21,66,low,low,medium),(22,Male,25,24,73,low,low,medium),(30,Female,23,29,87,low,low,medium),(32,Female,21,30,73,low,low,medium),(34,Male,18,33,92,low,low,medium),(36,Female,21,33,81,low,low,medium),(40,Female,20,37,75,low,low,medium),(42,Male,24,38,92,low,low,medium),(46,Female,24,39,65,low,low,medium),(62,Male,19,46,55,low,low,medium),(66,Male,18,48,59,low,low,medium),(69,Male,19,48,59,low,low,medium)})
+((low,medium),{(100,Male,20,61,49,low,medium,low),(163,Male,19,81,5,low,medium,low),(145,Male,25,77,12,low,medium,low),(139,Male,19,74,10,low,medium,low),(135,Male,20,73,5,low,medium,low),(133,Female,25,72,34,low,medium,low),(125,Female,23,70,29,low,medium,low),(116,Female,19,65,50,low,medium,low),(115,Female,18,65,48,low,medium,low),(114,Male,19,64,46,low,medium,low),(112,Female,19,63,54,low,medium,medium),(106,Female,21,62,42,low,medium,low),(101,Female,23,62,41,low,medium,low),(96,Male,24,60,52,low,medium,medium),(92,Male,18,59,41,low,medium,low),(88,Female,22,57,55,low,medium,medium),(85,Female,21,54,57,low,medium,medium),(79,Female,23,54,52,low,medium,medium)})
+((high,low),{(13,Female,58,20,15,high,low,low),(31,Male,60,30,4,high,low,low),(41,Female,65,38,35,high,low,low),(54,Male,59,43,60,high,low,medium),(58,Male,69,44,46,high,low,low),(61,Male,70,46,56,high,low,medium),(63,Female,67,47,52,high,low,medium),(65,Male,63,48,51,high,low,medium),(68,Female,68,48,48,high,low,low),(71,Male,70,49,55,high,low,medium),(73,Female,60,50,49,high,low,low),(74,Female,60,50,56,high,low,medium),(9,Male,64,19,3,high,low,low),(11,Male,67,19,14,high,low,low)})
+((high,medium),{(117,Female,63,65,43,high,medium,low),(75,Male,59,54,47,high,medium,low),(129,Male,59,71,11,high,medium,low),(177,Male,58,88,15,high,medium,low),(179,Male,59,93,14,high,medium,low),(81,Male,57,54,51,high,medium,medium),(83,Male,67,54,41,high,medium,low),(91,Female,68,59,55,high,medium,medium),(103,Male,67,62,59,high,medium,medium),(107,Female,66,63,50,high,medium,low),(141,Female,57,75,5,high,medium,low),(109,Male,68,63,43,high,medium,low),(161,Female,56,79,35,high,medium,low),(110,Male,66,63,48,high,medium,low),(111,Male,65,63,52,high,medium,medium)})
+((medium,low),{(17,Female,35,21,35,medium,low,low),(15,Male,37,20,13,medium,low,low),(12,Female,35,19,99,medium,low,medium),(10,Female,30,19,72,medium,low,medium),(7,Female,35,18,6,medium,low,low),(5,Female,31,17,40,medium,low,low),(72,Female,47,49,42,medium,low,low),(70,Female,32,48,47,medium,low,low),(67,Female,43,48,50,medium,low,low),(64,Female,54,47,59,medium,low,medium),(60,Male,53,46,46,medium,low,low),(59,Female,27,46,51,medium,low,medium),(57,Female,51,44,50,medium,low,low),(56,Male,47,43,41,medium,low,low),(55,Female,50,43,45,medium,low,low),(53,Female,31,43,54,medium,low,medium),(52,Male,33,42,60,medium,low,medium),(51,Female,49,42,52,medium,low,medium),(50,Female,31,40,42,medium,low,low),(49,Female,29,40,42,medium,low,low),(48,Female,27,40,47,medium,low,low),(47,Female,50,40,55,medium,low,medium),(45,Female,49,39,28,medium,low,low),(44,Female,31,39,61,medium,low,medium),(43,Male,48,39,36,medium,low,low),(39,Female,36,37,26,medium,low,low),(38,Female,30,34,73,medium,low,medium),(37,Female,42,34,17,medium,low,low),(35,Female,49,33,14,medium,low,low),(33,Male,53,33,4,medium,low,low),(29,Female,40,29,31,medium,low,low),(28,Male,35,28,61,medium,low,medium),(27,Female,45,28,32,medium,low,low),(26,Male,29,28,82,medium,low,medium),(25,Female,54,28,14,medium,low,low),(24,Male,31,25,73,medium,low,medium),(23,Female,46,25,5,medium,low,low),(21,Male,35,24,35,medium,low,low),(20,Female,35,23,98,medium,low,medium),(19,Male,52,23,29,medium,low,low)})
+((medium,high),{(200,Male,30,137,83,medium,high,medium),(196,Female,35,120,79,medium,high,medium),(190,Female,36,103,85,medium,high,medium),(189,Female,41,103,17,medium,high,low),(195,Female,47,120,16,medium,high,low),(191,Female,34,103,23,medium,high,low),(193,Male,33,113,8,medium,high,low),(188,Male,28,101,68,medium,high,medium),(198,Male,32,126,74,medium,high,medium),(199,Male,32,137,18,medium,high,low),(187,Female,54,101,24,medium,high,low),(192,Female,32,103,69,medium,high,medium),(197,Female,45,126,28,medium,high,low),(194,Female,38,113,91,medium,high,medium)})
+((medium,medium),{(93,Male,48,60,49,medium,medium,low),(144,Female,32,76,87,medium,medium,medium),(90,Female,50,58,46,medium,medium,low),(89,Female,34,58,60,medium,medium,medium),(87,Female,55,57,58,medium,medium,medium),(86,Male,48,54,46,medium,medium,low),(84,Female,46,54,44,medium,medium,low),(82,Male,38,54,55,medium,medium,medium),(146,Male,28,77,97,medium,medium,medium),(80,Female,49,54,42,medium,medium,low),(78,Male,40,54,48,medium,medium,low),(77,Female,45,54,53,medium,medium,medium),(76,Male,26,54,54,medium,medium,medium),(147,Male,48,77,36,medium,medium,low),(148,Female,32,77,74,medium,medium,medium),(149,Female,34,78,22,medium,medium,low),(150,Male,34,78,90,medium,medium,medium),(173,Male,36,87,10,medium,medium,low),(181,Female,37,97,32,medium,medium,low),(151,Male,43,78,17,medium,medium,low),(182,Female,32,97,86,medium,medium,medium),(152,Male,39,78,88,medium,medium,medium),(158,Female,30,78,78,medium,medium,medium),(153,Female,44,78,20,medium,medium,low),(183,Male,46,98,15,medium,medium,low),(154,Female,38,78,76,medium,medium,medium),(172,Male,28,87,75,medium,medium,medium),(155,Female,47,78,16,medium,medium,low),(171,Male,40,87,13,medium,medium,low),(170,Male,32,87,63,medium,medium,medium),(169,Female,36,87,27,medium,medium,low),(156,Female,27,78,89,medium,medium,medium),(168,Female,33,86,95,medium,medium,medium),(167,Male,42,86,20,medium,medium,low),(166,Female,36,85,75,medium,medium,medium),(165,Male,50,85,26,medium,medium,low),(164,Female,31,81,93,medium,medium,medium),(162,Female,29,79,83,medium,medium,medium),(184,Female,29,98,88,medium,medium,medium),(159,Male,34,78,1,medium,medium,low),(178,Male,27,88,69,medium,medium,medium),(185,Female,41,99,39,medium,medium,low),(157,Male,37,78,1,medium,medium,low),(186,Male,30,99,97,medium,medium,medium),(160,Female,30,78,73,medium,medium,medium),(131,Male,47,71,9,medium,medium,low),(130,Male,38,71,75,medium,medium,medium),(132,Male,39,71,75,medium,medium,medium),(128,Male,40,71,95,medium,medium,medium),(127,Male,43,71,35,medium,medium,low),(126,Female,31,70,77,medium,medium,medium),(176,Female,30,88,86,medium,medium,medium),(124,Male,39,69,91,medium,medium,medium),(123,Female,40,69,58,medium,medium,medium),(122,Female,38,67,40,medium,medium,low),(121,Male,27,67,56,medium,medium,medium),(120,Female,50,67,57,medium,medium,medium),(119,Female,51,67,43,medium,medium,low),(118,Female,49,65,59,medium,medium,medium),(134,Female,31,72,71,medium,medium,medium),(175,Female,52,88,13,medium,medium,low),(136,Female,29,73,88,medium,medium,medium),(113,Female,38,64,42,medium,medium,low),(137,Female,44,73,7,medium,medium,low),(138,Male,32,73,73,medium,medium,medium),(140,Female,35,74,72,medium,medium,medium),(108,Male,54,63,46,medium,medium,low),(142,Male,32,75,93,medium,medium,medium),(105,Male,49,62,56,medium,medium,medium),(104,Male,26,62,55,medium,medium,medium),(143,Female,28,76,40,medium,medium,low),(102,Female,49,62,48,medium,medium,low),(180,Male,35,93,90,medium,medium,medium),(99,Male,48,61,42,medium,medium,low),(98,Female,27,60,50,medium,medium,low),(97,Female,47,60,47,medium,medium,low),(174,Male,36,87,92,medium,medium,medium),(95,Female,32,60,42,medium,medium,low),(94,Female,40,60,40,medium,medium,low)})
+
+
+
+
+
+
+
+
+
+
+
+
+
+grunt> age_income_analysis = FOREACH grouped_by_age_income GENERATE group, COUNT(grouped_customers) AS total_in_group, AVG(grouped_customers.Age) AS avg_age, AVG(grouped_customers.Spending_Score) AS avg_spending_score;
+grunt> DUMP age_income_analysis;
+2025-10-09 09:34:02,411 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: GROUP_BY,FILTER
+2025-10-09 09:34:02,413 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:34:02,432 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:34:02,434 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.CombinerOptimizer - Choosing to move algebraic foreach to combiner
+2025-10-09 09:34:02,437 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 1
+2025-10-09 09:34:02,437 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:34:02,466 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:34:02,468 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:34:02,483 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:34:02,484 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Reduce phase detected, estimating # of required reducers.
+2025-10-09 09:34:02,484 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+2025-10-09 09:34:02,491 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=3972
+2025-10-09 09:34:02,491 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting Parallelism to 1
+2025-10-09 09:34:03,571 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job8076046355404047362.jar
+2025-10-09 09:34:06,818 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job8076046355404047362.jar created
+2025-10-09 09:34:06,823 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:34:06,823 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:34:06,824 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:34:06,824 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:34:06,836 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:34:06,836 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:34:06,838 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:34:06,840 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:34:06,917 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:34:06,917 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:34:06,922 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:34:07,364 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:1
+2025-10-09 09:34:07,391 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0014
+2025-10-09 09:34:07,470 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0014
+2025-10-09 09:34:07,480 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0014/
+2025-10-09 09:34:07,480 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0014
+2025-10-09 09:34:07,480 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases age_income_analysis,customers,grouped_by_age_income,grouped_customers
+2025-10-09 09:34:07,480 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],customers[11,12],grouped_customers[12,20],age_income_analysis[29,22],grouped_by_age_income[22,24] C: age_income_analysis[29,22],grouped_by_age_income[22,24] R: age_income_analysis[29,22]
+2025-10-09 09:34:07,480 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0014
+2025-10-09 09:34:07,526 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:34:15,072 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:34:23,402 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:34:23,403 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:34:02	2025-10-09 09:34:23	GROUP_BY,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0014	1	1	1	1	1	1	2	2	22age_income_analysis,customers,grouped_by_age_income,grouped_customers	GROUP_BY,COMBINERhdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1853681121,
+
+Input(s):
+Successfully read 201 records (4345 bytes) from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 7 records (280 bytes) in: "hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1853681121"
+
+Counters:
+Total records written : 7
+Total bytes written : 280
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0014
+
+
+2025-10-09 09:34:23,569 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 4 time(s).
+2025-10-09 09:34:23,569 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2025-10-09 09:34:23,570 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:34:23,570 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:34:23,571 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2025-10-09 09:34:23,580 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:34:23,580 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+((low,low),20,21.3,70.3)
+((low,medium),18,21.0,37.888888888888886)
+((high,low),14,64.28571428571429,38.857142857142854)
+((high,medium),15,62.333333333333336,37.93333333333333)
+((medium,low),40,39.925,44.175)
+((medium,high),14,36.92857142857143,48.785714285714285)
+((medium,medium),79,38.18987341772152,55.55696202531646)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+============================================================================================================================================================================
+
+
+
+
+
+
+
+grunt> high_income_customers = FILTER customers BY Annual_Income > 100;
+2025-10-09 09:05:26,382 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:05:26,383 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+grunt> DUMP high_income_customers;
+2025-10-09 09:05:43,952 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: FILTER
+2025-10-09 09:05:43,953 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:05:43,976 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:05:43,979 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 1
+2025-10-09 09:05:43,979 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:05:44,018 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:05:44,022 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:05:44,031 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:05:45,527 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job5248922900476759300.jar
+2025-10-09 09:05:48,779 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job5248922900476759300.jar created
+2025-10-09 09:05:48,784 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:05:48,784 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:05:48,784 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:05:48,785 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:05:48,791 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:05:48,791 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:05:48,792 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:05:48,797 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:05:48,984 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:05:48,985 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:05:48,990 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:05:49,036 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:1
+2025-10-09 09:05:49,082 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0004
+2025-10-09 09:05:49,171 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0004
+2025-10-09 09:05:49,177 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0004/
+2025-10-09 09:05:49,291 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0004
+2025-10-09 09:05:49,291 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases customers,high_income_customers
+2025-10-09 09:05:49,291 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],high_income_customers[10,24] C:  R: 
+2025-10-09 09:05:49,292 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0004
+2025-10-09 09:05:49,341 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:05:57,099 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:05:59,569 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:05:59,570 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:05:44	2025-10-09 09:05:59	FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0004	1	0	2	2	2	2	n/a	n/a	n/a	n/a	customers,high_income_customers	MAP_ONLY	hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1265941075,
+
+Input(s):
+Successfully read 201 records (4345 bytes) from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 14 records (300 bytes) in: "hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp1265941075"
+
+Counters:
+Total records written : 14
+Total bytes written : 300
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0004
+
+
+2025-10-09 09:05:59,714 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 4 time(s).
+2025-10-09 09:05:59,715 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2025-10-09 09:05:59,715 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:05:59,715 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:05:59,716 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2025-10-09 09:05:59,732 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:05:59,732 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+(187,Female,54,101,24)
+(188,Male,28,101,68)
+(189,Female,41,103,17)
+(190,Female,36,103,85)
+(191,Female,34,103,23)
+(192,Female,32,103,69)
+(193,Male,33,113,8)
+(194,Female,38,113,91)
+(195,Female,47,120,16)
+(196,Female,35,120,79)
+(197,Female,45,126,28)
+(198,Male,32,126,74)
+(199,Male,32,137,18)
+(200,Male,30,137,83)
 
 
 
@@ -47,79 +591,98 @@ grunt> grouped_customers = FOREACH customers GENERATE *, (CASE WHEN Age > 55 THE
 
 
 
+grunt> high_income_customers_joined = JOIN high_income_customers BY CustomerID, grouped_customers BY CustomerID;
+grunt> DUMP high_income_customers_joined;
+2025-10-09 09:18:18,815 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig features used in the script: HASH_JOIN,FILTER
+2025-10-09 09:18:18,817 [main] INFO  org.apache.pig.newplan.logical.optimizer.LogicalPlanOptimizer - {RULES_ENABLED=[AddForEach, ColumnMapKeyPrune, DuplicateForEachColumnRewrite, GroupByConstParallelSetter, ImplicitSplitInserter, LimitOptimizer, LoadTypeCastInserter, MergeFilter, MergeForEach, NewPartitionFilterOptimizer, PushDownForEachFlatten, PushUpFilter, SplitFilter, StreamTypeCastInserter], RULES_DISABLED=[FilterLogicExpressionSimplifier, PartitionFilterOptimizer]}
+2025-10-09 09:18:18,854 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler - File concatenation threshold: 100 optimistic? false
+2025-10-09 09:18:18,871 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MRCompiler$LastInputStreamingOptimizer - Rewrite: POPackage->POForEach to POJoinPackage
+2025-10-09 09:18:18,872 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size before optimization: 2
+2025-10-09 09:18:18,899 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - Merged 1 diamond splitter.
+2025-10-09 09:18:18,899 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - Merged 1 out of total 2 MR operators.
+2025-10-09 09:18:18,900 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MultiQueryOptimizer - MR plan size after optimization: 1
+2025-10-09 09:18:18,939 [main] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:18:18,942 [main] INFO  org.apache.pig.tools.pigstats.ScriptState - Pig script settings are added to the job
+2025-10-09 09:18:18,956 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - mapred.job.reduce.markreset.buffer.percent is not set, set to default 0.3
+2025-10-09 09:18:18,956 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Reduce phase detected, estimating # of required reducers.
+2025-10-09 09:18:18,957 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Using reducer estimator: org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator
+2025-10-09 09:18:18,962 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.InputSizeReducerEstimator - BytesPerReducer=1000000000 maxReducers=999 totalInputFileSize=7944
+2025-10-09 09:18:18,962 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting Parallelism to 1
+2025-10-09 09:18:20,835 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - creating jar file Job717213615727399492.jar
+2025-10-09 09:18:24,097 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - jar file Job717213615727399492.jar created
+2025-10-09 09:18:24,103 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.JobControlCompiler - Setting up single store job
+2025-10-09 09:18:24,103 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Key [pig.schematuple] is false, will not generate code.
+2025-10-09 09:18:24,103 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Starting process to move generated code to distributed cache
+2025-10-09 09:18:24,103 [main] INFO  org.apache.pig.data.SchemaTupleFrontend - Setting key [pig.schematuple.classes] with classes to deserialize []
+2025-10-09 09:18:24,128 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 1 map-reduce job(s) waiting for submission.
+2025-10-09 09:18:24,128 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:18:24,132 [JobControl] INFO  org.apache.hadoop.yarn.client.RMProxy - Connecting to ResourceManager at /0.0.0.0:8032
+2025-10-09 09:18:24,141 [JobControl] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:18:24,670 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:18:24,671 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:18:24,674 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:18:24,688 [JobControl] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:18:24,688 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+2025-10-09 09:18:24,692 [JobControl] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths (combined) to process : 1
+2025-10-09 09:18:25,145 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - number of splits:2
+2025-10-09 09:18:25,586 [JobControl] INFO  org.apache.hadoop.mapreduce.JobSubmitter - Submitting tokens for job: job_1759998356939_0008
+2025-10-09 09:18:25,678 [JobControl] INFO  org.apache.hadoop.yarn.client.api.impl.YarnClientImpl - Submitted application application_1759998356939_0008
+2025-10-09 09:18:25,688 [JobControl] INFO  org.apache.hadoop.mapreduce.Job - The url to track the job: http://quickstart.cloudera:8088/proxy/application_1759998356939_0008/
+2025-10-09 09:18:25,688 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - HadoopJobId: job_1759998356939_0008
+2025-10-09 09:18:25,688 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Processing aliases customers,grouped_customers,high_income_customers,high_income_customers_joined
+2025-10-09 09:18:25,688 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - detailed locations: M: customers[1,12],customers[-1,-1],high_income_customers[10,24],high_income_customers_joined[20,31],customers[1,12],customers[-1,-1],customers[11,12],grouped_customers[12,20],high_income_customers_joined[20,31] C:  R: 
+2025-10-09 09:18:25,688 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - More information at: http://localhost:50030/jobdetails.jsp?jobid=job_1759998356939_0008
+2025-10-09 09:18:25,739 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 0% complete
+2025-10-09 09:18:33,967 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 25% complete
+2025-10-09 09:18:34,514 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 50% complete
+2025-10-09 09:18:41,159 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - 100% complete
+2025-10-09 09:18:41,160 [main] INFO  org.apache.pig.tools.pigstats.SimplePigStats - Script Statistics: 
+
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+2.6.0-cdh5.7.0	0.12.0-cdh5.7.0	root	2025-10-09 09:18:18	2025-10-09 09:18:41	HASH_JOIN,FILTER
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_1759998356939_0008	2	1	1	1	1	1	2	2	22customers,grouped_customers,high_income_customers,high_income_customers_joined	HASH_JOINhdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp-102352155,
+
+Input(s):
+Successfully read 201 records from: "/xyz/Mall_Customers.csv"
+Successfully read 201 records from: "/xyz/Mall_Customers.csv"
+
+Output(s):
+Successfully stored 14 records (887 bytes) in: "hdfs://quickstart.cloudera:8020/tmp/temp1668634486/tmp-102352155"
+
+Counters:
+Total records written : 14
+Total bytes written : 887
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_1759998356939_0008
 
 
-
--- =================================================================
--- Step 1: Load customer data from HDFS
--- =================================================================
--- Assumes the CSV file is in HDFS and has a header row.
--- The schema is defined according to the CSV header.
-raw_data = LOAD 'hdfs:/path/to/your/customer_data.csv' USING PigStorage(',')
-           AS (CustomerID:int, Gender:chararray, Age:int, Annual_Income:int, Spending_Score:int);
-
--- Filter out the header row. This works if the first column of the header
--- cannot be cast to an integer, which is a common case.
-customers = FILTER raw_data BY CustomerID IS NOT NULL;
-
-
--- =================================================================
--- Step 2 & 3: Segment customers based on Age, Income, and Spending Score
--- =================================================================
--- A single FOREACH statement is used to generate all segments for efficiency.
--- The thresholds for segmentation are defined here and can be adjusted.
-segmented_customers = FOREACH customers GENERATE
-    CustomerID,
-    Gender,
-    Age,
-    Annual_Income,
-    Spending_Score,
-    -- Age segmentation
-    (CASE
-        WHEN Age <= 30 THEN 'Young'
-        WHEN Age > 30 AND Age <= 50 THEN 'Middle-Aged'
-        ELSE 'Senior'
-    END) AS age_segment,
-    -- Income segmentation
-    (CASE
-        WHEN Annual_Income <= 40 THEN 'Low_Income'
-        WHEN Annual_Income > 40 AND Annual_Income <= 80 THEN 'Medium_Income'
-        ELSE 'High_Income'
-    END) AS income_segment,
-    -- Spending Score segmentation
-    (CASE
-        WHEN Spending_Score <= 35 THEN 'Low_Spender'
-        WHEN Spending_Score > 35 AND Spending_Score <= 70 THEN 'Average_Spender'
-        ELSE 'High_Spender'
-    END) AS spending_segment;
-
-
--- =================================================================
--- Step 4: Analyze customer segments
--- =================================================================
--- Analysis 4a: Group by age and income segments to find behavioral patterns.
-grouped_by_demographics = GROUP segmented_customers BY (age_segment, income_segment);
-
-demographic_analysis = FOREACH grouped_by_demographics GENERATE
-    FLATTEN(group) AS (age_segment, income_segment),
-    COUNT(segmented_customers) AS total_customers,
-    AVG(segmented_customers.Spending_Score) AS avg_spending_score,
-    AVG(segmented_customers.Age) AS avg_age;
-
--- Analysis 4b: Group by spending segment to understand demographics.
-grouped_by_spending = GROUP segmented_customers BY spending_segment;
-
-spending_analysis = FOREACH grouped_by_spending GENERATE
-    group AS spending_segment,
-    COUNT(segmented_customers) AS total_customers,
-    AVG(segmented_customers.Age) AS avg_age,
-    AVG(segmented_customers.Annual_Income) AS avg_annual_income;
-
-
--- =================================================================
--- Step 5: Store the results into HDFS
--- =================================================================
--- The results are stored in separate directories in CSV format.
--- NOTE: Pig will fail if these HDFS directories already exist.
-STORE demographic_analysis INTO 'hdfs:/output/demographic_analysis_results' USING PigStorage(',');
-STORE spending_analysis INTO 'hdfs:/output/spending_analysis_results' USING PigStorage(',');
+2025-10-09 09:18:41,337 [main] WARN  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Encountered Warning FIELD_DISCARDED_TYPE_CONVERSION_FAILED 8 time(s).
+2025-10-09 09:18:41,337 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
+2025-10-09 09:18:41,337 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2025-10-09 09:18:41,337 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2025-10-09 09:18:41,338 [main] INFO  org.apache.pig.data.SchemaTupleBackend - Key [pig.schematuple] was not set... will not generate code.
+2025-10-09 09:18:41,377 [main] INFO  org.apache.hadoop.mapreduce.lib.input.FileInputFormat - Total input paths to process : 1
+2025-10-09 09:18:41,377 [main] INFO  org.apache.pig.backend.hadoop.executionengine.util.MapRedUtil - Total input paths to process : 1
+(187,Female,54,101,24,187,Female,54,101,24,medium,high,low)
+(188,Male,28,101,68,188,Male,28,101,68,medium,high,medium)
+(189,Female,41,103,17,189,Female,41,103,17,medium,high,low)
+(190,Female,36,103,85,190,Female,36,103,85,medium,high,medium)
+(191,Female,34,103,23,191,Female,34,103,23,medium,high,low)
+(192,Female,32,103,69,192,Female,32,103,69,medium,high,medium)
+(193,Male,33,113,8,193,Male,33,113,8,medium,high,low)
+(194,Female,38,113,91,194,Female,38,113,91,medium,high,medium)
+(195,Female,47,120,16,195,Female,47,120,16,medium,high,low)
+(196,Female,35,120,79,196,Female,35,120,79,medium,high,medium)
+(197,Female,45,126,28,197,Female,45,126,28,medium,high,low)
+(198,Male,32,126,74,198,Male,32,126,74,medium,high,medium)
+(199,Male,32,137,18,199,Male,32,137,18,medium,high,low)
+(200,Male,30,137,83,200,Male,30,137,83,medium,high,medium)

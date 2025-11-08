@@ -42,7 +42,7 @@ func UpdateLCD(line1 string, line2 string) {
 			return
 		}
 		uvPath := filepath.Join(homeDir, ".local", "bin", "uv")
-		err = exec.Command(uvPath, "run", "main.py", line1, line2).Run()
+		err = exec.Command(uvPath, "run", "lcd.py", line1, line2).Run()
 		if err != nil {
 			println(err.Error())
 		}

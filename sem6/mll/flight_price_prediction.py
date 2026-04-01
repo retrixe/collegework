@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib
+import json
 from dataclasses import dataclass
 from pathlib import Path
 from time import perf_counter
@@ -33,6 +35,7 @@ class RunConfig:
     use_log_target: bool
     max_rows: int | None
     cv_folds: int
+    use_cache: bool
 
 
 def parse_args() -> RunConfig:
@@ -80,6 +83,11 @@ def parse_args() -> RunConfig:
         default=3,
         help="Number of cross-validation folds (set 0 or 1 to skip CV)",
     )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Disable per-model cache loading/saving",
+    )
 
     args = parser.parse_args()
     return RunConfig(
@@ -90,7 +98,35 @@ def parse_args() -> RunConfig:
         use_log_target=args.use_log_target,
         max_rows=args.max_rows,
         cv_folds=args.cv_folds,
+        use_cache=not args.no_cache,
     )
+
+
+def build_cache_namespace(
+    config: RunConfig,
+    data_path: Path,
+    X_train: pd.DataFrame,
+    X_test: pd.DataFrame,
+    model_names: list[str],
+) -> str:
+    stat_result = data_path.stat()
+    payload = {
+        "data_path": str(data_path.resolve()),
+        "data_mtime_ns": stat_result.st_mtime_ns,
+        "data_size": stat_result.st_size,
+        "random_state": config.random_state,
+        "test_size": config.test_size,
+        "use_log_target": config.use_log_target,
+        "max_rows": config.max_rows,
+        "cv_folds": config.cv_folds,
+        "n_train": int(len(X_train)),
+        "n_test": int(len(X_test)),
+        "columns": X_train.columns.tolist(),
+        "models": sorted(model_names),
+    }
+    payload_json = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+    digest = hashlib.sha256(payload_json.encode("utf-8")).hexdigest()
+    return digest[:16]
 
 
 def load_and_prepare_data(
@@ -231,9 +267,12 @@ def evaluate_models(
     y_test: pd.Series,
     preprocessor: ColumnTransformer,
     models: dict[str, object],
+    output_dir: Path,
+    cache_namespace: str,
     random_state: int,
     cv_folds: int,
     use_log_target: bool,
+    use_cache: bool,
 ) -> tuple[pd.DataFrame, Pipeline]:
     rows: list[dict[str, float | str]] = []
     best_rmse = float("inf")
@@ -248,49 +287,87 @@ def evaluate_models(
     y_train_fit = np.log1p(y_train) if use_log_target else y_train
     total_models = len(models)
 
+    cache_dir = output_dir / "model_cache"
+    if use_cache:
+        cache_dir.mkdir(parents=True, exist_ok=True)
+
+    joblib_module = None
+    if use_cache:
+        try:
+            joblib_module = importlib.import_module("joblib")
+        except ImportError:
+            print("joblib not installed; proceeding without model cache.")
+            use_cache = False
+
     for idx, (model_name, estimator) in enumerate(models.items(), start=1):
         model_start = perf_counter()
-        print(f"[{idx}/{total_models}] Training model: {model_name}")
-        pipe = Pipeline(
-            steps=[
-                ("preprocessor", preprocessor),
-                ("model", estimator),
-            ]
-        )
-
-        if cv_folds >= 2:
-            cv = KFold(
-                n_splits=cv_folds,
-                shuffle=True,
-                random_state=random_state,
-            )
-            cv_results = cross_validate(
-                pipe,
-                X_train,
-                y_train_fit,
-                cv=cv,
-                scoring=scoring,
-                n_jobs=1,
-            )
-            cv_rmse_mean = float(-cv_results["test_rmse"].mean())
-            cv_rmse_std = float(cv_results["test_rmse"].std())
-            cv_mae_mean = float(-cv_results["test_mae"].mean())
-            cv_r2_mean = float(cv_results["test_r2"].mean())
+        cache_path = cache_dir / f"{model_name}__{cache_namespace}.joblib"
+        if use_cache and cache_path.exists() and joblib_module is not None:
+            print(f"[{idx}/{total_models}] Loading cached model: {model_name}")
+            cached = joblib_module.load(cache_path)
+            pipe = cached["pipeline"]
+            cv_rmse_mean = float(cached["cv_rmse_mean"])
+            cv_rmse_std = float(cached["cv_rmse_std"])
+            cv_mae_mean = float(cached["cv_mae_mean"])
+            cv_r2_mean = float(cached["cv_r2_mean"])
+            test_rmse = float(cached["test_rmse"])
+            test_mae = float(cached["test_mae"])
+            test_r2 = float(cached["test_r2"])
         else:
-            cv_rmse_mean = float("nan")
-            cv_rmse_std = float("nan")
-            cv_mae_mean = float("nan")
-            cv_r2_mean = float("nan")
+            print(f"[{idx}/{total_models}] Training model: {model_name}")
+            pipe = Pipeline(
+                steps=[
+                    ("preprocessor", preprocessor),
+                    ("model", estimator),
+                ]
+            )
 
-        pipe.fit(X_train, y_train_fit)
-        pred_test = pipe.predict(X_test)
+            if cv_folds >= 2:
+                cv = KFold(
+                    n_splits=cv_folds,
+                    shuffle=True,
+                    random_state=random_state,
+                )
+                cv_results = cross_validate(
+                    pipe,
+                    X_train,
+                    y_train_fit,
+                    cv=cv,
+                    scoring=scoring,
+                    n_jobs=1,
+                )
+                cv_rmse_mean = float(-cv_results["test_rmse"].mean())
+                cv_rmse_std = float(cv_results["test_rmse"].std())
+                cv_mae_mean = float(-cv_results["test_mae"].mean())
+                cv_r2_mean = float(cv_results["test_r2"].mean())
+            else:
+                cv_rmse_mean = float("nan")
+                cv_rmse_std = float("nan")
+                cv_mae_mean = float("nan")
+                cv_r2_mean = float("nan")
 
-        if use_log_target:
-            pred_test = np.expm1(pred_test)
+            pipe.fit(X_train, y_train_fit)
+            pred_test = pipe.predict(X_test)
 
-        test_rmse = float(np.sqrt(mean_squared_error(y_test, pred_test)))
-        test_mae = float(mean_absolute_error(y_test, pred_test))
-        test_r2 = float(r2_score(y_test, pred_test))
+            if use_log_target:
+                pred_test = np.expm1(pred_test)
+
+            test_rmse = float(np.sqrt(mean_squared_error(y_test, pred_test)))
+            test_mae = float(mean_absolute_error(y_test, pred_test))
+            test_r2 = float(r2_score(y_test, pred_test))
+
+            if use_cache and joblib_module is not None:
+                cache_payload = {
+                    "pipeline": pipe,
+                    "cv_rmse_mean": cv_rmse_mean,
+                    "cv_rmse_std": cv_rmse_std,
+                    "cv_mae_mean": cv_mae_mean,
+                    "cv_r2_mean": cv_r2_mean,
+                    "test_rmse": test_rmse,
+                    "test_mae": test_mae,
+                    "test_r2": test_r2,
+                }
+                joblib_module.dump(cache_payload, cache_path)
 
         rows.append(
             {
@@ -341,6 +418,13 @@ def main() -> None:
 
     preprocessor = build_preprocessor(X)
     models = build_models(config.random_state)
+    cache_namespace = build_cache_namespace(
+        config=config,
+        data_path=config.data_path,
+        X_train=X_train,
+        X_test=X_test,
+        model_names=list(models.keys()),
+    )
     results, best_pipeline = evaluate_models(
         X_train=X_train,
         X_test=X_test,
@@ -348,9 +432,12 @@ def main() -> None:
         y_test=y_test,
         preprocessor=preprocessor,
         models=models,
+        output_dir=config.output_dir,
+        cache_namespace=cache_namespace,
         random_state=config.random_state,
         cv_folds=config.cv_folds,
         use_log_target=config.use_log_target,
+        use_cache=config.use_cache,
     )
 
     results_path = config.output_dir / "model_comparison.csv"

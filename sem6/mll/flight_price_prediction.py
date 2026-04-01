@@ -200,7 +200,7 @@ def build_models(random_state: int) -> dict[str, object]:
         "dummy_mean": DummyRegressor(strategy="mean"),
         "ridge": Ridge(alpha=1.0),
         "linear_regression": LinearRegression(),
-        "lasso": Lasso(alpha=0.001, max_iter=10_000),
+        # "lasso": Lasso(alpha=0.001, max_iter=10_000),
         "decision_tree": DecisionTreeRegressor(
             random_state=random_state,
             max_depth=10,

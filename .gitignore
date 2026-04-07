@@ -1,5 +1,5 @@
 *.out
 *.o
-clion/
-python/
-java/
+/clion/
+/python/
+/java/

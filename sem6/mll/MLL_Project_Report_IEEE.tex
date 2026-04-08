@@ -1,0 +1,266 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{graphicx}
+
+\title{Flight Price Prediction Using Machine Learning Algorithms}
+
+\author{%
+\IEEEauthorblockN{Ibrahim Ansari}
+\IEEEauthorblockA{PRN: 1032233145\\
+School of Computer Engineering and Technology\\
+MIT World Peace University (MIT-WPU), Pune, India\\
+Third Year B.Tech CSE (Semester VI)\\
+Machine Learning Laboratory\\
+1032233145@mitwpu.edu.in}
+\and
+\IEEEauthorblockN{Chayan Raj Bharati}
+\IEEEauthorblockA{PRN: 1032233134\\
+School of Computer Engineering and Technology\\
+MIT World Peace University (MIT-WPU), Pune, India\\
+Third Year B.Tech CSE (Semester VI)\\
+Machine Learning Laboratory\\
+1032233134@mitwpu.edu.in}
+\and
+\IEEEauthorblockN{Omkar Darekar}
+\IEEEauthorblockA{PRN: 1032232336\\
+School of Computer Engineering and Technology\\
+MIT World Peace University (MIT-WPU), Pune, India\\
+Third Year B.Tech CSE (Semester VI)\\
+Machine Learning Laboratory\\
+1032232336@mitwpu.edu.in}
+\and
+\IEEEauthorblockN{Mohammed Jasim}
+\IEEEauthorblockA{PRN: 1032232360\\
+School of Computer Engineering and Technology\\
+MIT World Peace University (MIT-WPU), Pune, India\\
+Third Year B.Tech CSE (Semester VI)\\
+Machine Learning Laboratory\\
+1032232360@mitwpu.edu.in}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The aviation industry uses dynamic pricing strategies in which airfare changes frequently with demand, seasonality, route, and time-to-departure signals. This volatility makes it difficult for travelers to decide when to book. This paper presents an end-to-end machine learning pipeline for domestic Indian flight price prediction using structured historical data and supervised regression. The system performs data auditing, mixed-type preprocessing, and comparative training across linear, tree, and ensemble models, followed by deployment through an interactive Streamlit dashboard. On the Flight Price Prediction corpus (at https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction, 300,153 records), Random Forest provides the best observed generalization with test RMSE of 2373.68, MAE of 857.08, and $R^2$ of 0.9891. In addition to point prediction, the deployed interface provides uncertainty bands, nearest historical flight references, route insights, and booking-window analytics to support more cost-effective travel decisions.
+\end{abstract}
+
+\begin{IEEEkeywords}
+flight price prediction, regression, random forest, model comparison, Streamlit dashboard, machine learning deployment
+\end{IEEEkeywords}
+
+\section{Introduction}
+In modern travel planning, airline tickets are among the most volatile consumer prices. Revenue management systems continuously adjust fares using demand conditions, competition, route characteristics, and time remaining until departure. For users, this creates low transparency and a recurring dilemma: book now or wait for a potentially better price.
+
+Existing aggregators typically show current fares but rarely provide clear, data-driven estimates of future price behavior. The practical effect is that many travelers either overpay or postpone decisions without quantitative guidance. From a machine learning viewpoint, this setting naturally maps to supervised regression with heterogeneous inputs and non-linear feature interactions.
+
+This work targets that gap through a reproducible and deployable airfare intelligence system with three goals:
+\begin{itemize}
+\item develop a robust preprocessing and training pipeline;
+\item compare diverse baseline and ensemble regressors under a consistent protocol;
+\item deliver an interactive dashboard for prediction and route-level exploratory insights.
+\end{itemize}
+
+\section{Problem Statement and Objectives}
+\textbf{Problem Statement:} Travelers often struggle to decide whether to purchase a ticket immediately or wait for a price drop. Current booking platforms generally expose only real-time prices and limited predictive support. The project addresses this by building a model that estimates likely ticket price from historical flight attributes.
+
+\textbf{Project Objectives:}
+\begin{itemize}
+\item preprocess and structure historical flight records for regression;
+\item study how features such as airline, number of stops, departure/arrival slots, route, duration, class, and days\_left influence fare;
+\item train and evaluate multiple regression algorithms under a common validation protocol;
+\item deploy a user-facing web interface for practical prediction and comparative route analysis.
+\end{itemize}
+
+\section{Related Work}
+Prior research has established that flight price prediction can be effectively modeled through classical machine learning regression. Early work by Tziridis \textit{et al.} demonstrated feasibility with standard regressors and route-time features in controlled settings \cite{tziridis2017}. More recent studies expanded both data scale and methodological breadth. Kalampokas \textit{et al.} presented a large-scale comparative analysis in IEEE Access, showing the competitiveness of ensemble models for airfare prediction \cite{kalampokas2023}. Contemporary directions also include optimization-augmented random forests \cite{yang2025} and ranking-based frameworks focused on optimal purchase timing rather than only point-price estimation \cite{oglakcioglu2023}.
+
+Motivated by this trajectory, the present project prioritizes robust ensemble regression and practical deployment, while preserving an extensible path toward timing recommendation and richer temporal modeling.
+
+\section{Dataset and Problem Setup}
+The primary dataset used is the Flight Price Prediction corpus (at https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction), containing 300,153 rows and the following key fields: airline, flight identifier, source city, departure time, number of stops, arrival time, destination city, travel class, duration, days left to departure, and ticket price.
+
+The target variable is \texttt{price}. Inputs include both:
+\begin{itemize}
+\item numeric attributes (for example, duration, days\_left, mapped stops), and
+\item categorical attributes (for example, source\_city, destination\_city, class, airline, time buckets).
+\end{itemize}
+
+The dataset loader removes unnamed index-like columns and maps textual stop counts into ordinal values when available (zero $\to$ 0, one $\to$ 1, two\_or\_more $\to$ 2).
+
+\subsection{Scope and Assumptions}
+The implementation scope follows the course synopsis constraints:
+\begin{itemize}
+\item primary focus on domestic India flight records to maintain consistent pricing context;
+\item emphasis on structured tabular signals available in historical booking data;
+\item assumption that historical pricing patterns are informative for near-future behavior under normal operating conditions.
+\end{itemize}
+
+The model does not explicitly account for extreme exogenous shocks (for example, sudden policy disruptions, fuel crises, or pandemic-scale events).
+
+\section{Methodology}
+\subsection{Preprocessing Pipeline}
+A \texttt{ColumnTransformer} is used to process mixed feature types:
+\begin{itemize}
+\item numeric branch: median imputation followed by standardization;
+\item categorical branch: most-frequent imputation followed by one-hot encoding with unknown-category tolerance.
+\end{itemize}
+
+This transformer is composed with each estimator inside a single scikit-learn \texttt{Pipeline}, ensuring identical preprocessing during training and inference.
+
+\subsection{Training Protocol}
+The script \texttt{flight\_price\_prediction.py} performs:
+\begin{itemize}
+\item train/test split with test size 0.2 and random seed 42;
+\item optional row capping for faster iteration (default max rows: 80,000);
+\item 3-fold shuffled cross-validation (default);
+\item model-level caching to speed repeated experimentation.
+\end{itemize}
+
+Evaluated models include Dummy Mean, Linear Regression, Ridge, Decision Tree, Bagging, Random Forest, Gradient Boosting, and optional XGBoost/LightGBM (if installed).
+
+\subsection{Evaluation Metrics}
+Model quality is tracked with RMSE, MAE, and $R^2$ on both cross-validation and held-out test data. Let $y_i$ be true prices, $\hat{y}_i$ predictions, and $n$ the sample size:
+
+\begin{equation}
+\mathrm{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}
+\end{equation}
+
+\begin{equation}
+\mathrm{MAE} = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y}_i|
+\end{equation}
+
+\begin{equation}
+R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}{\sum_{i=1}^{n}(y_i-\bar{y})^2}
+\end{equation}
+
+The selected best model and artifacts are saved as \texttt{best\_model\_pipeline.joblib}, \texttt{best\_model.txt}, and \texttt{model\_comparison.csv}.
+
+\section{Results and Analysis}
+Table~\ref{tab:results} summarizes the test-set performance extracted from \texttt{outputs/flight\_price/model\_comparison.csv}. The best model recorded in \texttt{best\_model.txt} is Random Forest.
+
+\begin{table}[htbp]
+\caption{Model Comparison on Test Set}
+\label{tab:results}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Model & RMSE & MAE & $R^2$ \\
+\midrule
+Random Forest & 2373.68 & 857.08 & 0.9891 \\
+LightGBM & 3611.55 & 2115.29 & 0.9747 \\
+Bagging & 4294.16 & 2390.02 & 0.9642 \\
+XGBoost & 4344.06 & 2537.50 & 0.9634 \\
+Decision Tree & 4490.43 & 2474.45 & 0.9609 \\
+Gradient Boosting & 4888.77 & 2893.44 & 0.9536 \\
+Linear Regression & 6241.41 & 4246.84 & 0.9244 \\
+Ridge & 6243.19 & 4247.15 & 0.9244 \\
+Dummy Mean & 22704.24 & 19768.69 & $\approx$0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The ensemble tree methods outperform linear baselines, indicating strong non-linearity and interaction effects in fare dynamics. The Random Forest model yields high explained variance and substantially lower error than non-ensemble approaches.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{outputs/flight_price/charts/model_error_comparison.png}
+\caption{Comparison of test RMSE and test MAE for top-performing models. Lower values indicate better predictive performance.}
+\label{fig:model_errors}
+\end{figure}
+
+Figure~\ref{fig:model_errors} visually confirms the ranking observed in Table~\ref{tab:results}. Random Forest shows the most favorable error profile, while linear baselines remain significantly higher, suggesting that non-linear ensembles better capture route-time interactions in this dataset.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{outputs/flight_price/charts/model_r2_comparison.png}
+\caption{Test $R^2$ comparison across high-performing models. Higher values indicate better fit on the held-out test set.}
+\label{fig:model_r2}
+\end{figure}
+
+As shown in Figure~\ref{fig:model_r2}, the top ensemble models cluster near high $R^2$ values, with Random Forest leading the set. This supports the conclusion that ensemble tree methods capture non-linear pricing structure more effectively than linear alternatives in this dataset.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{outputs/flight_price/charts/booking_window_trend.png}
+\caption{Median airfare trend versus days left to departure from historical data.}
+\label{fig:booking_window}
+\end{figure}
+
+Figure~\ref{fig:booking_window} illustrates a clear temporal structure in pricing behavior. Fares are generally higher close to departure and stabilize after a longer booking window, reinforcing the importance of the \texttt{days\_left} feature and motivating inclusion of uncertainty-aware decision support in the dashboard.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{outputs/flight_price/charts/route_price_extremes.png}
+\caption{Median fare extremes across source-destination routes (top expensive and top cheap routes).}
+\label{fig:route_extremes}
+\end{figure}
+
+Figure~\ref{fig:route_extremes} highlights strong inter-route heterogeneity, which further motivates route-aware feature design (source and destination cities) and explains part of the gain achieved by flexible ensemble learners.
+
+\section{Dashboard Deployment}
+The application \texttt{flight\_price\_dashboard.py} deploys the trained pipeline with a three-tab interface:
+\begin{itemize}
+\item \textbf{Predict}: user-configurable flight input form, point prediction, fare band signal, confidence intervals, nearest historical flights, and route map visualization.
+\item \textbf{Route Insights}: expensive/cheap route tables, booking-window price curve, and seasonality summaries.
+\item \textbf{Model Performance}: full comparison table and top-model headline metrics.
+\end{itemize}
+
+Uncertainty is shown using either (i) RMSE-based approximate intervals or (ii) empirical quantiles from similar historical flights. This provides interpretable confidence context beyond a single predicted value.
+
+\section{Reproducibility}
+Core implementation files:
+\begin{itemize}
+\item training and evaluation: \texttt{flight\_price\_prediction.py}
+\item interactive inference (CLI): \texttt{predict\_flight\_price.py}
+\item web dashboard: \texttt{flight\_price\_dashboard.py}
+\end{itemize}
+
+The project uses Python with scikit-learn, pandas, NumPy, Streamlit, and optional gradient boosting libraries (XGBoost and LightGBM).
+
+\section{Limitations and Future Work}
+Current limitations include fixed hyperparameters per model family and no explicit time-series leakage controls beyond random split. Future enhancements include:
+\begin{itemize}
+\item Bayesian or Optuna-based hyperparameter optimization;
+\item feature importance and SHAP explainability for decision transparency;
+\item temporal validation (for example, forward-chaining split) to better mimic production booking timelines;
+\item confidence calibration and probabilistic forecasting.
+\end{itemize}
+
+\section*{Acknowledgment}
+This project was carried out for the Machine Learning Laboratory course (Academic Year 2025--26, Semester VI) under the guidance of Dr. Jayshree Aher, School of Computer Engineering and Technology, MIT-WPU.
+
+\section{Conclusion}
+This work demonstrates a practical machine learning workflow for flight price prediction from data preparation through model selection to interactive deployment. Empirical results show that Random Forest provides the most accurate predictions among tested models, while the dashboard improves usability by combining forecasts with contextual analytics. The resulting system is suitable as both an academic mini-project and a baseline for real-world fare intelligence applications.
+
+\begin{thebibliography}{00}
+\bibitem{kalampokas2023}
+T. Kalampokas, K. Tziridis, N. Kalampokas, A. Nikolaou, E. Vrochidou, and G. A. Papakostas, "A Holistic Approach on Airfare Price Prediction Using Machine Learning Techniques," \textit{IEEE Access}, vol. 11, pp. 46627--46643, 2023, doi: 10.1109/ACCESS.2023.3274669.
+
+\bibitem{tziridis2017}
+K. Tziridis, T. Kalampokas, G. A. Papakostas, and K. I. Diamantaras, "Airfare prices prediction using machine learning techniques," in \textit{Proc. 25th European Signal Processing Conference (EUSIPCO)}, Kos, Greece, 2017, pp. 1036--1039, doi: 10.23919/EUSIPCO.2017.8081365.
+
+\bibitem{yang2025}
+S. Yang, "Application of Random Forest Model Optimized by Grey Wolf Algorithm in Flight Price Prediction," in \textit{Proc. IEEE 3rd International Conference on Sensors, Electronics and Computer Engineering (ICSECE)}, Jinzhou, China, 2025, pp. 1473--1476, doi: 10.1109/ICSECE65727.2025.11257061.
+
+\bibitem{oglakcioglu2023}
+K. Oglakcioglu, Y. S. Can, and F. Alagoz, "Prediction of Optimal Flight Ticket Purchase Timing by Using Learning To Rank Methods," in \textit{Proc. Innovations in Intelligent Systems and Applications Conference (ASYU)}, Sivas, Turkiye, 2023, pp. 1--6, doi: 10.1109/ASYU58738.2023.10296726.
+
+\bibitem{sklearn}
+F. Pedregosa \textit{et al.}, "Scikit-learn: Machine Learning in Python," \textit{Journal of Machine Learning Research}, vol. 12, pp. 2825--2830, 2011.
+
+\bibitem{streamlit}
+Streamlit Inc., "Streamlit Documentation," 2026. [Online]. Available: \url{https://docs.streamlit.io}
+
+\bibitem{xgboost}
+T. Chen and C. Guestrin, "XGBoost: A Scalable Tree Boosting System," in \textit{Proc. 22nd ACM SIGKDD}, 2016, pp. 785--794.
+
+\bibitem{lightgbm}
+G. Ke \textit{et al.}, "LightGBM: A Highly Efficient Gradient Boosting Decision Tree," in \textit{Proc. NIPS}, 2017.
+\end{thebibliography}
+
+\end{document}

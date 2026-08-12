@@ -1,0 +1,52 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-base: #121212;
+}
+
+.login-bg {
+    -fx-background-color: linear-gradient(to bottom right, #1a1a1a, #000000);
+}
+
+.sidebar {
+    -fx-background-color: #0d0d0d;
+    -fx-border-color: #333;
+    -fx-border-width: 0 1 0 0;
+}
+
+.button {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #00ffcc;
+    -fx-border-color: #00ffcc;
+    -fx-border-radius: 4;
+}
+
+.button:hover {
+    -fx-background-color: #00ffcc;
+    -fx-text-fill: black;
+}
+
+.action-button {
+    -fx-background-color: #00ffcc;
+    -fx-text-fill: black;
+    -fx-font-size: 14;
+}
+
+.console {
+    -fx-control-inner-background: #000000;
+    -fx-text-fill: #00ff00;
+    -fx-font-family: "Consolas";
+}
+
+.text-area, .text-field {
+    -fx-control-inner-background: #1e1e1e;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #888888; /* Light gray placeholders */
+    -fx-highlight-fill: #00ffcc;
+    -fx-highlight-text-fill: #1a1a1a;
+}
+
+/* Sidebar button "Active" state */
+.sidebar-button-active {
+    -fx-background-color: #333;
+    -fx-border-color: #00ffcc;
+}

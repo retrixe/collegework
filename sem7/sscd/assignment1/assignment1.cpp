@@ -97,9 +97,9 @@ int evaluate(string expr,vector<Symbol> &symtab){
 
 int main(){
 
-    ifstream file("inputAssgn1.txt");
+    ifstream file("inputAssign1.txt");
     if(!file){
-        cout<<"Cannot open inputAssgn1.txt\n";
+        cout<<"Cannot open inputAssign1.txt\n";
         return 0;
     }
 

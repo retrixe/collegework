@@ -1,5 +1,3 @@
-package xyz.retrixe;
-
 import java.io.*;
 import java.util.*;
 

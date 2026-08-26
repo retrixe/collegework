@@ -1,0 +1,48 @@
+{
+ "n": 344,
+ "n_comm": 334,
+ "tok_src": 2301,
+ "tok_en": 3454,
+ "tok_comm": 3935,
+ "voc_src": 1731,
+ "voc_en": 1446,
+ "len_src": 6.7,
+ "len_en": 10.0,
+ "len_comm": 11.4,
+ "jac_own": 0.051,
+ "jac_rand": 0.029,
+ "clf_n": 668,
+ "clf_k": 2,
+ "maj_acc": 0.5,
+ "maj_f1": 0.333,
+ "acc_en": 0.726,
+ "f1_en": 0.724,
+ "retrieval": {
+  "TF-IDF (EN literal query)": {
+   "P@1": 0.081,
+   "P@5": 0.138,
+   "MRR": 0.114
+  },
+  "TF-IDF (source-language query)": {
+   "P@1": 0.024,
+   "P@5": 0.045,
+   "MRR": 0.044
+  },
+  "Random baseline": {
+   "P@1": 0.003,
+   "P@5": 0.015,
+   "MRR": 0.019
+  },
+  "LaBSE (EN literal query)": {
+   "P@1": 0.066,
+   "P@5": 0.159,
+   "MRR": 0.119
+  },
+  "LaBSE (source-language query)": {
+   "P@1": 0.009,
+   "P@5": 0.027,
+   "MRR": 0.031
+  }
+ },
+ "n_retr": 334
+}

@@ -1,0 +1,19 @@
+# --- local environment (recreate with: uv venv .venv && uv pip install -p .venv/bin/python pandas matplotlib scikit-learn seaborn openpyxl python-docx nbformat nbclient ipykernel sentence-transformers) ---
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- editor / OS noise ---
+.idea/
+.vscode/
+.DS_Store
+.~lock.*#          # LibreOffice lock files left by an open .docx/.xlsx
+
+# --- scanned source books (44 MB of binaries; re-downloadable from the Internet Archive URLs in the report / extraction script docstrings) ---
+corpus/source_pdfs/*.pdf
+
+# --- transient outputs ---
+*.log

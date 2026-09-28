@@ -1,0 +1,61 @@
+function definition: int sample
+punctuation: (
+punctuation: )
+punctuation: {
+comment: // sample program
+datatype: int
+identifier: a
+operator: =
+integer: 2
+punctuation: ;
+datatype: float
+identifier: pi
+operator: =
+float number: 3.14
+punctuation: ;
+array declaration: int arr
+punctuation: [
+integer: 5
+punctuation: ]
+operator: =
+punctuation: {
+integer: 1
+punctuation: ,
+integer: 2
+punctuation: ,
+integer: 3
+punctuation: ,
+integer: 4
+punctuation: ,
+integer: 5
+punctuation: }
+punctuation: ;
+keyword: if
+punctuation: (
+array: arr
+punctuation: [
+integer: 0
+punctuation: ]
+relational/logical operator: >=
+integer: 2
+relational/logical operator: &&
+array: arr
+punctuation: [
+integer: 1
+punctuation: ]
+relational/logical operator: !=
+integer: 3
+punctuation: )
+punctuation: {
+keyword: return
+identifier: a
+operator: *
+integer: 10
+punctuation: ;
+punctuation: }
+datatype: char
+identifier: s
+operator: =
+string: "hello"
+punctuation: ;
+punctuation: }

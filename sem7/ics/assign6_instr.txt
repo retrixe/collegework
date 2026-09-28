@@ -1,0 +1,5 @@
+pgp -kg
+pgp -kx: pgp -kxa ID dest.pub
+pgp -ka dest.pub -- ?
+pgp -ea message.txt ID
+pgp message.txt.asc

@@ -554,8 +554,37 @@ char *yytext;
 #line 1 "assignment5.l"
 #line 2 "assignment5.l"
 #include <stdio.h>
-#line 557 "lex.yy.c"
-#line 558 "lex.yy.c"
+#include <string.h>
+
+char sym_name[100][32], sym_type[100][16], sym_kind[100][16];
+int sym_count = 0;
+char last_type[16] = "";   /* datatype seen just before an identifier */
+
+void add_symbol(char *name, char *type, char *kind) {
+    int i;
+    for (i = 0; i < sym_count; i++)
+        if (strcmp(sym_name[i], name) == 0) return;   /* already present */
+    strcpy(sym_name[sym_count], name);
+    strcpy(sym_type[sym_count], type);
+    strcpy(sym_kind[sym_count], kind);
+    sym_count++;
+}
+
+/* yytext is "type name" (function or array declaration) */
+void add_declaration(char *text, char *kind) {
+    char type[16], name[32];
+    sscanf(text, "%s %s", type, name);
+    add_symbol(name, type, kind);
+}
+
+void print_symbol_table(FILE *f) {
+    int i;
+    fprintf(f, "\nSYMBOL TABLE\n%-4s %-10s %-8s %s\n", "Sr", "Name", "Type", "Kind");
+    for (i = 0; i < sym_count; i++)
+        fprintf(f, "%-4d %-10s %-8s %s\n", i + 1, sym_name[i], sym_type[i], sym_kind[i]);
+}
+#line 586 "lex.yy.c"
+#line 587 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -778,10 +807,10 @@ YY_DECL
 		}
 
 	{
-#line 10 "assignment5.l"
+#line 39 "assignment5.l"
 
 
-#line 784 "lex.yy.c"
+#line 813 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -863,97 +892,98 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 12 "assignment5.l"
+#line 41 "assignment5.l"
 { fprintf(yyout,"comment: %s\n", yytext); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "assignment5.l"
+#line 43 "assignment5.l"
 { fprintf(yyout,"keyword: %s\n", yytext); }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 15 "assignment5.l"
+#line 44 "assignment5.l"
 { fprintf(yyout,"keyword: %s\n", yytext); }
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 16 "assignment5.l"
-{ fprintf(yyout,"function definition: %s\n", yytext); }
+#line 45 "assignment5.l"
+{ fprintf(yyout,"function definition: %s\n", yytext); add_declaration(yytext, "function"); }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 17 "assignment5.l"
+#line 46 "assignment5.l"
 { fprintf(yyout,"function call: %s\n", yytext); }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 18 "assignment5.l"
-{ fprintf(yyout,"array declaration: %s\n", yytext); }
+#line 47 "assignment5.l"
+{ fprintf(yyout,"array declaration: %s\n", yytext); add_declaration(yytext, "array"); }
 	YY_BREAK
 case 7:
 /* rule 7 can match eol */
 YY_RULE_SETUP
-#line 19 "assignment5.l"
+#line 48 "assignment5.l"
 { fprintf(yyout,"array: %s\n", yytext); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "assignment5.l"
-{ fprintf(yyout,"datatype: %s\n", yytext); }
+#line 49 "assignment5.l"
+{ fprintf(yyout,"datatype: %s\n", yytext); strcpy(last_type, yytext); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "assignment5.l"
-{ fprintf(yyout,"identifier: %s\n", yytext); }
+#line 50 "assignment5.l"
+{ fprintf(yyout,"identifier: %s\n", yytext);
+                                  if (last_type[0]) { add_symbol(yytext, last_type, "variable"); last_type[0] = 0; } }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "assignment5.l"
+#line 53 "assignment5.l"
 { fprintf(yyout,"float number: %s\n", yytext); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 24 "assignment5.l"
+#line 54 "assignment5.l"
 { fprintf(yyout,"integer: %s\n", yytext); }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 25 "assignment5.l"
+#line 55 "assignment5.l"
 { fprintf(yyout,"string: %s\n", yytext); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 27 "assignment5.l"
+#line 57 "assignment5.l"
 { fprintf(yyout,"relational/logical operator: %s\n", yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 28 "assignment5.l"
+#line 58 "assignment5.l"
 { fprintf(yyout,"operator: %s\n", yytext); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 30 "assignment5.l"
+#line 60 "assignment5.l"
 { fprintf(yyout,"punctuation: %s\n", yytext); }
 	YY_BREAK
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 33 "assignment5.l"
+#line 63 "assignment5.l"
 { }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 35 "assignment5.l"
+#line 65 "assignment5.l"
 ECHO;
 	YY_BREAK
-#line 956 "lex.yy.c"
+#line 986 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1931,7 +1961,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 35 "assignment5.l"
+#line 65 "assignment5.l"
 
 
 int main()
@@ -1939,6 +1969,8 @@ int main()
     yyin = fopen("input.txt","r");
     yyout = fopen("output.txt", "w");
     yylex();
+    print_symbol_table(yyout);
+    print_symbol_table(stdout);
     return 0;
 }
 

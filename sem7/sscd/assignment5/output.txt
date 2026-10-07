@@ -59,3 +59,11 @@ operator: =
 string: "hello"
 punctuation: ;
 punctuation: }
+
+SYMBOL TABLE
+Sr   Name       Type     Kind
+1    sample     int      function
+2    a          int      variable
+3    pi         float    variable
+4    arr        int      array
+5    s          char     variable

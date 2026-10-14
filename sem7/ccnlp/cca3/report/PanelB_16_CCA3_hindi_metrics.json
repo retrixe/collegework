@@ -1,0 +1,75 @@
+{
+ "reverse_retrieval": {
+  "labse": {
+   "hit_at_1": 0.625,
+   "hit_at_5": 0.75,
+   "mrr": 0.68
+  },
+  "tfidf": {
+   "hit_at_1": 0.125,
+   "hit_at_5": 0.375,
+   "mrr": 0.246
+  },
+  "random": {
+   "hit_at_1": 0.003,
+   "hit_at_5": 0.016,
+   "mrr": 0.021
+  }
+ },
+ "reverse_retrieval_n": 8,
+ "equivalence_marathi": {
+  "n_pairs": 305,
+  "mean_best_similarity": 0.364,
+  "mean_random_similarity": 0.086,
+  "mutual_best_matches": 103,
+  "candidates": 7
+ },
+ "equivalence_assamese": {
+  "n_pairs": 305,
+  "mean_best_similarity": 0.276,
+  "mean_random_similarity": 0.096,
+  "mutual_best_matches": 32,
+  "candidates": 0
+ },
+ "magpie": {
+  "train": 38716,
+  "test": 4840,
+  "majority_acc": 0.746,
+  "acc": 0.862,
+  "macro_f1": 0.827
+ },
+ "idiom_in_text_hindi": {
+  "n": 1376,
+  "chance": 0.5,
+  "acc": 0.922,
+  "macro_f1": 0.922
+ },
+ "llm_benchmark": {
+  "Qwen2.5-0.5B-Instruct / literal_en": {
+   "similarity_to_gold": 0.11,
+   "similarity_to_control": 0.057,
+   "margin": 0.053
+  },
+  "Qwen2.5-0.5B-Instruct / romanized": {
+   "similarity_to_gold": 0.076,
+   "similarity_to_control": 0.077,
+   "margin": -0.002
+  },
+  "flan-t5-base / literal_en": {
+   "similarity_to_gold": 0.113,
+   "similarity_to_control": 0.058,
+   "margin": 0.055
+  },
+  "flan-t5-base / romanized": {
+   "similarity_to_gold": 0.097,
+   "similarity_to_control": 0.076,
+   "margin": 0.021
+  },
+  "echo baseline (literal translation)": {
+   "similarity_to_gold": 0.125,
+   "similarity_to_control": 0.055,
+   "margin": 0.071
+  }
+ },
+ "llm_benchmark_n": 60
+}

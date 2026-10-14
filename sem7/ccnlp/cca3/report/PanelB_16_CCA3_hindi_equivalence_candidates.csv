@@ -1,0 +1,8 @@
+own_id,own_proverb,own_meaning,other_language,other_id,other_proverb,other_meaning,labse_similarity,tfidf_similarity,random_pair_similarity,mutual_best_match,verified
+276,BaoOo ekeAr id etar lAet nakr id.,are the bert of their kind).,marathi,329,Lankuda sayatse lenkaru rayatse,The beet of their kind.,0.6,0.427,0.116,True,
+228,"Rit na tatvddtd, merd Idld navddtd / Worn.","The tatvdhtd is a ceremony performed by women iu the seventh month sftcr the birth of a first-born son, Sspecially if long wished for.",marathi,401,De vana ghe vana,This is an offering made by women on certuD dftja of the year. Even God will not give without first receiving.,0.531,0.068,0.254,True,
+204,Pd'dsse med ae kyod. nikle parte ho f,i. e. why do you' fret and fume so much?,marathi,7,KliaDdiDiadhye pava rati,Why trouble abont so trivial a matter?,0.519,0.0,0.099,True,
+300,Terd hakd rake merd bik Joe.,Applied to a aelfixli peraoii.,marathi,297,Vayi vairata boll aairata,Applied to almBgiving.,0.516,0.219,-0.09,True,
+281,"Bufbak dOitinal kd rakika bde, koii mM ehdur,",He oau’t learn to apend.,marathi,175,Phara zhale hasu ale,It should not be seen ataU.,0.509,0.0,0.09,True,
+256,"Tak Hlamdg Btmgdgaa hkdif;hako, phor rale",A Alt at tha pnfvarhfal oiggMdHnaaa of tho Bonyia.,marathi,251,Zikade sul tikade dora,The hneband foUowB tbe wife.,0.506,0.0,0.081,True,
+337,MtH k t tddt na dyd.,A miefortone that cannot bo avoided.,marathi,228,Jyatse pota dukhela to oibva magela,An insiificant remedy.,0.504,0.0,0.196,True,

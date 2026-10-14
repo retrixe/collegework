@@ -1,0 +1,13 @@
+abstract
+keywords
+intro
+survey
+research gaps
+objectives
+outcomes
+research contribution
+methodology
+implementation
+performance
+
+-- 3 visuals per person

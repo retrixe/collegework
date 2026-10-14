@@ -1,0 +1,3 @@
+# MAGPIE corpus (47 MB, re-download: https://github.com/hslh/magpie-corpus -> MAGPIE_filtered_split_random.jsonl)
+external/*.jsonl
+.ipynb_checkpoints/

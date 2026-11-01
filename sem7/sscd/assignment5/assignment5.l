@@ -7,27 +7,27 @@ int sym_count = 0;
 char last_type[16] = "";   /* datatype seen just before an identifier */
 
 void add_symbol(char *name, char *type, char *kind) {
-    int i;
-    for (i = 0; i < sym_count; i++)
-        if (strcmp(sym_name[i], name) == 0) return;   /* already present */
-    strcpy(sym_name[sym_count], name);
-    strcpy(sym_type[sym_count], type);
-    strcpy(sym_kind[sym_count], kind);
-    sym_count++;
+  int i;
+  for (i = 0; i < sym_count; i++)
+    if (strcmp(sym_name[i], name) == 0) return;   /* already present */
+  strcpy(sym_name[sym_count], name);
+  strcpy(sym_type[sym_count], type);
+  strcpy(sym_kind[sym_count], kind);
+  sym_count++;
 }
 
 /* yytext is "type name" (function or array declaration) */
 void add_declaration(char *text, char *kind) {
-    char type[16], name[32];
-    sscanf(text, "%s %s", type, name);
-    add_symbol(name, type, kind);
+  char type[16], name[32];
+  sscanf(text, "%s %s", type, name);
+  add_symbol(name, type, kind);
 }
 
 void print_symbol_table(FILE *f) {
-    int i;
-    fprintf(f, "\nSYMBOL TABLE\n%-4s %-10s %-8s %s\n", "Sr", "Name", "Type", "Kind");
-    for (i = 0; i < sym_count; i++)
-        fprintf(f, "%-4d %-10s %-8s %s\n", i + 1, sym_name[i], sym_type[i], sym_kind[i]);
+  int i;
+  fprintf(f, "\nSYMBOL TABLE\n%-4s %-10s %-8s %s\n", "Sr", "Name", "Type", "Kind");
+  for (i = 0; i < sym_count; i++)
+    fprintf(f, "%-4d %-10s %-8s %s\n", i + 1, sym_name[i], sym_type[i], sym_kind[i]);
 }
 %}
 
@@ -64,17 +64,15 @@ whitespace                      [ \t\n]+
 
 %%
 
-int main()
-{
-    yyin = fopen("input.txt","r");
-    yyout = fopen("output.txt", "w");
-    yylex();
-    print_symbol_table(yyout);
-    print_symbol_table(stdout);
-    return 0;
+int main() {
+  yyin = fopen("input.txt","r");
+  yyout = fopen("output.txt", "w");
+  yylex();
+  print_symbol_table(yyout);
+  print_symbol_table(stdout);
+  return 0;
 }
 
-int yywrap()
-{
-    return 1;
+int yywrap() {
+  return 1;
 }

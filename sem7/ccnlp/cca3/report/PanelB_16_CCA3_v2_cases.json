@@ -1,0 +1,296 @@
+{
+ "reverse": [
+  {
+   "language": "Marathi",
+   "query": "Someone is making a fuss over a tiny shortfall that does not matter in the big picture.",
+   "rank": 33,
+   "target": "An ounce \u00bbhort in a cart-load.",
+   "returned": "Pertuade Aim and he will he full to the brim, i. e. with anger, desir\u2026",
+   "returned_meaning": "Something need in common by all. Ofbea applied in a bad sense."
+  },
+  {
+   "language": "Marathi",
+   "query": "A person works hard all day on a task that produces nothing at all.",
+   "rank": 17,
+   "target": "To Hitter the hand by pounding chaff.",
+   "returned": "A hoe dratet toil tovardt tit.",
+   "returned_meaning": "Used where a man is working for selfish ends."
+  },
+  {
+   "language": "Marathi",
+   "query": "Something has finally reached its full ripeness or maturity.",
+   "rank": 57,
+   "target": "It haa come to per/ectioK, it U ripe on the stem.",
+   "returned": "Hmeever much you rub charcoal it mill still be llack.",
+   "returned_meaning": "Some men are bad all throog'h: or their troubles are never ending."
+  },
+  {
+   "language": "Marathi",
+   "query": "Acting carefully so that neither of two friends is hurt by a decision.",
+   "rank": 1,
+   "target": "Injury nt&er to tie plant nor to the cucumher.",
+   "returned": "Injury nt&er to tie plant nor to the cucumher.",
+   "returned_meaning": "So to act that neither of two friends will be injnied."
+  },
+  {
+   "language": "Marathi",
+   "query": "A man arranges everything so that the benefit comes only to himself.",
+   "rank": 1,
+   "target": "A hoe dratet toil tovardt tit.",
+   "returned": "A hoe dratet toil tovardt tit.",
+   "returned_meaning": "Used where a man is working for selfish ends."
+  },
+  {
+   "language": "Marathi",
+   "query": "Someone drops you the moment they no longer need your help.",
+   "rank": 17,
+   "target": "He tcAo says a hunbi ts devoted to him is a donkey.",
+   "returned": "Cvrd\u00bb make the eater's throat ache.",
+   "returned_meaning": "A man likes a bribe at the time bat it will eaoee him trouble afterwarde."
+  },
+  {
+   "language": "Marathi",
+   "query": "A farmer has good harvests every year yet stays poor because he keeps borrowing.",
+   "rank": 1,
+   "target": "Perpetual crops, perpetual poverty.",
+   "returned": "Perpetual crops, perpetual poverty.",
+   "returned_meaning": "However good the konbi's crops are he remainB poor because of bis habit of borr\u2026"
+  },
+  {
+   "language": "Marathi",
+   "query": "Urgent seasonal work must be done on time even when something else demands attention.",
+   "rank": 1,
+   "target": "Cover up the corpse, attend first to the sowing.",
+   "returned": "Cover up the corpse, attend first to the sowing.",
+   "returned_meaning": "Everything must be left so that the sowing may be done exactly at the right tim\u2026"
+  },
+  {
+   "language": "Marathi",
+   "query": "A person is generous with things that belong to someone else.",
+   "rank": 1,
+   "target": "He ojenii the gate and givet away the cota.",
+   "returned": "He ojenii the gate and givet away the cota.",
+   "returned_meaning": "Liberal with- another's property."
+  },
+  {
+   "language": "Marathi",
+   "query": "While one person is in deep trouble, another only worries about his own small concern.",
+   "rank": 53,
+   "target": "T'ife camel if droumiriff and the goat Oikt him ike depth tihe water.",
+   "returned": "Hmeever much you rub charcoal it mill still be llack.",
+   "returned_meaning": "Some men are bad all throog'h: or their troubles are never ending."
+  },
+  {
+   "language": "Hindi",
+   "query": "A big job has barely been started even though a lot of time has passed.",
+   "rank": 1,
+   "target": "Of the pound of cotton not a skein ii yet sp jn.",
+   "returned": "Of the pound of cotton not a skein ii yet sp jn.",
+   "returned_meaning": "Scarce a fraction of the work is yet done."
+  },
+  {
+   "language": "Hindi",
+   "query": "Someone starts preparing far too early for something that is hours away.",
+   "rank": 6,
+   "target": "He sets his mouth ajar at sunset in order to gape at midnight",
+   "returned": "In August the jackal was born, and in Septeiuber he bom a flood and s\u2026",
+   "returned_meaning": "Said of one who niakee a great deal of what he liaa never eeeu before."
+  },
+  {
+   "language": "Hindi",
+   "query": "A person demands payment for work they never actually did.",
+   "rank": 1,
+   "target": "You haveu't aold me ginger I Have you f",
+   "returned": "You haveu't aold me ginger I Have you f",
+   "returned_meaning": "Eodlh is a valuable artigte; said to those who . demand money for doing nothing."
+  },
+  {
+   "language": "Hindi",
+   "query": "Instead of enjoying what is offered, someone keeps asking pointless questions about where it came from.",
+   "rank": 1,
+   "target": "Will you eat the mangoes or count the trees 1",
+   "returned": "Will you eat the mangoes or count the trees 1",
+   "returned_meaning": "We should eajiiy the good things that are preMnted to ua, without pusxling oius\u2026"
+  },
+  {
+   "language": "Hindi",
+   "query": "Two people in love find that their relationship is full of obstacles.",
+   "rank": 4,
+   "target": "Loving is not like living in my aunt's house.",
+   "returned": "When one is in love, what shame remains 1",
+   "returned_meaning": "All love ' in India is illegitimate."
+  },
+  {
+   "language": "Hindi",
+   "query": "A reckless spender is told that his ruin cannot be repaired.",
+   "rank": 51,
+   "target": "If heaven break w'ho will patch it upf",
+   "returned": "Why did she die? For want of breath 1",
+   "returned_meaning": "A misfortune that cannot be avoided."
+  },
+  {
+   "language": "Hindi",
+   "query": "When a child is born, the means to feed it also appear.",
+   "rank": 1,
+   "target": "Come man, come food, gone man, gone food.",
+   "returned": "Come man, come food, gone man, gone food.",
+   "returned_meaning": "With the both of the child the uother'e milk bpgint to flow."
+  },
+  {
+   "language": "Hindi",
+   "query": "Someone pushes into a matter where nobody asked for them.",
+   "rank": 1,
+   "target": "The panier hae jumped iu without the ox, who ever saw such a thing be\u2026",
+   "returned": "The panier hae jumped iu without the ox, who ever saw such a thing be\u2026",
+   "returned_meaning": "Said to one who obtrudes hinsetf Where he is not required."
+  },
+  {
+   "language": "Assamese",
+   "query": "A boastful man talks big about a fight but achieves almost nothing.",
+   "rank": 2,
+   "target": "He came to fight in all his strength, But he only broke one hair (of \u2026",
+   "returned": "In the evening he has seven ploughs going, In the early morning he ha\u2026",
+   "returned_meaning": "The proverb illustrates the case of a man,who, although ignorant of agriculture\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "Someone excuses saying more than he should by blaming his loose tongue.",
+   "rank": 49,
+   "target": "The tongue because it has no bone, Says various things. A poor excuse\u2026",
+   "returned": "What fault have I committed? I admit I am wrong, and give you a duck'\u2026",
+   "returned_meaning": "The proverb refers to the case of a person who thinks he is taken to task for a\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "A person with no money keeps craving expensive things.",
+   "rank": 3,
+   "target": "He has no money in hand, But his cravings are great.",
+   "returned": "A hasty cook and a hasty broom, and the husband goes fasting, A slow \u2026",
+   "returned_meaning": "A hasty cook often spoils what she is cooking. A hasty broom makes a lot of dus\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "People remember God only when they are in trouble.",
+   "rank": 1,
+   "target": "When in distress, a man calls on R&ma.",
+   "returned": "When in distress, a man calls on R&ma.",
+   "returned_meaning": "This proverb is not confined to Assam. There is a similar one in Bengali, and p\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "A person who plots harm for others ends up suffering from it himself.",
+   "rank": 5,
+   "target": "He who lays thorns for others, Dies amongst them himself.",
+   "returned": "What fault have I committed? I admit I am wrong, and give you a duck'\u2026",
+   "returned_meaning": "The proverb refers to the case of a person who thinks he is taken to task for a\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "Someone with only a show of respectability wants to be the leader.",
+   "rank": 5,
+   "target": "With a pdgri on his head, And with nothing on the lower part of his b\u2026",
+   "returned": "The little dove has flown away being chased by a hawk, He has pierced\u2026",
+   "returned_meaning": "The above is meant to illustrate the case of a person who tells a story, which \u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "A worker is full of energy one moment and abandons the job the next.",
+   "rank": 42,
+   "target": "Bring the adze, I am itching to be off. To-morrow morning I shall sta\u2026",
+   "returned": "He has got herds And herds of brother-in-law.",
+   "returned_meaning": "=a wife's elder brother, fcrct = a younger sister's husband. also means a sail,\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "A poor man wants to attend a grand feast he cannot afford.",
+   "rank": 74,
+   "target": "He has not a grain of rice in his house, but he wishes to go to a big\u2026",
+   "returned": "What fault have I committed? I admit I am wrong, and give you a duck'\u2026",
+   "returned_meaning": "The proverb refers to the case of a person who thinks he is taken to task for a\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "Someone who wants to succeed never wastes a moment, working even while resting.",
+   "rank": 1,
+   "target": "He who has a mind to thrive, Scratches up grass, even when sitting do\u2026",
+   "returned": "He who has a mind to thrive, Scratches up grass, even when sitting do\u2026",
+   "returned_meaning": "I'T literally, the mind for eating and living. The proverb means that people wh\u2026"
+  },
+  {
+   "language": "Assamese",
+   "query": "A man is burdened by too many relatives from his wife's side.",
+   "rank": 1,
+   "target": "He has got herds And herds of brother-in-law.",
+   "returned": "He has got herds And herds of brother-in-law.",
+   "returned_meaning": "=a wife's elder brother, fcrct = a younger sister's husband. also means a sail,\u2026"
+  }
+ ],
+ "idiom": [
+  {
+   "sentence": "She has never stepped out of line .",
+   "idiom": "out of line",
+   "true": "idiomatic",
+   "predicted": "idiomatic",
+   "p_idiomatic": 0.79,
+   "outcome": "success"
+  },
+  {
+   "sentence": "Nellie and I tiptoed quietly back down the aisle and out of the door .",
+   "idiom": "down and out",
+   "true": "literal",
+   "predicted": "literal",
+   "p_idiomatic": 0.2,
+   "outcome": "success"
+  },
+  {
+   "sentence": "\" It was me that shot the bull , son .",
+   "idiom": "shoot the bull",
+   "true": "literal",
+   "predicted": "idiomatic",
+   "p_idiomatic": 0.88,
+   "outcome": "failure"
+  },
+  {
+   "sentence": "Everett , similarly enthusiastic , described it as \u2018 being on the stump\u2019 .",
+   "idiom": "on the stump",
+   "true": "idiomatic",
+   "predicted": "literal",
+   "p_idiomatic": 0.49,
+   "outcome": "failure"
+  }
+ ],
+ "llm": [
+  {
+   "language": "Hindi",
+   "proverb": "Let the iron cUre and the smith care; why",
+   "gold": "Smiths in Idttia keep a man on fixed wages to blow their bellows, and the point of the pr\u2026",
+   "answer": "The proverb \"Let the iron cUre and the smith care; why\" suggests that it's unnecessary to worry about or take\u2026",
+   "margin": 0.4,
+   "outcome": "success"
+  },
+  {
+   "language": "Assamese",
+   "proverb": "A horse is known by his ears, A woman in times of adversity, And a ra\u2026",
+   "gold": "not break on the whetstone. As to the faithfulness of women, horses, etc., cf. the Persia\u2026",
+   "answer": "The proverb suggests that qualities like good horses (virtue) and a razor (wisdom) can help individuals navig\u2026",
+   "margin": 0.39,
+   "outcome": "success"
+  },
+  {
+   "language": "Hindi",
+   "proverb": "Tott made it fly away, I fried and ate it",
+   "gold": "Teeeh your graadmothfr to eiiok eggs.",
+   "answer": "The proverb \"Tott made it fly away, I fried and ate it\" means that something was so delicious or satisfying t\u2026",
+   "margin": -0.13,
+   "outcome": "failure"
+  },
+  {
+   "language": "Assamese",
+   "proverb": "The egg plant that is out of season, cries out pluck me, pluck me.",
+   "gold": "This saying is expressive of contempt towards men who are too pushing. 246. The bagari pl\u2026",
+   "answer": "This proverb means that when something is no longer suitable or desirable, it should be taken care of and rep\u2026",
+   "margin": -0.13,
+   "outcome": "failure"
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "magpie_counts": {
+  "idiomatic": 36328,
+  "literal": 12067
+ },
+ "magpie": {
+  "train": 38716,
+  "test": 4840,
+  "majority_acc": 0.746,
+  "acc": 0.862,
+  "macro_f1": 0.827,
+  "per_class": {
+   "idiomatic": {
+    "precision": 0.929,
+    "recall": 0.883,
+    "f1": 0.905
+   },
+   "literal": {
+    "precision": 0.7,
+    "recall": 0.803,
+    "f1": 0.748
+   }
+  }
+ },
+ "step_b_marathi": {
+  "n": 2180,
+  "acc": 0.943,
+  "macro_f1": 0.943
+ },
+ "step_b_hindi": {
+  "n": 1376,
+  "acc": 0.933,
+  "macro_f1": 0.933
+ },
+ "step_b_assamese": {
+  "n": 412,
+  "acc": 0.913,
+  "macro_f1": 0.913
+ }
+}

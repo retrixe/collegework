@@ -1,0 +1,79 @@
+{
+ "benchmark": {
+  "Assamese/Qwen2.5-0.5B / literal_en": {
+   "sim_gold": 0.267,
+   "sim_control": 0.221,
+   "margin": 0.046
+  },
+  "Assamese/Qwen2.5-0.5B / romanized": {
+   "sim_gold": 0.214,
+   "sim_control": 0.208,
+   "margin": 0.007
+  },
+  "Assamese/echo baseline": {
+   "sim_gold": 0.218,
+   "sim_control": 0.132,
+   "margin": 0.086
+  },
+  "Assamese/flan-t5-base / literal_en": {
+   "sim_gold": 0.156,
+   "sim_control": 0.097,
+   "margin": 0.058
+  },
+  "Assamese/flan-t5-base / romanized": {
+   "sim_gold": 0.098,
+   "sim_control": 0.106,
+   "margin": -0.008
+  },
+  "Hindi/Qwen2.5-0.5B / literal_en": {
+   "sim_gold": 0.11,
+   "sim_control": 0.059,
+   "margin": 0.051
+  },
+  "Hindi/Qwen2.5-0.5B / romanized": {
+   "sim_gold": 0.076,
+   "sim_control": 0.071,
+   "margin": 0.005
+  },
+  "Hindi/echo baseline": {
+   "sim_gold": 0.125,
+   "sim_control": 0.053,
+   "margin": 0.073
+  },
+  "Hindi/flan-t5-base / literal_en": {
+   "sim_gold": 0.113,
+   "sim_control": 0.063,
+   "margin": 0.049
+  },
+  "Hindi/flan-t5-base / romanized": {
+   "sim_gold": 0.097,
+   "sim_control": 0.095,
+   "margin": 0.002
+  },
+  "Marathi/Qwen2.5-0.5B / literal_en": {
+   "sim_gold": 0.138,
+   "sim_control": 0.096,
+   "margin": 0.042
+  },
+  "Marathi/Qwen2.5-0.5B / romanized": {
+   "sim_gold": 0.113,
+   "sim_control": 0.097,
+   "margin": 0.016
+  },
+  "Marathi/echo baseline": {
+   "sim_gold": 0.166,
+   "sim_control": 0.089,
+   "margin": 0.077
+  },
+  "Marathi/flan-t5-base / literal_en": {
+   "sim_gold": 0.143,
+   "sim_control": 0.079,
+   "margin": 0.064
+  },
+  "Marathi/flan-t5-base / romanized": {
+   "sim_gold": 0.059,
+   "sim_control": 0.044,
+   "margin": 0.015
+  }
+ }
+}

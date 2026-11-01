@@ -1,0 +1,438 @@
+{
+ "corpus": {
+  "Marathi": [
+   [
+    13,
+    "Ila ani bhopala",
+    "The sickle and the gourd.",
+    "Applied to man and wife, master and servant,"
+   ],
+   [
+    23,
+    "Preta zhaiikuna thevave adhl peranisa zave",
+    "Cover up the corpse, attend first to the sowing.",
+    "Everything must be left so that the sowing may be done exactly at the right time."
+   ],
+   [
+    68,
+    "Kida mun khai tara taru salamata zai",
+    "1/ insects and ants have food the ship will go safely.",
+    "A man will prosper who is liberal to the poor."
+   ],
+   [
+    216,
+    "Vati tjala pati",
+    "The distributor has the basket.",
+    "He helps others and has only the empty basket left."
+   ]
+  ],
+  "Hindi": [
+   [
+    1,
+    "Abkl ser mek pint bhi naJvik kati hai.",
+    "Of the pound of cotton not a skein ii yet sp jn.",
+    "Scarce a fraction of the work is yet done."
+   ],
+   [
+    47,
+    "Burbak ki Jord sab kl bkaujdi.",
+    "A fool\u2019s wife is every body\u2019s sister-in-law,",
+    "le. any body may flirt with her."
+   ],
+   [
+    48,
+    "Chain nudhaun heuar harid hail",
+    "Who fails to do what he can for himself t",
+    "Every one tries his beat in his own interest: to put one's best leg forward."
+   ],
+   [
+    79,
+    "DM jKirtfi. ddkh tajdi.",
+    "The eyes feel shame for another's daughter.",
+    "When married into the owner's family."
+   ]
+  ],
+  "Assamese": [
+   [
+    17,
+    "Hatat nal bit Mane kare pit pit.",
+    "He has no money in hand, But his cravings are great.",
+    "f5 literally gall, bile, f literally wealth, substance."
+   ],
+   [
+    46,
+    "Jar khabar jibar man, Bahote achore ban.",
+    "He who has a mind to thrive, Scratches up grass, even when sitting down.",
+    "I'T literally, the mind for eating and living. The proverb means that people who wish to succeed, should never waste a moment, which may be devoted t\u2026"
+   ],
+   [
+    48,
+    "Jagar ba lagalo ki Mato ha(n)h kanidi.",
+    "What fault have I committed? I admit I am wrong, and give you a duck's egg.",
+    "The proverb refers to the case of a person who thinks he is taken to task for a trifling fault."
+   ],
+   [
+    42,
+    "Gharat nai kanto, bar shabhaloi manto.",
+    "He has not a grain of rice in his house, but he wishes to go to a big feast.",
+    "This is almost similar to No. 97, except that Wl is sub- stituted for the verb r. Also compare the Grauhdti proverb ta'vs 5 1 ft 1 (urdlat ndi kanto \u2026"
+   ]
+  ]
+ },
+ "records": [
+  [
+   "Marathi proverb",
+   "Ila ani bhopala",
+   "The sickle and the gourd.",
+   "Applied to man and wife, master and servant,"
+  ],
+  [
+   "Marathi proverb",
+   "Preta zhaiikuna thevave adhl peranisa zave",
+   "Cover up the corpse, attend first to the sowing.",
+   "Everything must be left so that the sowing may be done exactly at the right time."
+  ],
+  [
+   "Hindi proverb",
+   "Abkl ser mek pint bhi naJvik kati hai.",
+   "Of the pound of cotton not a skein ii yet sp jn.",
+   "Scarce a fraction of the work is yet done."
+  ],
+  [
+   "Hindi proverb",
+   "Burbak ki Jord sab kl bkaujdi.",
+   "A fool\u2019s wife is every body\u2019s sister-in-law,",
+   "le. any body may flirt with her."
+  ],
+  [
+   "Assamese proverb",
+   "Hatat nal bit Mane kare pit pit.",
+   "He has no money in hand, But his cravings are great.",
+   "f5 literally gall, bile, f literally wealth, substance."
+  ],
+  [
+   "Assamese proverb",
+   "Jar khabar jibar man, Bahote achore ban.",
+   "He who has a mind to thrive, Scratches up grass, even when sitting down.",
+   "I'T literally, the mind for eating and living. The proverb means that people who wish to succeed, s\u2026"
+  ],
+  [
+   "English idiom (MAGPIE)",
+   "off the beaten track",
+   "For example , with fell running and mountain marathons gaining in popularity , how about \u2026",
+   "idiomatic usage"
+  ],
+  [
+   "English idiom (MAGPIE)",
+   "in the running",
+   "I 'd keep him well in the running .",
+   "idiomatic usage"
+  ],
+  [
+   "English idiom (MAGPIE)",
+   "go all the way",
+   "So I went all the way down to the door slightly irritated , and what did I see ?",
+   "literal usage"
+  ]
+ ],
+ "magpie": [
+  [
+   "For example , with fell running and mountain marathons gaining in popularity , how about some ideas for safe running off the beaten track ?",
+   "off the beaten track",
+   "idiomatic",
+   "training"
+  ],
+  [
+   "I 'd keep him well in the running .",
+   "in the running",
+   "idiomatic",
+   "training"
+  ],
+  [
+   "He gives me the creeps , so I looked round , hmm hmm .",
+   "give someone the creeps",
+   "idiomatic",
+   "training"
+  ],
+  [
+   "So I went all the way down to the door slightly irritated , and what did I see ?",
+   "go all the way",
+   "literal",
+   "training"
+  ],
+  [
+   "At least back when I lived in a hole I knew everything there was to know about living in a hole , and now it 's a year later and I 'm at a \u2026",
+   "in the hole",
+   "literal",
+   "training"
+  ],
+  [
+   "four lenses ( a 20,35,55 and zoom ) , a tripod , \u2018 that was as essential on the trip as a passport,\u2019 and 30 rolls of Kodachrome film ( alth\u2026",
+   "in black and white",
+   "literal",
+   "training"
+  ]
+ ],
+ "train_a": [
+  [
+   "Another time they put a railroadman 's cap on his head and a red scarf around his neck and ordered him to push a wheelbarrow on the double .",
+   "on the double",
+   "idiomatic"
+  ],
+  [
+   "By the same token Mr Kenneth Baker , as loyally supportive of Mrs Thatcher as Mr Heseltine was not , may have helped himself .",
+   "by the same token",
+   "idiomatic"
+  ],
+  [
+   "Third time lucky .",
+   "third time lucky",
+   "idiomatic"
+  ],
+  [
+   "Well I 'm very hot on that in the youth club .",
+   "in the club",
+   "literal"
+  ],
+  [
+   "The Blues should have equalised midway through the second half when Gorman , bursting down the right , played a lovely ball into Haylock 's\u2026",
+   "play ball",
+   "literal"
+  ],
+  [
+   "Putting the game on an SD card will slow down the game because the read / write operations will be slower from an SD card than they are on \u2026",
+   "game on",
+   "literal"
+  ]
+ ],
+ "train_b": [
+  [
+   "My grandmother used to say that one who doe not understand buying and Mlling thoubi not start a bueinea. 1724 miHKI f flIH.1ft ftft Kamadar\u2026",
+   "proverb",
+   "Marathi corpus"
+  ],
+  [
+   "As the saying goes, sipotai 's hand went to the hilt of his sword , then withdrew again",
+   "plain",
+   "MAGPIE literal"
+  ],
+  [
+   "She reminded everyone that the thief and the cattle arc both present",
+   "proverb",
+   "Hindi corpus"
+  ],
+  [
+   "It is well known that he turned his head and smiled at me",
+   "plain",
+   "MAGPIE literal"
+  ],
+  [
+   "My grandmother used to say that a covering of blood and skin. I did not find one of the seven happinesses, And I did not find even the dhek\u2026",
+   "proverb",
+   "Assamese corpus"
+  ],
+  [
+   "As the saying goes, working in black - and - white was pretty much a natural choice , partly for practical and economic reasons",
+   "plain",
+   "MAGPIE literal"
+  ]
+ ],
+ "queries": [
+  {
+   "language": "Marathi",
+   "situation": "Someone is making a fuss over a tiny shortfall that does not matter in the big picture.",
+   "target_id": 7,
+   "target_proverb": "KliaDdiDiadhye pava rati",
+   "target_literal": "An ounce \u00bbhort in a cart-load."
+  },
+  {
+   "language": "Marathi",
+   "situation": "A person works hard all day on a task that produces nothing at all.",
+   "target_id": 9,
+   "target_proverb": "Tusa kanduna hatasa phoda",
+   "target_literal": "To Hitter the hand by pounding chaff."
+  },
+  {
+   "language": "Marathi",
+   "situation": "Something has finally reached its full ripeness or maturity.",
+   "target_id": 11,
+   "target_proverb": "Bangi rangall dethi pikali",
+   "target_literal": "It haa come to per/ectioK, it U ripe on the stem."
+  },
+  {
+   "language": "Marathi",
+   "situation": "Acting carefully so that neither of two friends is hurt by a decision.",
+   "target_id": 12,
+   "target_proverb": "Veliga duhkha nalii valukaaa duhkha nahi",
+   "target_literal": "Injury nt&er to tie plant nor to the cucumher."
+  },
+  {
+   "language": "Marathi",
+   "situation": "A man arranges everything so that the benefit comes only to himself.",
+   "target_id": 14,
+   "target_proverb": "Khore mat! apalyakade upasate",
+   "target_literal": "A hoe dratet toil tovardt tit."
+  },
+  {
+   "language": "Marathi",
+   "situation": "Someone drops you the moment they no longer need your help.",
+   "target_id": 19,
+   "target_proverb": "KunabyS,la zo mhanela apa tyatsa gadhava bapa",
+   "target_literal": "He tcAo says a hunbi ts devoted to him is a donkey."
+  },
+  {
+   "language": "Marathi",
+   "situation": "A farmer has good harvests every year yet stays poor because he keeps borrowing.",
+   "target_id": 20,
+   "target_proverb": "Sada pika sada bhika",
+   "target_literal": "Perpetual crops, perpetual poverty."
+  },
+  {
+   "language": "Marathi",
+   "situation": "Urgent seasonal work must be done on time even when something else demands attention.",
+   "target_id": 23,
+   "target_proverb": "Preta zhaiikuna thevave adhl peranisa zave",
+   "target_literal": "Cover up the corpse, attend first to the sowing."
+  },
+  {
+   "language": "Marathi",
+   "situation": "A person is generous with things that belong to someone else.",
+   "target_id": 30,
+   "target_proverb": "Ugbada zhopa deta g&ya",
+   "target_literal": "He ojenii the gate and givet away the cota."
+  },
+  {
+   "language": "Marathi",
+   "situation": "While one person is in deep trouble, another only worries about his own small concern.",
+   "target_id": 31,
+   "target_proverb": "Unta budato 6eli thava vicarati",
+   "target_literal": "T'ife camel if droumiriff and the goat Oikt him ike depth tihe water."
+  },
+  {
+   "language": "Hindi",
+   "situation": "A big job has barely been started even though a lot of time has passed.",
+   "target_id": 1,
+   "target_proverb": "Abkl ser mek pint bhi naJvik kati hai.",
+   "target_literal": "Of the pound of cotton not a skein ii yet sp jn."
+  },
+  {
+   "language": "Hindi",
+   "situation": "Someone starts preparing far too early for something that is hours away.",
+   "target_id": 3,
+   "target_proverb": "Adhl rdt kajadbhdi dve, ehdm eemddhpkaildm",
+   "target_literal": "He sets his mouth ajar at sunset in order to gape at midnight"
+  },
+  {
+   "language": "Hindi",
+   "situation": "A person demands payment for work they never actually did.",
+   "target_id": 9,
+   "target_proverb": "Aim Ai no aod baehA kai f",
+   "target_literal": "You haveu't aold me ginger I Have you f"
+  },
+  {
+   "language": "Hindi",
+   "situation": "Instead of enjoying what is offered, someone keeps asking pointless questions about where it came from.",
+   "target_id": 12,
+   "target_proverb": "Am thdae yd pef giane t",
+   "target_literal": "Will you eat the mangoes or count the trees 1"
+  },
+  {
+   "language": "Hindi",
+   "situation": "Two people in love find that their relationship is full of obstacles.",
+   "target_id": 20,
+   "target_proverb": "Ashiql khdld H kdghar nahUd.",
+   "target_literal": "Loving is not like living in my aunt's house."
+  },
+  {
+   "language": "Hindi",
+   "situation": "A reckless spender is told that his ruin cannot be repaired.",
+   "target_id": 21,
+   "target_proverb": "Ai'md7i ke phaie ko kahdd tedb thegii tage?",
+   "target_literal": "If heaven break w'ho will patch it upf"
+  },
+  {
+   "language": "Hindi",
+   "situation": "When a child is born, the means to feed it also appear.",
+   "target_id": 23,
+   "target_proverb": "Avwat'tadmt bddkdtaUm. Pen.",
+   "target_literal": "Come man, come food, gone man, gone food."
+  },
+  {
+   "language": "Hindi",
+   "situation": "Someone pushes into a matter where nobody asked for them.",
+   "target_id": 25,
+   "target_proverb": "Bail na kdddt kddl gaun: y6h tamdthd dekha",
+   "target_literal": "The panier hae jumped iu without the ox, who ever saw such a thing before f"
+  },
+  {
+   "language": "Assamese",
+   "situation": "A boastful man talks big about a fight but achieves almost nothing.",
+   "target_id": 4,
+   "target_proverb": "Jujhibaloi ahile mal, Dui hate singile bal.",
+   "target_literal": "He came to fight in all his strength, But he only broke one hair (of his adversary)."
+  },
+  {
+   "language": "Assamese",
+   "situation": "Someone excuses saying more than he should by blaming his loose tongue.",
+   "target_id": 10,
+   "target_proverb": "Har nai kiya jiba, Koy kiba kiba.",
+   "target_literal": "The tongue because it has no bone, Says various things. A poor excuse made by a man when he says more than he ought. He does not admit the blame, but throws it on his tongue, which, he says, is easily pliable, because it is unsupported by bone."
+  },
+  {
+   "language": "Assamese",
+   "situation": "A person with no money keeps craving expensive things.",
+   "target_id": 17,
+   "target_proverb": "Hatat nal bit Mane kare pit pit.",
+   "target_literal": "He has no money in hand, But his cravings are great."
+  },
+  {
+   "language": "Assamese",
+   "situation": "People remember God only when they are in trouble.",
+   "target_id": 18,
+   "target_proverb": "ttCT Tfa Tan pdle Earn bole.",
+   "target_literal": "When in distress, a man calls on R&ma."
+  },
+  {
+   "language": "Assamese",
+   "situation": "A person who plots harm for others ends up suffering from it himself.",
+   "target_id": 19,
+   "target_proverb": "Kotar gharar kuti, Lokaloi bull hul pati, Apuni mare phuti.",
+   "target_literal": "He who lays thorns for others, Dies amongst them himself."
+  },
+  {
+   "language": "Assamese",
+   "situation": "Someone with only a show of respectability wants to be the leader.",
+   "target_id": 20,
+   "target_proverb": "Pokarat nai murat pag, Shi hai dehatar ag.",
+   "target_literal": "With a pdgri on his head, And with nothing on the lower part of his body, he wishes take the lead."
+  },
+  {
+   "language": "Assamese",
+   "situation": "A worker is full of energy one moment and abandons the job the next.",
+   "target_id": 24,
+   "target_proverb": "Bhangi an khuchari khao. Pua hale nao meli jao.",
+   "target_literal": "Bring the adze, I am itching to be off. To-morrow morning I shall start in the boat."
+  },
+  {
+   "language": "Assamese",
+   "situation": "A poor man wants to attend a grand feast he cannot afford.",
+   "target_id": 42,
+   "target_proverb": "Gharat nai kanto, bar shabhaloi manto.",
+   "target_literal": "He has not a grain of rice in his house, but he wishes to go to a big feast."
+  },
+  {
+   "language": "Assamese",
+   "situation": "Someone who wants to succeed never wastes a moment, working even while resting.",
+   "target_id": 46,
+   "target_proverb": "Jar khabar jibar man, Bahote achore ban.",
+   "target_literal": "He who has a mind to thrive, Scratches up grass, even when sitting down."
+  },
+  {
+   "language": "Assamese",
+   "situation": "A man is burdened by too many relatives from his wife's side.",
+   "target_id": 47,
+   "target_proverb": "Jetheri boinai hal Kihar pal e pal.",
+   "target_literal": "He has got herds And herds of brother-in-law."
+  }
+ ]
+}
